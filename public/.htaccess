@@ -6,33 +6,55 @@
     RewriteEngine On
 
     # ----------------------------------------------------------------------
-    # SECURITY HEADERS (Für Lighthouse Best Practices 100%)
+    # FORCE HTTPS + REMOVE WWW (SEO CRITICAL)
+    # ----------------------------------------------------------------------
+
+    # Redirect HTTP → HTTPS
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^ https://digitalpackt.de%{REQUEST_URI} [L,R=301]
+
+    # Redirect www → non-www
+    RewriteCond %{HTTP_HOST} ^www\.digitalpackt\.de$ [NC]
+    RewriteRule ^ https://digitalpackt.de%{REQUEST_URI} [L,R=301]
+
+    # ----------------------------------------------------------------------
+    # SECURITY HEADERS (Lighthouse + Jetstream SAFE)
     # ----------------------------------------------------------------------
     <IfModule mod_headers.c>
-        # 1. HSTS: Zwingt Browser für 1 Jahr auf HTTPS (behebt HSTS Warnung)
-        Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 
-        # 2. X-Frame-Options: Verhindert Clickjacking (behebt XFO Warnung)
-        Header set X-Frame-Options "SAMEORIGIN"
+        # HSTS (HTTPS enforcement)
+        Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 
-        # 3. Content Security Policy: Schützt vor XSS (behebt CSP & Trusted Types Warnung)
-        # Hinweis: Diese Policy erlaubt Google Fonts und Tailwind CDN.
-        Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.bunny.net; font-src https://fonts.bunny.net; img-src 'self' data:; connect-src 'self';"
+        # Clickjacking protection
+        Header always set X-Frame-Options "SAMEORIGIN"
 
-        # 4. COOP: Origin Isolation (behebt COOP Warnung)
-        Header set Cross-Origin-Opener-Policy "same-origin"
+        # ✅ CORRECT CSP (Alpine + Livewire + Jetstream)
+        Header always set Content-Security-Policy "
+            default-src 'self';
+            script-src 'self' 'unsafe-inline' 'unsafe-eval';
+            style-src 'self' 'unsafe-inline' https://fonts.bunny.net;
+            font-src 'self' https://fonts.bunny.net data:;
+            img-src 'self' data: https://ui-avatars.com;
+            connect-src 'self';
+            frame-src 'self';
+            object-src 'none';
+        "
 
-        # 5. X-Content-Type-Options: Verhindert MIME-Sniffing
-        Header set X-Content-Type-Options "nosniff"
+        # COOP
+        Header always set Cross-Origin-Opener-Policy "same-origin"
 
-        # 6. Referrer-Policy: Datenschutz bei Verlinkungen
-        Header set Referrer-Policy "strict-origin-when-cross-origin"
+        # Prevent MIME sniffing
+        Header always set X-Content-Type-Options "nosniff"
+
+        # Privacy-safe referrer
+        Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
     </IfModule>
 
     # ----------------------------------------------------------------------
-    # LARAVEL ROUTING (Standard)
+    # LARAVEL ROUTING (STANDARD)
     # ----------------------------------------------------------------------
-    
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
@@ -41,13 +63,14 @@
     RewriteCond %{HTTP:x-xsrf-token} .
     RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
 
-    # Redirect Trailing Slashes If Not A Folder...
+    # Remove trailing slash (SEO)
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
     RewriteRule ^ %1 [L,R=301]
 
-    # Send Requests To Front Controller...
+    # Front Controller
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
 </IfModule>
