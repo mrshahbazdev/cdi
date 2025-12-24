@@ -5,18 +5,21 @@
 
     RewriteEngine On
 
-    # -------------------------------------------------
-    # FORCE HTTPS + REMOVE WWW (SEO)
-    # -------------------------------------------------
+    # ======================================================
+    # FORCE HTTPS + REMOVE WWW (SEO CRITICAL)
+    # ======================================================
+
+    # HTTP → HTTPS
     RewriteCond %{HTTPS} !=on
     RewriteRule ^ https://digitalpackt.de%{REQUEST_URI} [L,R=301]
 
+    # www → non-www
     RewriteCond %{HTTP_HOST} ^www\.digitalpackt\.de$ [NC]
     RewriteRule ^ https://digitalpackt.de%{REQUEST_URI} [L,R=301]
 
-    # -------------------------------------------------
-    # SECURITY HEADERS (APACHE SAFE)
-    # -------------------------------------------------
+    # ======================================================
+    # SECURITY HEADERS (APACHE SAFE – SINGLE LINE)
+    # ======================================================
     <IfModule mod_headers.c>
 
         Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
@@ -25,25 +28,27 @@
         Header always set Referrer-Policy "strict-origin-when-cross-origin"
         Header always set Cross-Origin-Opener-Policy "same-origin"
 
-        # ✅ SINGLE-LINE CSP (NO 500 ERROR)
         Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.bunny.net; font-src 'self' https://fonts.bunny.net data:; img-src 'self' data: https://ui-avatars.com; connect-src 'self'; frame-src 'self'; object-src 'none';"
-
     </IfModule>
 
-    # -------------------------------------------------
-    # LARAVEL ROUTING
-    # -------------------------------------------------
+    # ======================================================
+    # LARAVEL ROUTING (STANDARD)
+    # ======================================================
 
+    # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
+    # Handle X-XSRF-Token Header
     RewriteCond %{HTTP:x-xsrf-token} .
     RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
 
+    # Remove trailing slash (SEO)
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
     RewriteRule ^ %1 [L,R=301]
 
+    # Front Controller
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
