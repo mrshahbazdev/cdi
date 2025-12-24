@@ -16,7 +16,7 @@
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,600,700&display=swap" rel="stylesheet">
-
+    <meta name="seobility" content="fd402df0ec93277527efbc1c09c8da01">
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
