@@ -5,6 +5,34 @@
 
     RewriteEngine On
 
+    # ----------------------------------------------------------------------
+    # SECURITY HEADERS (Für Lighthouse Best Practices 100%)
+    # ----------------------------------------------------------------------
+    <IfModule mod_headers.c>
+        # 1. HSTS: Zwingt Browser für 1 Jahr auf HTTPS (behebt HSTS Warnung)
+        Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+        # 2. X-Frame-Options: Verhindert Clickjacking (behebt XFO Warnung)
+        Header set X-Frame-Options "SAMEORIGIN"
+
+        # 3. Content Security Policy: Schützt vor XSS (behebt CSP & Trusted Types Warnung)
+        # Hinweis: Diese Policy erlaubt Google Fonts und Tailwind CDN.
+        Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.bunny.net; font-src https://fonts.bunny.net; img-src 'self' data:; connect-src 'self';"
+
+        # 4. COOP: Origin Isolation (behebt COOP Warnung)
+        Header set Cross-Origin-Opener-Policy "same-origin"
+
+        # 5. X-Content-Type-Options: Verhindert MIME-Sniffing
+        Header set X-Content-Type-Options "nosniff"
+
+        # 6. Referrer-Policy: Datenschutz bei Verlinkungen
+        Header set Referrer-Policy "strict-origin-when-cross-origin"
+    </IfModule>
+
+    # ----------------------------------------------------------------------
+    # LARAVEL ROUTING (Standard)
+    # ----------------------------------------------------------------------
+    
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
