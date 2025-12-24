@@ -31,21 +31,32 @@
     Zum Inhalt springen
 </a>
 
-<header role="banner" class="fixed top-0 w-full bg-white/90 backdrop-blur border-b border-slate-200 z-40">
-  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-    <a href="/" aria-label="Zur Startseite" class="text-xl font-extrabold text-slate-900">
+<header role="banner" class="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-slate-200 z-50">
+  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    
+    <a href="/" aria-label="Zur Startseite" class="text-2xl font-black text-slate-900 tracking-tighter">
       Digital<span class="text-blue-600">packt</span>
     </a>
 
-    <nav role="navigation" aria-label="Hauptnavigation" class="hidden md:flex items-center gap-8 text-sm font-semibold">
-      <a href="#vorteile" class="hover:text-blue-600 transition-colors">Vorteile</a>
-      <a href="#plattform" class="hover:text-blue-600 transition-colors">Plattform</a>
-      <a href="#preise" class="hover:text-blue-600 transition-colors">Preise</a>
-      <a href="{{ route('login') }}" class="hover:text-blue-600 transition-colors">Login</a>
-      <a href="{{ route('register') }}" class="px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all">
+    <nav role="navigation" aria-label="Hauptnavigation" class="hidden md:flex items-center gap-1">
+      <a href="#vorteile" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-all">Vorteile</a>
+      <a href="#plattform" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-all">Plattform</a>
+      <a href="#preise" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-all">Preise</a>
+      
+      <div class="w-px h-6 bg-slate-200 mx-2"></div>
+      
+      <a href="{{ route('login') }}" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-blue-600 transition-all">Login</a>
+      <a href="{{ route('register') }}" 
+         class="ml-2 px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-bold shadow-sm shadow-blue-200 hover:bg-blue-700 hover:shadow-lg transition-all active:scale-95">
          Kostenlos starten
       </a>
     </nav>
+
+    <div class="md:hidden flex items-center gap-2">
+      <a href="{{ route('login') }}" class="text-xs font-bold text-slate-600 px-3 py-2">Login</a>
+      <a href="{{ route('register') }}" class="text-xs font-bold bg-blue-600 text-white px-4 py-2 rounded-lg">Start</a>
+    </div>
+
   </div>
 </header>
 
