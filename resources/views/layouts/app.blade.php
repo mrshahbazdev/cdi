@@ -91,59 +91,8 @@
     </main>
 
     <!-- ================= FOOTER ================= -->
-    @php
-        $footerPages = \App\Models\Page::where('is_visible', true)->orderBy('sort_order')->get();
-    @endphp
+    <x-dynamic-footer />
 
-    <footer role="contentinfo" class="bg-gray-900 text-gray-400 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-6 py-12">
-
-            <div class="grid md:grid-cols-4 gap-10 mb-10">
-
-                <div class="md:col-span-2">
-                    <p class="text-white font-extrabold text-xl mb-4">
-                        {{ config('app.name', 'Digitalpackt') }}
-                    </p>
-                    <p class="text-sm max-w-md">
-                        {{ $settings->site_description ?? 'Professional SaaS & Automation Platform.' }}
-                    </p>
-                </div>
-
-                <div>
-                    <p class="text-white font-semibold mb-3">Platform</p>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="{{ route('dashboard') }}" class="hover:text-blue-400">Dashboard</a></li>
-                        <li><a href="{{ route('tools.index') }}" class="hover:text-blue-400">Tools</a></li>
-                        <li><a href="{{ route('blog.index') }}" class="hover:text-blue-400">Blog</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <p class="text-white font-semibold mb-3">Legal</p>
-                    <ul class="space-y-2 text-sm">
-                        @foreach($footerPages as $page)
-                            <li>
-                                <a href="{{ route('pages.show', $page->slug) }}" class="hover:text-blue-400">
-                                    {{ $page->title }}
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-
-            </div>
-
-            <div class="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between text-sm">
-                <p>© {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
-                <div class="flex gap-6 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-gray-300">Status</a>
-                    <a href="#" class="hover:text-gray-300">Security</a>
-                    <a href="#" class="hover:text-gray-300">Sitemap</a>
-                </div>
-            </div>
-
-        </div>
-    </footer>
 
 </div>
 
