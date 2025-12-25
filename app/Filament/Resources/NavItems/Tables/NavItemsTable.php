@@ -7,6 +7,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Grouping\Group;
 use Filament\Actions\EditAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\BulkActionGroup;
@@ -18,35 +19,25 @@ class NavItemsTable
     {
         return $table
 
-            /* ================= HIERARCHICAL ORDER FIX ================= */
-            ->modifyQueryUsing(function ($query) {
-                $query->orderByRaw('parent_id IS NOT NULL') // parents first
-                      ->orderBy('parent_id')
-                      ->orderBy('sort_order');
-            })
+            /* ================= GROUPING (COLLAPSIBLE) ================= */
+            ->groups([
+                Group::make('parent.title')
+                    ->label('Menu Group')
+                    ->collapsible()              // 🔥 collapse / expand
+                    ->defaultExpanded(),         // parents expanded by default
+            ])
 
-            /* ================= DRAG & DROP ================= */
+            /* ================= ORDERING ================= */
             ->reorderable('sort_order')
+            ->defaultSort('sort_order')
 
             /* ================= COLUMNS ================= */
             ->columns([
 
                 TextColumn::make('title')
                     ->label('Menu Title')
-                    ->formatStateUsing(fn ($state, $record) =>
-                        $record->parent_id ? '↳ ' . $state : $state
-                    )
-                    ->extraAttributes(fn ($record) => [
-                        'class' => $record->parent_id
-                            ? 'pl-6 text-gray-600'
-                            : 'font-bold text-gray-900',
-                    ])
-                    ->searchable(),
-
-                TextColumn::make('parent.title')
-                    ->label('Parent')
-                    ->placeholder('— Root —')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->searchable()
+                    ->sortable(),
 
                 BadgeColumn::make('children_count')
                     ->label('Children')
@@ -54,23 +45,29 @@ class NavItemsTable
                     ->colors(['primary']),
 
                 ToggleColumn::make('is_visible')
-                    ->label('Visible'),
+                    ->label('Visible')
+                    ->sortable(),
 
                 TextColumn::make('updated_at')
-                    ->label('Updated')
-                    ->dateTime('d M Y')
+                    ->label('Last Updated')
+                    ->dateTime('d M Y, H:i')
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
 
             /* ================= FILTERS ================= */
             ->filters([
-                Filter::make('root')
-                    ->label('Parents only')
-                    ->query(fn ($q) => $q->whereNull('parent_id')),
+                Filter::make('visible')
+                    ->label('Visible')
+                    ->query(fn ($q) => $q->where('is_visible', true)),
 
-                Filter::make('children')
-                    ->label('Children only')
-                    ->query(fn ($q) => $q->whereNotNull('parent_id')),
+                Filter::make('hidden')
+                    ->label('Hidden')
+                    ->query(fn ($q) => $q->where('is_visible', false)),
+
+                Filter::make('root')
+                    ->label('Parent items only')
+                    ->query(fn ($q) => $q->whereNull('parent_id')),
             ])
 
             /* ================= ACTIONS ================= */
