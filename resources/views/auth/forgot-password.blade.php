@@ -1,4 +1,4 @@
-<x-guest-layout title="Passwort vergessen | Digitalpackt">
+<x-guest-layout title="Passwort vergessen" metaDescription="Haben Sie Ihr Passwort vergessen? Hier können Sie es sicher zurücksetzen, um wieder Zugriff auf Digitalpackt zu erhalten.">
     <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
         <div class="max-w-md w-full relative z-10">
             <!-- Logo & Header -->
