@@ -17,9 +17,15 @@ class NavItemsTable
     public static function configure(Table $table): Table
     {
         return $table
-            /* ================= ORDERING ================= */
-            ->defaultSort('parent_id')   // Parent first
-            ->defaultSort('sort_order')  // Then order inside parent
+
+            /* ================= HIERARCHICAL ORDER FIX ================= */
+            ->modifyQueryUsing(function ($query) {
+                $query->orderByRaw('parent_id IS NOT NULL') // parents first
+                      ->orderBy('parent_id')
+                      ->orderBy('sort_order');
+            })
+
+            /* ================= DRAG & DROP ================= */
             ->reorderable('sort_order')
 
             /* ================= COLUMNS ================= */
@@ -27,69 +33,52 @@ class NavItemsTable
 
                 TextColumn::make('title')
                     ->label('Menu Title')
-                    ->searchable()
-                    ->sortable()
-                    // 👇 INDENT CHILD ITEMS
-                    ->formatStateUsing(function ($state, $record) {
-                        return $record->parent_id
-                            ? '↳ ' . $state
-                            : $state;
-                    })
+                    ->formatStateUsing(fn ($state, $record) =>
+                        $record->parent_id ? '↳ ' . $state : $state
+                    )
                     ->extraAttributes(fn ($record) => [
                         'class' => $record->parent_id
                             ? 'pl-6 text-gray-600'
                             : 'font-bold text-gray-900',
-                    ]),
+                    ])
+                    ->searchable(),
 
                 TextColumn::make('parent.title')
                     ->label('Parent')
                     ->placeholder('— Root —')
-                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 BadgeColumn::make('children_count')
                     ->label('Children')
                     ->counts('children')
-                    ->colors([
-                        'primary',
-                    ]),
+                    ->colors(['primary']),
 
                 ToggleColumn::make('is_visible')
-                    ->label('Visible')
-                    ->sortable(),
+                    ->label('Visible'),
 
                 TextColumn::make('updated_at')
-                    ->label('Last Updated')
-                    ->dateTime('d M Y, H:i')
-                    ->sortable()
+                    ->label('Updated')
+                    ->dateTime('d M Y')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
 
             /* ================= FILTERS ================= */
             ->filters([
                 Filter::make('root')
-                    ->label('Root items only')
-                    ->query(fn ($query) => $query->whereNull('parent_id')),
+                    ->label('Parents only')
+                    ->query(fn ($q) => $q->whereNull('parent_id')),
 
                 Filter::make('children')
-                    ->label('Child items only')
-                    ->query(fn ($query) => $query->whereNotNull('parent_id')),
-
-                Filter::make('visible')
-                    ->label('Visible')
-                    ->query(fn ($query) => $query->where('is_visible', true)),
+                    ->label('Children only')
+                    ->query(fn ($q) => $q->whereNotNull('parent_id')),
             ])
 
-            /* ================= ROW ACTIONS ================= */
+            /* ================= ACTIONS ================= */
             ->recordActions([
-                EditAction::make()
-                    ->icon('heroicon-o-pencil'),
-
-                DeleteAction::make()
-                    ->icon('heroicon-o-trash'),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
 
-            /* ================= BULK ACTIONS ================= */
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
