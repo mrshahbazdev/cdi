@@ -2,6 +2,7 @@
     title="Blog & Insights – Digitale Produkte, SaaS & Automatisierung | Digitalpackt"
     metaDescription="Lesen Sie aktuelle Blogartikel, Tutorials und Experten-Insights zu SaaS, digitalen Produkten, Automatisierung und modernen Web-Technologien bei Digitalpackt."
 >
+
     {{-- ================= PAGE HEADER ================= --}}
     <x-slot name="header">
         <div class="flex items-center justify-between">
@@ -12,12 +13,11 @@
                     </svg>
                 </div>
                 <div>
-                    {{-- H1 (ONLY ONE) --}}
                     <h1 class="font-extrabold text-2xl text-gray-900 tracking-tight leading-none">
                         Blog & Insights
                     </h1>
                     <p class="text-[11px] font-black text-blue-700 uppercase tracking-[0.2em] mt-1.5">
-                        Aktuelle Artikel zu SaaS, Automatisierung & digitalen Produkten
+                        Digitale Produkte, SaaS & Automatisierung bei Digitalpackt
                     </p>
                 </div>
             </div>
@@ -28,7 +28,35 @@
     <div class="py-12 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-            {{-- ================= CATEGORY FILTER (INTERNAL LINKS) ================= --}}
+            {{-- ================= SEO INTRO TEXT (VERY IMPORTANT) ================= --}}
+            <section class="mb-12 max-w-4xl">
+                <p class="text-gray-700 leading-relaxed">
+                    Der <strong>Digitalpackt Blog</strong> ist Ihre zentrale Anlaufstelle für
+                    fundierte Inhalte rund um <strong>SaaS-Plattformen</strong>,
+                    <strong>digitale Produkte</strong>, <strong>Automatisierung</strong> und
+                    moderne Web-Technologien. Hier finden Sie praxisnahe Tutorials,
+                    Experten-Insights und technische Leitfäden für Unternehmen,
+                    Startups und Entwickler.
+                </p>
+
+                {{-- Contextual internal links --}}
+                <div class="mt-4 flex flex-wrap gap-4 text-sm font-semibold">
+                    <a href="{{ url('/') }}" class="text-blue-600 hover:underline">
+                        Zur Digitalpackt Startseite
+                    </a>
+                    <a href="{{ route('tools.index') }}" class="text-blue-600 hover:underline">
+                        Alle Tools entdecken
+                    </a>
+                    <a href="/pricing" class="text-blue-600 hover:underline">
+                        Preise & Pakete
+                    </a>
+                    <a href="/features" class="text-blue-600 hover:underline">
+                        Plattform-Funktionen
+                    </a>
+                </div>
+            </section>
+
+            {{-- ================= CATEGORY FILTER ================= --}}
             <nav aria-label="Blog Kategorien" class="mb-12 flex flex-wrap items-center gap-3">
                 <a href="{{ route('blog.index') }}"
                    class="px-5 py-2.5 rounded-xl text-sm font-black transition-all
@@ -50,14 +78,10 @@
             @if($posts->count() > 0)
                 <section aria-label="Blog Artikel">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-
                         @foreach($posts as $post)
-                            <article
-                                itemscope
-                                itemtype="https://schema.org/BlogPosting"
+                            <article itemscope itemtype="https://schema.org/BlogPosting"
                                 class="group bg-white/90 backdrop-blur-xl rounded-[2.5rem] border border-blue-100 shadow-md hover:shadow-2xl hover:shadow-blue-600/10 transition-all duration-500 flex flex-col h-full overflow-hidden">
 
-                                {{-- IMAGE --}}
                                 <div class="relative aspect-[16/10] overflow-hidden border-b border-blue-50 bg-gray-100">
                                     @if($post->cover_image)
                                         <img src="{{ Storage::url($post->cover_image) }}"
@@ -73,7 +97,6 @@
                                     </div>
                                 </div>
 
-                                {{-- CONTENT --}}
                                 <div class="p-8 flex-1 flex flex-col">
                                     <div class="text-[11px] font-black text-blue-700 uppercase tracking-widest mb-4">
                                         <time itemprop="datePublished" datetime="{{ $post->published_at->toIso8601String() }}">
@@ -83,7 +106,6 @@
                                         <span itemprop="author">{{ $post->user->name }}</span>
                                     </div>
 
-                                    {{-- H2 --}}
                                     <h2 class="text-2xl font-black text-gray-900 mb-4 group-hover:text-blue-700 transition-colors leading-tight"
                                         itemprop="headline">
                                         <a href="{{ route('blog.show', $post) }}">
@@ -100,11 +122,6 @@
                                         <a href="{{ route('blog.show', $post) }}"
                                            class="inline-flex items-center font-black text-sm text-gray-900 group-hover:text-blue-600 transition-all">
                                             Artikel lesen
-                                            <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1.5 transition-transform"
-                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                                                      d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                            </svg>
                                         </a>
                                     </div>
                                 </div>
@@ -113,27 +130,17 @@
                     </div>
                 </section>
 
-                {{-- ================= PAGINATION ================= --}}
                 <div class="mt-20 flex justify-center">
-                    <div class="bg-white/80 backdrop-blur-md p-4 rounded-2xl border border-blue-100 shadow-xl">
-                        {{ $posts->links() }}
-                    </div>
+                    {{ $posts->links() }}
                 </div>
-
             @else
-                {{-- ================= EMPTY STATE ================= --}}
-                <section class="bg-white/80 backdrop-blur-xl rounded-[3rem] p-20 text-center border-2 border-dashed border-blue-200 shadow-sm">
+                <section class="text-center py-20">
                     <h2 class="text-3xl font-black text-gray-900 mb-4">
                         Keine Artikel gefunden
                     </h2>
-                    <p class="text-gray-600 font-medium max-w-md mx-auto leading-relaxed">
+                    <p class="text-gray-600 max-w-md mx-auto">
                         Aktuell arbeiten wir an neuen Inhalten zu SaaS, Automatisierung und digitalen Produkten.
                     </p>
-
-                    <a href="{{ url('/') }}"
-                       class="mt-10 inline-flex items-center px-8 py-4 bg-gray-900 text-white font-black rounded-2xl hover:bg-blue-600 transition-all shadow-lg">
-                        Zur Startseite
-                    </a>
                 </section>
             @endif
         </div>
