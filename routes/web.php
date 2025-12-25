@@ -17,7 +17,9 @@ Route::get('/', function () {
     
     return view('welcome', compact('tools'));
 })->name('home');
-
+Route::view('/impressum', 'pages.legal.imprint')->name('imprint');
+Route::view('/datenschutz', 'pages.legal.privacy')->name('privacy');
+Route::view('/hilfe', 'pages.legal.help')->name('help');
 // Public Blog & Tools (No auth required)
 Route::get('/tools', [ToolController::class, 'index'])->name('tools.index');
 Route::get('/tools/{tool}', [ToolController::class, 'show'])->name('tools.show');

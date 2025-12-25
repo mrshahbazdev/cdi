@@ -45,9 +45,9 @@
                     <div class="max-w-md mx-auto px-4">
                         <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs font-bold text-slate-400 uppercase tracking-widest">
                             <a href="{{ url('/') }}" class="hover:text-blue-600 transition-colors">Startseite</a>
-                            <a href="{{ url('/impressum') }}" class="hover:text-blue-600 transition-colors">Impressum</a>
-                            <a href="{{ url('/datenschutz') }}" class="hover:text-blue-600 transition-colors">Datenschutz</a>
-                            <a href="{{ url('/hilfe') }}" class="hover:text-blue-600 transition-colors">Hilfe</a>
+                            <a href="{{ route('imprint') }}" class="hover:text-blue-600 transition-colors">Impressum</a>
+                            <a href="{{ route('privacy') }}" class="hover:text-blue-600 transition-colors">Datenschutz</a>
+                            <a href="{{ route('help') }}" class="hover:text-blue-600 transition-colors">Hilfe</a>
                         </div>
                         <div class="mt-6 text-center">
                             <p class="text-[10px] text-slate-400 font-medium">
