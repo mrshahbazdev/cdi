@@ -426,7 +426,7 @@
             <span>✓</span> API-Zugang
           </li>
         </ul>
-        <a href="{{ route('register') }}" class="block text-center py-3 bg-white text-blue-600 rounded-xl font-bold hover:shadow-lg transition-all">
+        <a href="{{ route('register') }}" rel="nofollow" class="block text-center py-3 bg-white text-blue-600 rounded-xl font-bold hover:shadow-lg transition-all">
           Jetzt starten
         </a>
       </div>
@@ -536,7 +536,7 @@
       professionelle SaaS-Lösungen zu entwickeln und zu betreiben.
     </p>
     <div class="flex flex-wrap gap-4 justify-center">
-      <a href="{{ route('register') }}" 
+      <a href="{{ route('register') }}" rel="nofollow" 
          class="px-10 py-4 bg-white text-blue-600 rounded-2xl font-bold text-lg hover:shadow-2xl transition-all transform hover:-translate-y-1">
         Kostenlos starten
       </a>
