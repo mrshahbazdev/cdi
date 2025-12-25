@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use App\Models\FooterItem;
 
 class FooterSection extends Model
 {
@@ -30,8 +31,8 @@ class FooterSection extends Model
      */
     public function items()
     {
-        return $this->hasMany(FooterItem::class)
-            ->orderBy('sort_order');
+        // ❗ No orderBy here — ordering handled via scope
+        return $this->hasMany(FooterItem::class);
     }
 
     /**
@@ -50,7 +51,7 @@ class FooterSection extends Model
         return $query->orderBy('sort_order');
     }
 
-    // Filter by type (brand, links, socials, bottom)
+    // Filter by type
     public function scopeOfType(Builder $query, string $type): Builder
     {
         return $query->where('type', $type);
@@ -59,7 +60,6 @@ class FooterSection extends Model
     /**
      * Helpers
      */
-
     public function isBrand(): bool
     {
         return $this->type === 'brand';
