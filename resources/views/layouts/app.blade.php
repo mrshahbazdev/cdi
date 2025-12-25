@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="ltr">
 <head>
+    @php $settings = \App\Models\Setting::first(); @endphp
     <!-- Meta Tags -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="{{ $settings->site_description ?? 'Professional SaaS & Automation Platform' }}">
+    <meta name="description" content="{{ $metaDescription ?? $settings->site_description ?? 'Professional SaaS & Automation Platform' }}">
     <meta name="theme-color" content="#2563eb">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -14,7 +15,13 @@
     <!-- Security Headers -->
     <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
 
-    <title>{{ config('app.name', 'Digitalpackt') }} - Professional SaaS Platform</title>
+    <title>
+        @hasSection('title')
+            @yield('title') - {{ config('app.name', 'Digitalpackt') }}
+        @else
+            {{ $title ?? (config('app.name', 'Digitalpackt') . ' - Professional SaaS Platform') }}
+        @endif
+    </title>
 
     <!-- Preconnect & DNS Prefetch -->
     <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>

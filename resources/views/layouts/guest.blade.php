@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
+<html lang="de" class="h-full">
     <head>
         @php
             $settings = \App\Models\Setting::first();
