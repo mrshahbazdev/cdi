@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-guest-layout title="Passwort vergessen | Digitalpackt">
     <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
         <div class="max-w-md w-full relative z-10">
             <!-- Logo & Header -->

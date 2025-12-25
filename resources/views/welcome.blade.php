@@ -72,8 +72,16 @@
       </h1>
 
       <p class="mt-6 text-lg text-slate-600 max-w-xl">
-        Digitalpackt ist eine moderne SaaS-Plattform für Automatisierung,
-        Cloud-Tools und skalierbare digitale Geschäftslösungen.
+        Digitalpackt ist eine moderne, europaweit ausgerichtete SaaS‑Plattform, die Unternehmen,
+        Agenturen und Startups dabei hilft, digitale Produkte deutlich schneller zu entwickeln,
+        sicher zu betreiben und effizient zu skalieren. Unsere Lösung vereint leistungsfähige
+        Automatisierungs‑Workflows, wiederverwendbare SaaS‑Bausteine und ein flexibles Subdomain‑Deployment,
+        sodass Teams Infrastrukturaufwand deutlich reduzieren und sich auf die Produktinnovation
+        konzentrieren können. Mit EU‑Hosting, umfassender DSGVO‑Konformität, rollenbasierter Zugriffskontrolle
+        und optionalen SLA‑Paketen bieten wir ein hohes Maß an Sicherheit und Rechtssicherheit für
+        sensible Geschäftsanwendungen. Digitalpackt unterstützt nahtlose API‑Integrationen, integrierte
+        Abrechnung, Echtzeit‑Metriken und anpassbare Onboarding‑Flows — ideal für Proof‑of‑Concepts,
+        schnell wachsende Produkte und Enterprise‑Deployments gleichermaßen.
       </p>
 
       <div class="mt-10 flex flex-wrap gap-4">
@@ -150,8 +158,13 @@
         Eine Plattform für digitale Geschäftsmodelle
       </h2>
       <p class="text-slate-700 mb-6">
-        Digitalpackt vereint Automatisierung, SaaS-Tools und Cloud-Systeme
-        in einer zentralen Plattform für maximale Effizienz.
+        Digitalpackt bündelt Automatisierung, modulare SaaS‑Tools und bewährte Cloud‑Architekturen in einer
+        zentralen Plattform, die darauf ausgelegt ist, wiederkehrende Prozesse zu vereinfachen und
+        operative Abläufe zu beschleunigen. Entwicklerteams profitieren von sofort einsatzbereiten
+        Templates und integrationsfreundlichen APIs, Produktteams von vorkonfigurierten Workflows und
+        Marketing‑Teams von zentralen Analyse‑ und Reporting‑Funktionen. Durch die Kombination aus
+        Automatisierung, Observability und einfacher Multi‑Tenant‑Verwaltung minimieren Unternehmen
+        die Time‑to‑Market und reduzieren gleichzeitig Betriebskosten und Sicherheitsrisiken.
       </p>
       <ul class="space-y-3 text-slate-700 font-medium">
         <li class="flex items-center gap-2"><span class="text-blue-600">✔</span> Automatisierung & Workflows</li>
@@ -223,8 +236,11 @@
     <div class="md:col-span-2">
       <h3 class="text-white text-2xl font-extrabold mb-4">Digitalpackt</h3>
       <p class="max-w-md">
-        Professionelle SaaS- und Automatisierungsplattform für Unternehmen
-        in Europa – sicher, skalierbar und zukunftssicher.
+        Professionelle SaaS‑ und Automatisierungsplattform für Unternehmen in Europa — sicher,
+        skalierbar und zukunftssicher. Wir unterstützen Migrationen, bieten umfangreiche
+        Integrationsmöglichkeiten für Drittsysteme und liefern transparentes Monitoring sowie
+        Support‑Optionen, die Unternehmen bei ihrem Wachstum begleiten. Vertrauen, Compliance und
+        Performance stehen bei uns an erster Stelle.
       </p>
     </div>
 

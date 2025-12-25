@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-guest-layout title="Konto erstellen | Digitalpackt">
     <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-[#f8fafc]">
         
         <div class="absolute top-0 -left-4 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
