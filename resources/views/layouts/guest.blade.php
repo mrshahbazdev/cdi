@@ -10,13 +10,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         {{-- Dynamic title: view can use @section('title', 'Page Title') or pass $title variable --}}
-        <title>
-            @hasSection('title')
-                @yield('title') - {{ config('app.name', 'CIP Tools') }}
-            @else
-                {{ $title ?? config('app.name', 'CIP Tools') }}
-            @endif
-        </title>
+        <title>{{ $title ? $title . ' - ' . config('app.name') : config('app.name') }}</title>
 
         <!-- SEO & Social -->
         <meta name="description" content="{{ $metaDescription ?? $settings->site_description ?? 'CIP Tools — Practical developer utilities.' }}">
