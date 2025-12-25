@@ -4,9 +4,9 @@
         {{-- ================= TOP FOOTER GRID ================= --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12">
 
-            @foreach($sections->whereNotIn('type', ['bottom']) as $section)
+            @foreach($sections->whereNotIn('type', ['bottom', 'socials']) as $section)
 
-                {{-- ================= BRAND BLOCK ================= --}}
+                {{-- BRAND --}}
                 @if($section->type === 'brand')
                     <div class="md:col-span-2">
                         <div class="text-white text-2xl font-extrabold mb-4">
@@ -21,7 +21,7 @@
                     </div>
                 @endif
 
-                {{-- ================= LINK SECTIONS ================= --}}
+                {{-- LINKS --}}
                 @if($section->type === 'links')
                     <div>
                         <div class="text-white font-bold mb-4">
@@ -38,29 +38,6 @@
                                 </li>
                             @endforeach
                         </ul>
-                    </div>
-                @endif
-
-                {{-- ================= SOCIAL ICONS (TOP) ================= --}}
-                @if($section->type === 'socials')
-                    <div>
-                        <div class="text-white font-bold mb-4">
-                            {{ $section->title }}
-                        </div>
-
-                        <div class="flex gap-5">
-                            @foreach($section->items as $item)
-                                <a href="{{ $item->url }}"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   aria-label="{{ $item->label }}"
-                                   class="text-slate-400 hover:text-blue-400 transition-colors">
-                                    <span class="block w-5 h-5">
-                                        {!! str_replace('<svg', '<svg class="w-5 h-5"', $item->icon) !!}
-                                    </span>
-                                </a>
-                            @endforeach
-                        </div>
                     </div>
                 @endif
 
@@ -94,7 +71,7 @@
                 </div>
             @endif
 
-            {{-- RIGHT (SOCIAL ICONS AGAIN) --}}
+            {{-- RIGHT (SOCIAL ICONS ONLY HERE) --}}
             @if($socialSection)
                 <div class="flex gap-4">
                     @foreach($socialSection->items as $item)
