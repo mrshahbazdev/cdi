@@ -79,7 +79,7 @@
     <!-- ================= HEADER ================= -->
     <header role="banner" class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
         <nav role="navigation" aria-label="Main Navigation">
-            @livewire('navigation-menu')
+            <x-dynamic-navbar />
         </nav>
     </header>
 
