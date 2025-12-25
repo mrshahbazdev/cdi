@@ -26,26 +26,25 @@
     </style>
 
     <!-- Structured Data -->
+    @verbatim
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Digitalpackt",
-      "applicationCategory": "BusinessApplication",
-      "offers": {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Digitalpackt",
+    "applicationCategory": "BusinessApplication",
+    "offers": {
         "@type": "AggregateOffer",
         "lowPrice": "0",
         "highPrice": "49",
         "priceCurrency": "EUR"
-      },
-      "description": "Professionelle SaaS- und Automatisierungsplattform für Unternehmen, Agenturen und Startups in Europa",
-      "operatingSystem": "Web-based",
-      "provider": {
-        "@type": "Organization",
-        "name": "Digitalpackt"
-      }
+    },
+    "description": "Professionelle SaaS- und Automatisierungsplattform für Unternehmen",
+    "operatingSystem": "Web-based"
     }
     </script>
+    @endverbatim
+
 </head>
 
 <body class="bg-white text-slate-900 antialiased">
