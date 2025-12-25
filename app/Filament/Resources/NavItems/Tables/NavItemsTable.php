@@ -23,8 +23,7 @@ class NavItemsTable
             ->groups([
                 Group::make('parent.title')
                     ->label('Menu Group')
-                    ->collapsible()              // 🔥 collapse / expand
-                    ->defaultExpanded(),         // parents expanded by default
+                    ->collapsible(), // ✅ Filament v4 supported
             ])
 
             /* ================= ORDERING ================= */
@@ -70,12 +69,13 @@ class NavItemsTable
                     ->query(fn ($q) => $q->whereNull('parent_id')),
             ])
 
-            /* ================= ACTIONS ================= */
+            /* ================= ROW ACTIONS ================= */
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make(),
             ])
 
+            /* ================= BULK ACTIONS ================= */
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
