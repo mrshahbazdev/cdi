@@ -5,12 +5,12 @@
         <div class="flex justify-between h-20 items-center">
 
             {{-- ================= LOGO ================= --}}
-            <a href="{{ url('/') }}" class="flex items-center gap-2 font-black text-xl">
+            <a href="{{ url('/') }}" class="font-black text-xl">
                 {{ config('app.name') }}
             </a>
 
             {{-- ================= DESKTOP MENU ================= --}}
-            <div class="hidden md:flex space-x-10 items-center">
+            <div class="hidden md:flex items-center gap-12"> {{-- FIXED GAP --}}
 
                 @foreach($items as $item)
                     <div class="relative group">
@@ -19,7 +19,7 @@
                         <a href="{{ $item->url ?: '#' }}"
                            class="uppercase tracking-widest font-black text-sm
                                   text-gray-700 hover:text-blue-600
-                                  inline-flex items-center gap-1 transition">
+                                  inline-flex items-center gap-2 transition">
 
                             {{ $item->title }}
 
@@ -38,24 +38,24 @@
                         {{-- ================= DROPDOWN ================= --}}
                         @if($item->children->count())
                             <div
-                                class="absolute left-1/2 -translate-x-1/2 top-full pt-3
+                                class="absolute left-1/2 -translate-x-1/2 top-full pt-4
                                        opacity-0 invisible group-hover:opacity-100
                                        group-hover:visible transition-all duration-200 z-50">
 
-                                {{-- Invisible hover bridge (fix flicker) --}}
-                                <div class="absolute -top-3 left-0 right-0 h-3"></div>
+                                {{-- Hover bridge --}}
+                                <div class="absolute -top-4 left-0 right-0 h-4"></div>
 
                                 <div
-                                    class="min-w-[220px] max-w-[340px]
-                                           bg-white rounded-xl shadow-2xl
+                                    class="min-w-[260px] max-w-[420px] {{-- FIXED WIDTH --}}
+                                           bg-white rounded-2xl shadow-2xl
                                            ring-1 ring-black/5 overflow-hidden">
 
                                     @foreach($item->children as $child)
                                         <a href="{{ $child->url }}"
-                                           class="block px-5 py-3 text-sm font-semibold
+                                           class="block px-6 py-4 text-sm font-semibold
                                                   text-gray-700 hover:bg-blue-50
                                                   hover:text-blue-600 transition
-                                                  whitespace-normal">
+                                                  whitespace-normal leading-relaxed">
                                             {{ $child->title }}
                                         </a>
                                     @endforeach
@@ -113,9 +113,9 @@
                     <div class="pl-6 pb-3 space-y-2">
                         @foreach($item->children as $child)
                             <a href="{{ $child->url }}"
-                               class="block px-4 py-2 text-sm
+                               class="block px-4 py-3 text-sm
                                       text-gray-600 hover:text-blue-600
-                                      transition">
+                                      transition leading-relaxed">
                                 {{ $child->title }}
                             </a>
                         @endforeach
