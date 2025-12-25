@@ -123,12 +123,12 @@
                     </div>
                 @else
                     {{-- Guest --}}
-                    <a href="{{ route('login') }}"
+                    <a href="{{ route('login') }}" rel="nofollow"
                        class="text-sm font-black uppercase tracking-widest text-gray-600 hover:text-blue-600 transition">
                         Login
                     </a>
 
-                    <a href="{{ route('register') }}"
+                    <a href="{{ route('register') }}" rel="nofollow"
                        class="inline-flex items-center px-6 py-3 text-sm font-black
                               bg-gradient-to-r from-blue-600 to-indigo-600
                               text-white rounded-xl hover:shadow-lg transition">
@@ -193,8 +193,8 @@
 
         @guest
             <div class="px-6 py-4 flex gap-4">
-                <a href="{{ route('login') }}" class="text-sm font-bold text-gray-600">Login</a>
-                <a href="{{ route('register') }}" class="text-sm font-bold text-blue-600">Register</a>
+                <a href="{{ route('login') }}" rel="nofollow" class="text-sm font-bold text-gray-600">Login</a>
+                <a href="{{ route('register') }}" rel="nofollow" class="text-sm font-bold text-blue-600">Register</a>
             </div>
         @endguest
     </div>
