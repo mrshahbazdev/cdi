@@ -111,13 +111,6 @@
                     <span>Sichere Enterprise-Verschlüsselung</span>
                 </div>
                 
-                <div class="flex space-x-4 text-xs font-bold text-slate-400">
-                    <a href="#" class="hover:text-slate-600 transition-colors">Impressum</a>
-                    <span>•</span>
-                    <a href="#" class="hover:text-slate-600 transition-colors">Datenschutz</a>
-                    <span>•</span>
-                    <a href="#" class="hover:text-slate-600 transition-colors">Hilfe</a>
-                </div>
             </div>
         </div>
     </div>
