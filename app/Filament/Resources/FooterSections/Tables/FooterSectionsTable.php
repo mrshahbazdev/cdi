@@ -17,14 +17,28 @@ class FooterSectionsTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->reorderable('sort_order') // 🔥 Drag & Drop sections
+            /* ================= ORDERING ================= */
+            ->reorderable('sort_order')
             ->defaultSort('sort_order')
+
+            /* ================= COLUMNS ================= */
             ->columns([
+
                 TextColumn::make('title')
-                    ->label('Section Title')
+                    ->label('Title')
                     ->searchable()
                     ->sortable()
                     ->placeholder('— No title —'),
+
+                BadgeColumn::make('type')
+                    ->label('Type')
+                    ->colors([
+                        'primary' => 'brand',
+                        'success' => 'links',
+                        'warning' => 'socials',
+                        'info'    => 'bottom',
+                    ])
+                    ->formatStateUsing(fn (string $state) => ucfirst($state)),
 
                 BadgeColumn::make('items_count')
                     ->label('Items')
@@ -43,6 +57,8 @@ class FooterSectionsTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+
+            /* ================= FILTERS ================= */
             ->filters([
                 Filter::make('visible')
                     ->label('Visible only')
@@ -51,15 +67,36 @@ class FooterSectionsTable
                 Filter::make('hidden')
                     ->label('Hidden only')
                     ->query(fn ($query) => $query->where('is_visible', false)),
+
+                Filter::make('type_brand')
+                    ->label('Brand')
+                    ->query(fn ($query) => $query->where('type', 'brand')),
+
+                Filter::make('type_links')
+                    ->label('Links')
+                    ->query(fn ($query) => $query->where('type', 'links')),
+
+                Filter::make('type_socials')
+                    ->label('Socials')
+                    ->query(fn ($query) => $query->where('type', 'socials')),
+
+                Filter::make('type_bottom')
+                    ->label('Bottom Bar')
+                    ->query(fn ($query) => $query->where('type', 'bottom')),
             ])
+
+            /* ================= ROW ACTIONS ================= */
             ->recordActions([
                 EditAction::make()
                     ->label('Edit')
                     ->icon('heroicon-o-pencil'),
+
                 DeleteAction::make()
                     ->label('Delete')
                     ->icon('heroicon-o-trash'),
             ])
+
+            /* ================= BULK ACTIONS ================= */
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

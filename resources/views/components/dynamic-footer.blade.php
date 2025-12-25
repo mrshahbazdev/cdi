@@ -3,7 +3,7 @@
 
         @foreach($sections as $section)
 
-            {{-- BRAND BLOCK --}}
+            {{-- ================= BRAND BLOCK ================= --}}
             @if($section->type === 'brand')
                 <div class="md:col-span-2">
                     <div class="text-white text-2xl font-extrabold mb-4">
@@ -18,7 +18,7 @@
                 </div>
             @endif
 
-            {{-- LINK SECTIONS --}}
+            {{-- ================= LINK SECTIONS ================= --}}
             @if($section->type === 'links')
                 <div>
                     <div class="text-white font-bold mb-4">
@@ -38,7 +38,7 @@
                 </div>
             @endif
 
-            {{-- SOCIAL ICONS --}}
+            {{-- ================= SOCIAL ICONS ================= --}}
             @if($section->type === 'socials')
                 <div>
                     <div class="text-white font-bold mb-4">
@@ -62,24 +62,27 @@
         @endforeach
     </div>
 
-    {{-- BOTTOM BAR --}}
+    {{-- ================= BOTTOM BAR (FULLY DYNAMIC) ================= --}}
+    @php
+        $bottomSection = $sections->firstWhere('type', 'bottom');
+    @endphp
+
     <div class="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-slate-800">
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
             <p>
-                © 2025 Digital Packt. All rights reserved.
+                © {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
             </p>
 
-            <div class="flex gap-6">
-                <a href="{{ route('status') ?? '#' }}" class="hover:text-blue-400 transition">
-                    Status
-                </a>
-                <a href="{{ route('security') ?? '#' }}" class="hover:text-blue-400 transition">
-                    Security
-                </a>
-                <a href="{{ route('sitemap') ?? '#' }}" class="hover:text-blue-400 transition">
-                    Site Map
-                </a>
-            </div>
+            @if($bottomSection)
+                <div class="flex gap-6">
+                    @foreach($bottomSection->items as $item)
+                        <a href="{{ $item->url }}"
+                           class="hover:text-blue-400 transition">
+                            {{ $item->label }}
+                        </a>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </div>
 </footer>

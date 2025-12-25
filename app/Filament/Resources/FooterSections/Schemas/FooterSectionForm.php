@@ -15,7 +15,7 @@ class FooterSectionForm
     {
         return $schema->components([
 
-            /* ================= SECTION ================= */
+            /* ================= SECTION SETTINGS ================= */
 
             Select::make('type')
                 ->label('Section Type')
@@ -23,6 +23,7 @@ class FooterSectionForm
                     'brand'   => 'Brand / Description',
                     'links'   => 'Links',
                     'socials' => 'Social Icons',
+                    'bottom'  => 'Bottom Bar Links',
                 ])
                 ->required()
                 ->live()
@@ -30,21 +31,27 @@ class FooterSectionForm
 
             TextInput::make('title')
                 ->label('Section Title')
-                ->visible(fn ($get) => in_array($get('type'), ['links', 'socials']))
+                ->placeholder('e.g. Platform, Legal, Resources')
+                ->visible(fn ($get) =>
+                    in_array($get('type'), ['links', 'socials'])
+                )
                 ->columnSpanFull(),
 
             Toggle::make('is_visible')
+                ->label('Visible')
                 ->default(true),
 
-            /* ================= ITEMS ================= */
+            /* ================= SECTION ITEMS ================= */
 
             Repeater::make('items')
                 ->relationship()
                 ->orderable('sort_order')
                 ->reorderable()
+                ->addActionLabel('Add Item')
+                ->columnSpanFull()
                 ->schema([
 
-                    /* LABEL (USED EVERYWHERE) */
+                    /* LABEL / TEXT */
                     TextInput::make('label')
                         ->label(fn ($get) =>
                             $get('../../type') === 'brand'
@@ -52,22 +59,27 @@ class FooterSectionForm
                                 : 'Label'
                         )
                         ->required(fn ($get) =>
-                            in_array($get('../../type'), ['links', 'socials'])
+                            in_array($get('../../type'), ['links', 'socials', 'bottom'])
                         )
-                        ->dehydrated() // 🔥 VERY IMPORTANT
+                        ->dehydrated()
                         ->columnSpanFull(),
 
-                    /* URL (LINKS + SOCIALS ONLY) */
+                    /* URL (LINKS / SOCIALS / BOTTOM) */
                     TextInput::make('url')
                         ->label('URL')
+                        ->placeholder('https://example.com or /status')
                         ->visible(fn ($get) =>
-                            in_array($get('../../type'), ['links', 'socials'])
+                            in_array($get('../../type'), ['links', 'socials', 'bottom'])
+                        )
+                        ->dehydrated(fn ($get) =>
+                            in_array($get('../../type'), ['links', 'socials', 'bottom'])
                         ),
 
                     /* SVG ICON (SOCIALS ONLY) */
                     Textarea::make('icon')
                         ->label('SVG Icon')
                         ->rows(3)
+                        ->helperText('Paste SVG code here (only for social icons)')
                         ->visible(fn ($get) =>
                             $get('../../type') === 'socials'
                         )
@@ -76,10 +88,10 @@ class FooterSectionForm
                         ),
 
                     Toggle::make('is_visible')
+                        ->label('Visible')
                         ->default(true),
                 ])
-                ->columns(2)
-                ->columnSpanFull(),
+                ->columns(2),
         ]);
     }
 }
