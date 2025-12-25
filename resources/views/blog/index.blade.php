@@ -27,18 +27,31 @@
     <div class="py-12 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-            {{-- ================= SEO H1 + INTRO (FOR CRAWLERS) ================= --}}
-            <section class="mb-10 max-w-4xl">
+            {{-- ================= SEO H1 + CONTENT BLOCKS ================= --}}
+            <section class="mb-12 max-w-4xl space-y-6">
                 <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">
                     Digital Packt – Professional SaaS Platform Blog
                 </h1>
 
-                <p class="mt-4 text-gray-700 leading-relaxed">
-                    Der <strong>Digital Packt – Professional SaaS Platform</strong> Blog bietet
+                <p class="text-gray-700 leading-relaxed">
+                    Der <strong>Digital Packt – Professional SaaS Platform Blog</strong> bietet
                     fundierte Inhalte rund um <strong>SaaS</strong>, digitale Produkte und
-                    Automatisierung. Auf <strong>Digitalpackt</strong> finden Sie technische
-                    Fachartikel, Produkt-Updates und praxisnahe Einblicke in moderne
-                    Web-Technologien für Unternehmen und Entwickler.
+                    <strong>Automatisierung</strong>. Auf <strong>Digitalpackt</strong> finden
+                    Unternehmen, Entwickler und Produktteams praxisnahe Fachartikel,
+                    technische Einblicke und strategische Informationen zu modernen
+                    digitalen Plattformen.
+                </p>
+
+                <h2 class="text-xl font-extrabold text-gray-900">
+                    Fachartikel zu SaaS, Plattformen und Automatisierung
+                </h2>
+
+                <p class="text-gray-700 leading-relaxed">
+                    In diesem Blog veröffentlichen wir regelmäßig neue <strong>Artikel</strong>
+                    zu professionellen SaaS-Plattformen, skalierbaren Architekturen,
+                    Automatisierungslösungen und der Entwicklung digitaler Produkte.
+                    Der Fokus liegt auf verständlichen Erklärungen, realen
+                    Anwendungsbeispielen und nachhaltigen Best Practices.
                 </p>
             </section>
 
@@ -97,12 +110,12 @@
                                         <span itemprop="author">{{ $post->user->name }}</span>
                                     </div>
 
-                                    <h2 class="text-2xl font-black text-gray-900 mb-4 group-hover:text-blue-700 transition-colors leading-tight"
+                                    <h3 class="text-2xl font-black text-gray-900 mb-4 group-hover:text-blue-700 transition-colors leading-tight"
                                         itemprop="headline">
                                         <a href="{{ route('blog.show', $post) }}">
                                             {{ $post->title }}
                                         </a>
-                                    </h2>
+                                    </h3>
 
                                     <p class="text-gray-600 font-medium leading-relaxed mb-8 line-clamp-3"
                                        itemprop="description">
@@ -113,6 +126,11 @@
                                         <a href="{{ route('blog.show', $post) }}"
                                            class="inline-flex items-center font-black text-sm text-gray-900 group-hover:text-blue-600 transition-all">
                                             Artikel lesen
+                                            <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1.5 transition-transform"
+                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                                      d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                            </svg>
                                         </a>
                                     </div>
                                 </div>
@@ -127,7 +145,6 @@
                         {{ $posts->links() }}
                     </div>
                 </div>
-
             @else
                 <section class="bg-white/80 backdrop-blur-xl rounded-[3rem] p-20 text-center border-2 border-dashed border-blue-200 shadow-sm">
                     <h2 class="text-3xl font-black text-gray-900 mb-4">
