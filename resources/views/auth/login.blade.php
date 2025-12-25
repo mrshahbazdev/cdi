@@ -1,4 +1,7 @@
-<x-guest-layout title="Anmelden | Digitalpackt">
+<x-guest-layout 
+    title="Anmelden" 
+    metaDescription="Loggen Sie sich bei Digitalpackt ein, um Ihre Tools zu verwalten."
+>
     <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-[#f8fafc]">
         <div class="absolute top-0 -left-4 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
         <div class="absolute top-0 -right-4 w-72 h-72 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
