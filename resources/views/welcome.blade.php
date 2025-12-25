@@ -69,16 +69,24 @@
       
       <div class="w-px h-6 bg-slate-200 mx-2"></div>
       
-      <a href="{{ route('login') }}" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-blue-600 transition-all">Login</a>
-      <a href="{{ route('register') }}" 
-         class="ml-2 px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-bold shadow-sm shadow-blue-200 hover:bg-blue-700 hover:shadow-lg transition-all active:scale-95">
-         Kostenlos starten
-      </a>
+      @auth
+        <a href="{{ route('dashboard') }}" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-blue-600 transition-all">Dashboard</a>
+      @else
+        <a href="{{ route('login') }}" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-blue-600 transition-all">Login</a>
+        <a href="{{ route('register') }}" 
+           class="ml-2 px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-bold shadow-sm shadow-blue-200 hover:bg-blue-700 hover:shadow-lg transition-all active:scale-95">
+           Kostenlos starten
+        </a>
+      @endauth
     </nav>
 
     <div class="md:hidden flex items-center gap-2">
-      <a href="{{ route('login') }}" class="text-xs font-bold text-slate-600 px-3 py-2">Login</a>
-      <a href="{{ route('register') }}" class="text-xs font-bold bg-blue-600 text-white px-4 py-2 rounded-lg">Start</a>
+      @auth
+        <a href="{{ route('dashboard') }}" class="text-xs font-bold text-slate-600 px-3 py-2">Dashboard</a>
+      @else
+        <a href="{{ route('login') }}" class="text-xs font-bold text-slate-600 px-3 py-2">Login</a>
+        <a href="{{ route('register') }}" class="text-xs font-bold bg-blue-600 text-white px-4 py-2 rounded-lg">Start</a>
+      @endauth
     </div>
 
   </div>
@@ -444,7 +452,8 @@
           <li class="flex items-center gap-2">
             <span>✓</span> White-Label-Option
           </li>
-          <li class="flex items-center gap-2            <span>✓</span> Erweiterte Analytics
+          <li class="flex items-center gap-2">
+            <span>✓</span> Erweiterte Analytics
           </li>
           <li class="flex items-center gap-2">
             <span>✓</span> API-Zugang
@@ -479,7 +488,7 @@
             <span class="text-green-600">✓</span> Schulungen & Onboarding
           </li>
         </ul>
-        <a href="#" class="block text-center py-3 border-2 border-slate-900 text-slate-900 rounded-xl font-bold hover:bg-slate-900 hover:text-white transition-colors">
+        <a href="mailto:contact@digitalpackt.de" class="block text-center py-3 border-2 border-slate-900 text-slate-900 rounded-xl font-bold hover:bg-slate-900 hover:text-white transition-colors">
           Kontakt aufnehmen
         </a>
       </div>
@@ -655,7 +664,7 @@
   <div class="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-slate-800">
     <div class="flex flex-col md:flex-row justify-between items-center gap-4">
       <p class="text-sm text-center md:text-left">
-        © {{ date('Y') }} Digitalpackt. Alle Rechte vorbehalten. Made with ❤️ in Germany.
+        © @php echo date('Y'); @endphp Digitalpackt. Alle Rechte vorbehalten. Made with ❤️ in Germany.
       </p>
       <div class="flex gap-6">
         <a href="#" class="hover:text-blue-400 transition-colors" aria-label="LinkedIn">
