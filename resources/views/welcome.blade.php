@@ -664,7 +664,7 @@
   <div class="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-slate-800">
     <div class="flex flex-col md:flex-row justify-between items-center gap-4">
       <p class="text-sm text-center md:text-left">
-        © @php echo date('Y'); @endphp Digitalpackt. Alle Rechte vorbehalten. Made with ❤️ in Germany.
+                    © {{ date('Y') }} Digitalpackt. 
       </p>
       <div class="flex gap-6">
         <a href="#" class="hover:text-blue-400 transition-colors" aria-label="LinkedIn">
