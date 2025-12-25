@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">
-                    Passwort vergessen?
+                    Digitalpackt Passwort zurücksetzen
                 </h1>
                 <p class="mt-2 text-slate-500 font-medium">
                     Kein Problem, wir senden Ihnen Anweisungen 📧

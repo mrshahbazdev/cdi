@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">
-                    Neues Konto erstellen
+                    Neues Konto bei Digitalpackt erstellen
                 </h1>
                 <p class="mt-2 text-slate-500 font-medium">
                     Werden Sie Teil von <span class="text-slate-900 font-bold">Digitalpackt</span>.
