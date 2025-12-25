@@ -136,7 +136,7 @@
     </div>
 
     <div class="rounded-3xl border bg-white shadow-xl p-8 transform hover:-translate-y-1 transition-transform">
-      <h3 class="text-lg font-bold mb-4">Core Features</h3>
+      <div class="text-lg font-bold mb-4">Core Features</div>
       <ul class="space-y-4 text-slate-700">
         <li class="flex items-center gap-3">
             <span class="w-2 h-2 bg-blue-600 rounded-full"></span> Sofortige Bereitstellung
@@ -223,7 +223,7 @@
       </div>
 
       <div class="p-8 rounded-3xl border border-slate-100 bg-white hover:shadow-lg transition-all">
-        <h3 class="font-bold text-xl mb-4 text-blue-600">Agenturen & Entwickler</h3>
+        <div class="font-bold text-xl mb-4 text-blue-600">Agenturen & Entwickler</div>
         <p class="text-slate-700 mb-4">
           Bieten Sie Ihren Kunden professionelle digitale Lösungen mit White-Label-Optionen. 
           Nutzen Sie unsere vorkonfigurierten Module, um Projekte schneller auszuliefern und 
@@ -244,7 +244,7 @@
       </div>
 
       <div class="p-8 rounded-3xl border border-slate-100 bg-white hover:shadow-lg transition-all">
-        <h3 class="font-bold text-xl mb-4 text-blue-600">Unternehmen & Corporates</h3>
+        <div class="font-bold text-xl mb-4 text-blue-600">Unternehmen & Corporates</div>
         <p class="text-slate-700 mb-4">
           Digitalisieren Sie interne Prozesse und entwickeln Sie kundenorientierte 
           Anwendungen mit Enterprise-Grade-Sicherheit. Von Automatisierungs-Tools bis 
@@ -300,7 +300,7 @@
     </div>
 
     <div class="rounded-3xl bg-slate-50 border border-slate-200 shadow-sm p-8">
-      <h3 class="font-bold text-lg mb-4 text-blue-600">Technologie-Stack</h3>
+      <div class="font-bold text-lg mb-4 text-blue-600">Technologie-Stack</div>
       <ul class="space-y-3 text-slate-700">
         <li class="flex justify-between border-b border-slate-100 pb-2">
             <span>Architektur</span>
@@ -353,7 +353,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
           </svg>
         </div>
-        <h3 class="font-bold mb-2">Automatisierung</h3>
+        <div class="font-bold mb-2">Automatisierung</div>
         <p class="text-sm text-slate-600">
           Erstellen Sie komplexe Workflows und automatisieren Sie wiederkehrende Aufgaben.
         </p>
@@ -365,7 +365,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
           </svg>
         </div>
-        <h3 class="font-bold mb-2">Sicherheit</h3>
+        <div class="font-bold mb-2">Sicherheit</div>
         <p class="text-sm text-slate-600">
           Enterprise-Grade Sicherheit mit SSL, Verschlüsselung und regelmäßigen Audits.
         </p>
@@ -377,7 +377,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
           </svg>
         </div>
-        <h3 class="font-bold mb-2">Analytics</h3>
+        <div class="font-bold mb-2">Analytics</div>
         <p class="text-sm text-slate-600">
           Echtzeit-Einblicke in Nutzung, Performance und Geschäftskennzahlen.
         </p>
@@ -389,7 +389,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
           </svg>
         </div>
-        <h3 class="font-bold mb-2">Integrationen</h3>
+        <div class="font-bold mb-2">Integrationen</div>
         <p class="text-sm text-slate-600">
           Verbinden Sie über 100+ Tools und Services über unsere REST API.
         </p>
@@ -409,7 +409,7 @@
 
     <div class="grid md:grid-cols-3 gap-8">
       <div class="border rounded-3xl p-8 hover:shadow-md transition-shadow">
-        <h3 class="font-bold text-lg">Starter</h3>
+        <div class="font-bold text-lg">Starter</div>
         <p class="text-4xl font-extrabold my-4">€0<span class="text-base font-normal text-slate-600">/Monat</span></p>
         <p class="text-slate-600 mb-6">Perfekt zum Testen und für kleine Projekte</p>
         <ul class="space-y-3 mb-8 text-sm text-slate-700">
@@ -435,7 +435,7 @@
         <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-blue-900 text-xs font-bold px-3 py-1 rounded-full uppercase">
           Beliebt
         </span>
-        <h3 class="font-bold text-lg">Professional</h3>
+        <div class="font-bold text-lg">Professional</div>
         <p class="text-4xl font-extrabold my-4">€49<span class="text-base font-normal opacity-90">/Monat</span></p>
         <p class="mb-6 opacity-90">Für wachsende Unternehmen und Agenturen</p>
         <ul class="space-y-3 mb-8 text-sm">
@@ -464,7 +464,7 @@
       </div>
 
       <div class="border rounded-3xl p-8 hover:shadow-md transition-shadow">
-        <h3 class="font-bold text-lg">Enterprise</h3>
+        <div class="font-bold text-lg">Enterprise</div>
         <p class="text-3xl font-extrabold my-4">Individuell</p>
         <p class="text-slate-600 mb-6">Maßgeschneiderte Lösungen für große Unternehmen</p>
         <ul class="space-y-3 mb-8 text-sm text-slate-700">
@@ -510,7 +510,7 @@
 
     <div class="space-y-6">
       <div class="bg-white p-6 rounded-2xl border border-slate-100">
-        <h3 class="font-bold text-lg mb-2">Wie schnell kann ich digitale Produkte erstellen?</h3>
+        <div class="font-bold text-lg mb-2">Wie schnell kann ich digitale Produkte erstellen?</div>
         <p class="text-slate-700">
           Mit Digitalpackt können Sie innerhalb weniger Minuten loslegen. Unsere Plattform bietet 
           vorkonfigurierte Templates und automatisierte Deployments, sodass Sie sich auf die 
@@ -519,7 +519,7 @@
       </div>
 
       <div class="bg-white p-6 rounded-2xl border border-slate-100">
-        <h3 class="font-bold text-lg mb-2">Ist Digitalpackt DSGVO-konform?</h3>
+        <div class="font-bold text-lg mb-2">Ist Digitalpackt DSGVO-konform?</div>
         <p class="text-slate-700">
           Ja, absolut. Alle unsere Server befinden sich in Deutschland und unterliegen strengen 
           EU-Datenschutzrichtlinien. Wir bieten vollständige DSGVO-Konformität, 
@@ -528,7 +528,7 @@
       </div>
 
       <div class="bg-white p-6 rounded-2xl border border-slate-100">
-        <h3 class="font-bold text-lg mb-2">Kann ich meine bestehenden Tools integrieren?</h3>
+        <div class="font-bold text-lg mb-2">Kann ich meine bestehenden Tools integrieren?</div>
         <p class="text-slate-700">
           Definitiv! Digitalpackt bietet eine REST API und unterstützt über 100+ Integrationen 
           mit gängigen Business-Tools. Von CRM-Systemen über Payment-Provider bis zu 
@@ -537,7 +537,7 @@
       </div>
 
       <div class="bg-white p-6 rounded-2xl border border-slate-100">
-        <h3 class="font-bold text-lg mb-2">Wie funktioniert die Skalierung?</h3>
+        <div class="font-bold text-lg mb-2">Wie funktioniert die Skalierung?</div>
         <p class="text-slate-700">
           Unsere Cloud-Infrastruktur skaliert automatisch mit Ihrem Wachstum. Sie zahlen nur 
           für die Ressourcen, die Sie tatsächlich nutzen. Bei steigender Last werden automatisch 
@@ -546,7 +546,7 @@
       </div>
 
       <div class="bg-white p-6 rounded-2xl border border-slate-100">
-        <h3 class="font-bold text-lg mb-2">Welchen Support bietet Digitalpackt?</h3>
+        <div class="font-bold text-lg mb-2">Welchen Support bietet Digitalpackt?</div>
         <p class="text-slate-700">
           Je nach gewähltem Paket erhalten Sie E-Mail-Support, Prioritäts-Support mit 24h 
           Response-Zeit oder 24/7 Premium-Support. Zusätzlich bieten wir umfangreiche 
