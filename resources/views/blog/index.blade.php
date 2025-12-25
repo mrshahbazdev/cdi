@@ -1,45 +1,55 @@
 <x-app-layout
-    title="Blog & Insights – Digitale Produkte, SaaS & Automatisierung | Digitalpackt"
-    metaDescription="Lesen Sie aktuelle Blogartikel, Tutorials und Experten-Insights zu SaaS, digitalen Produkten, Automatisierung und modernen Web-Technologien bei Digitalpackt."
+    title="Blog & Insights – SaaS, Automatisierung & digitale Produkte | Digitalpackt"
+    metaDescription="Fachartikel, Tutorials und Expertenwissen zu SaaS-Plattformen, Automatisierung, digitalen Produkten und skalierbaren Architekturen bei Digitalpackt."
 >
-    {{-- ================= PAGE HEADER (UI ONLY) ================= --}}
+    {{-- ================= HEADER ================= --}}
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-600/20">
+                <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center shadow-xl">
                     <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20l-7-7 7-7" />
                     </svg>
                 </div>
                 <div>
-                    <h2 class="font-extrabold text-2xl text-gray-900 tracking-tight leading-none">
+                    <h2 class="font-extrabold text-2xl text-gray-900">
                         Blog & Insights
                     </h2>
-                    <p class="text-[11px] font-black text-blue-700 uppercase tracking-[0.2em] mt-1.5">
-                        Aktuelle Artikel zu SaaS, Automatisierung & digitalen Produkten
+                    <p class="text-[11px] font-black text-blue-700 uppercase tracking-widest mt-1">
+                        SaaS · Automatisierung · Digitale Produkte
                     </p>
                 </div>
             </div>
         </div>
     </x-slot>
 
-    {{-- ================= MAIN CONTENT ================= --}}
-    <div class="py-12 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    {{-- ================= MAIN ================= --}}
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            {{-- ================= SEO H1 + CONTENT BLOCKS ================= --}}
-            <section class="mb-12 max-w-4xl space-y-6">
-                <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">
+            {{-- ================= SEO CONTENT ================= --}}
+            <section class="max-w-4xl mb-16 space-y-6">
+
+                <h1 class="text-3xl font-extrabold text-gray-900">
                     Digital Packt – Professional SaaS Platform Blog
                 </h1>
 
+                {{-- SEO IMAGE --}}
+                <img
+                    src="/images/blog-saas-automatisierung.webp"
+                    alt="SaaS Plattformen, Automatisierung und digitale Produkte"
+                    loading="lazy"
+                    class="rounded-2xl shadow-md border border-blue-100"
+                >
+
                 <p class="text-gray-700 leading-relaxed">
                     Der <strong>Digital Packt – Professional SaaS Platform Blog</strong> bietet
-                    fundierte Inhalte rund um <strong>SaaS</strong>, digitale Produkte und
-                    <strong>Automatisierung</strong>. Auf <strong>Digitalpackt</strong> finden
-                    Unternehmen, Entwickler und Produktteams praxisnahe Fachartikel,
-                    technische Einblicke und strategische Informationen zu modernen
-                    digitalen Plattformen.
+                    fundierte Fachartikel zu <strong>SaaS-Plattformen</strong>,
+                    <strong>Automatisierungslösungen</strong> und der Entwicklung
+                    <strong>digitaler Produkte</strong>.
+                    Unternehmen, Entwickler und Produktteams finden hier praxisnahe
+                    Einblicke, technische Best Practices und strategisches Wissen
+                    für skalierbare Software-Architekturen.
                 </p>
 
                 <h2 class="text-xl font-extrabold text-gray-900">
@@ -47,34 +57,45 @@
                 </h2>
 
                 <p class="text-gray-700 leading-relaxed">
-                    In diesem Blog veröffentlichen wir regelmäßig neue <strong>Artikel</strong>
-                    zu professionellen SaaS-Plattformen, skalierbaren Architekturen,
-                    Automatisierungslösungen und der Entwicklung digitaler Produkte.
-                    Der Fokus liegt auf verständlichen Erklärungen, realen
-                    Anwendungsbeispielen und nachhaltigen Best Practices.
+                    Unsere Artikel behandeln Themen wie <strong>SaaS Architektur</strong>,
+                    <strong>Cloud-basierte Plattformen</strong>, Prozess-Automatisierung,
+                    DevOps, Produktstrategie und die nachhaltige Skalierung
+                    digitaler Geschäftsmodelle.
                 </p>
+
+                <h2 class="text-xl font-extrabold text-gray-900">
+                    Für wen ist der Digitalpackt Blog geeignet?
+                </h2>
+
+                <p class="text-gray-700 leading-relaxed">
+                    Der Blog richtet sich an <strong>Startups</strong>,
+                    <strong>SaaS-Unternehmen</strong>, <strong>Entwickler</strong>,
+                    <strong>CTOs</strong> und Produktverantwortliche, die digitale
+                    Plattformen professionell planen, entwickeln und betreiben möchten.
+                </p>
+
             </section>
 
             {{-- ================= CATEGORY FILTER ================= --}}
-            <nav aria-label="Blog Kategorien" class="mb-12 flex flex-wrap items-center gap-3">
+            <nav aria-label="Blog Kategorien" class="mb-12 flex flex-wrap gap-3">
                 <a href="{{ route('blog.index') }}"
-                   class="px-5 py-2.5 rounded-xl text-sm font-black transition-all
-                   {{ !request('category') ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'bg-white text-gray-700 border-2 border-blue-100 hover:bg-blue-50 hover:border-blue-200' }}">
+                   class="px-5 py-2.5 rounded-xl text-sm font-black transition
+                   {{ !request('category') ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-blue-100 hover:bg-blue-50' }}">
                     Alle Artikel
                 </a>
 
                 @foreach($categories as $category)
                     <a href="{{ route('blog.index', ['category' => $category->slug]) }}"
-                       class="px-5 py-2.5 rounded-xl text-sm font-black transition-all
-                       {{ request('category') == $category->slug ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'bg-white text-gray-700 border-2 border-blue-100 hover:bg-blue-50 hover:border-blue-200' }}">
+                       class="px-5 py-2.5 rounded-xl text-sm font-black transition
+                       {{ request('category') == $category->slug ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-blue-100 hover:bg-blue-50' }}">
                         {{ $category->name }}
-                        <span class="ml-1 opacity-60 text-xs font-bold">({{ $category->posts_count }})</span>
+                        <span class="ml-1 text-xs opacity-60">({{ $category->posts_count }})</span>
                     </a>
                 @endforeach
             </nav>
 
-            {{-- ================= POSTS GRID ================= --}}
-            @if($posts->count() > 0)
+            {{-- ================= POSTS ================= --}}
+            @if($posts->count())
                 <section aria-label="Blog Artikel">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
 
@@ -82,23 +103,17 @@
                             <article
                                 itemscope
                                 itemtype="https://schema.org/BlogPosting"
-                                class="group bg-white/90 backdrop-blur-xl rounded-[2.5rem] border border-blue-100 shadow-md hover:shadow-2xl hover:shadow-blue-600/10 transition-all duration-500 flex flex-col h-full overflow-hidden">
+                                class="bg-white rounded-[2.5rem] border border-blue-100 shadow hover:shadow-xl transition flex flex-col overflow-hidden">
 
                                 {{-- IMAGE --}}
-                                <div class="relative aspect-[16/10] overflow-hidden border-b border-blue-50 bg-gray-100">
-                                    @if($post->cover_image)
-                                        <img src="{{ Storage::url($post->cover_image) }}"
-                                             alt="{{ $post->title }}"
-                                             itemprop="image"
-                                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                                    @endif
-
-                                    <div class="absolute top-6 left-6">
-                                        <span class="px-4 py-1.5 bg-blue-600 text-white text-[10px] font-black rounded-lg uppercase tracking-widest shadow-lg">
-                                            {{ $post->category->name ?? 'Allgemein' }}
-                                        </span>
-                                    </div>
-                                </div>
+                                @if($post->cover_image)
+                                    <img
+                                        src="{{ Storage::url($post->cover_image) }}"
+                                        alt="{{ $post->title }}"
+                                        itemprop="image"
+                                        class="h-48 w-full object-cover"
+                                    >
+                                @endif
 
                                 {{-- CONTENT --}}
                                 <div class="p-8 flex-1 flex flex-col">
@@ -106,55 +121,60 @@
                                         <time itemprop="datePublished" datetime="{{ $post->published_at->toIso8601String() }}">
                                             {{ $post->published_at->format('d.m.Y') }}
                                         </time>
-                                        <span class="mx-2 text-blue-200">|</span>
-                                        <span itemprop="author">{{ $post->user->name }}</span>
+                                        · <span itemprop="author">{{ $post->user->name }}</span>
                                     </div>
 
-                                    <h3 class="text-2xl font-black text-gray-900 mb-4 group-hover:text-blue-700 transition-colors leading-tight"
-                                        itemprop="headline">
+                                    <h3 class="text-xl font-black text-gray-900 mb-3" itemprop="headline">
                                         <a href="{{ route('blog.show', $post) }}">
                                             {{ $post->title }}
                                         </a>
                                     </h3>
 
-                                    <p class="text-gray-600 font-medium leading-relaxed mb-8 line-clamp-3"
-                                       itemprop="description">
-                                        {{ $post->excerpt ?? Str::limit(strip_tags($post->content), 140) }}
+                                    <p class="text-gray-600 leading-relaxed mb-6" itemprop="description">
+                                        {{ $post->excerpt ?? Str::limit(strip_tags($post->content), 150) }}
                                     </p>
 
-                                    <div class="mt-auto pt-6 border-t border-blue-50">
-                                        <a href="{{ route('blog.show', $post) }}"
-                                           class="inline-flex items-center font-black text-sm text-gray-900 group-hover:text-blue-600 transition-all">
-                                            Artikel lesen
-                                            <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1.5 transition-transform"
-                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                                                      d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                            </svg>
-                                        </a>
-                                    </div>
+                                    <a href="{{ route('blog.show', $post) }}"
+                                       class="mt-auto font-black text-sm text-blue-600">
+                                        Artikel lesen →
+                                    </a>
                                 </div>
                             </article>
                         @endforeach
+
                     </div>
                 </section>
 
                 {{-- PAGINATION --}}
                 <div class="mt-20 flex justify-center">
-                    <div class="bg-white/80 backdrop-blur-md p-4 rounded-2xl border border-blue-100 shadow-xl">
-                        {{ $posts->links() }}
-                    </div>
+                    {{ $posts->links() }}
                 </div>
+
             @else
-                <section class="bg-white/80 backdrop-blur-xl rounded-[3rem] p-20 text-center border-2 border-dashed border-blue-200 shadow-sm">
+                <section class="text-center bg-white p-16 rounded-3xl border border-dashed border-blue-200">
                     <h2 class="text-3xl font-black text-gray-900 mb-4">
                         Keine Artikel gefunden
                     </h2>
-                    <p class="text-gray-600 font-medium max-w-md mx-auto leading-relaxed">
-                        Aktuell arbeiten wir an neuen Inhalten zu SaaS, Automatisierung und digitalen Produkten.
+                    <p class="text-gray-600 max-w-md mx-auto">
+                        Aktuell entstehen neue Inhalte zu SaaS, Automatisierung und digitalen Plattformen.
                     </p>
                 </section>
             @endif
+
+            {{-- ================= EXTRA SEO TEXT ================= --}}
+            <section class="max-w-4xl mt-24 space-y-6">
+                <h2 class="text-xl font-extrabold text-gray-900">
+                    SaaS-Plattformen & digitale Automatisierung verstehen
+                </h2>
+
+                <p class="text-gray-700 leading-relaxed">
+                    Software as a Service (SaaS) ist heute das Fundament moderner
+                    digitaler Produkte. Durch skalierbare Cloud-Architekturen,
+                    automatisierte Prozesse und modulare Plattformen können
+                    Unternehmen schneller wachsen und effizienter arbeiten.
+                </p>
+            </section>
+
         </div>
     </div>
 </x-app-layout>
