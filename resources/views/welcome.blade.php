@@ -136,7 +136,7 @@
     </div>
 
     <div class="rounded-3xl border bg-white shadow-xl p-8 transform hover:-translate-y-1 transition-transform">
-      <h2 class="text-xl font-bold mb-4">Plattform-Highlights</h2>
+      <h3 class="text-lg font-bold mb-4">Core Features</h3>
       <ul class="space-y-4 text-slate-700">
         <li class="flex items-center gap-3">
             <span class="w-2 h-2 bg-blue-600 rounded-full"></span> Sofortige Bereitstellung
@@ -202,7 +202,7 @@
 
     <div class="grid md:grid-cols-3 gap-10">
       <div class="p-8 rounded-3xl border border-slate-100 bg-white hover:shadow-lg transition-all">
-        <h3 class="font-bold text-xl mb-4 text-blue-600">Startups & Gründer</h3>
+        <div class="font-bold text-xl mb-4 text-blue-600">Startups & Gründer</div>
         <p class="text-slate-700 mb-4">
           Validieren Sie Ihre Geschäftsideen schnell mit minimalen Vorabinvestitionen. 
           Unsere Plattform ermöglicht es Ihnen, MVPs (Minimum Viable Products) innerhalb 
