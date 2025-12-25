@@ -7,6 +7,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 
 class FooterSectionForm
 {
@@ -14,50 +15,83 @@ class FooterSectionForm
     {
         return $schema
             ->components([
+
+                /* ================= SECTION SETTINGS ================= */
+
+                Select::make('type')
+                    ->label('Section Type')
+                    ->options([
+                        'brand'   => 'Brand / Description',
+                        'links'   => 'Links',
+                        'socials' => 'Social Icons',
+                    ])
+                    ->required()
+                    ->live()
+                    ->columnSpanFull(),
+
                 TextInput::make('title')
                     ->label('Section Title')
-                    ->placeholder('e.g. Platform, Legal, Company')
+                    ->placeholder('e.g. Platform, Legal')
                     ->maxLength(255)
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->visible(fn ($get) => in_array($get('type'), ['links', 'socials'])),
 
                 Toggle::make('is_visible')
                     ->label('Visible')
                     ->default(true),
 
+                /* ================= ITEMS ================= */
+
                 Repeater::make('items')
-                    ->label('Footer Items')
-                    ->relationship() // footer_items table
-                    ->orderable('sort_order') // drag & drop
+                    ->label('Section Items')
+                    ->relationship()
+                    ->orderable('sort_order')
                     ->reorderable()
-                    ->addActionLabel('Add Footer Item')
+                    ->addActionLabel('Add Item')
+                    ->collapsible()
+                    ->collapsed(false)
                     ->schema([
+
+                        /* BRAND TEXT */
+                        Textarea::make('label')
+                            ->label('Text / Description')
+                            ->rows(4)
+                            ->required()
+                            ->visible(fn ($get) =>
+                                $get('../../type') === 'brand'
+                            ),
+
+                        /* LINK LABEL */
                         TextInput::make('label')
                             ->label('Label')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->visible(fn ($get) =>
+                                in_array($get('../../type'), ['links', 'socials'])
+                            ),
 
+                        /* URL */
                         TextInput::make('url')
                             ->label('URL')
-                            ->placeholder('https://example.com'),
+                            ->placeholder('https://example.com')
+                            ->visible(fn ($get) =>
+                                in_array($get('../../type'), ['links', 'socials'])
+                            ),
 
-                        Select::make('icon')
-                            ->label('Icon')
-                            ->options([
-                                'heroicon-o-link' => 'Link',
-                                'heroicon-o-document-text' => 'Document',
-                                'heroicon-o-envelope' => 'Email',
-                                'heroicon-o-globe-alt' => 'Website',
-                            ])
-                            ->searchable()
-                            ->nullable(),
+                        /* SOCIAL ICON (SVG / HTML) */
+                        Textarea::make('icon')
+                            ->label('Icon (SVG / HTML)')
+                            ->rows(3)
+                            ->helperText('Paste SVG or icon HTML (only for social links)')
+                            ->visible(fn ($get) =>
+                                $get('../../type') === 'socials'
+                            ),
 
                         Toggle::make('is_visible')
                             ->label('Visible')
                             ->default(true),
                     ])
-                    ->columns(2)
-                    ->collapsible()
-                    ->collapsed(false),
+                    ->columns(2),
             ]);
     }
 }
