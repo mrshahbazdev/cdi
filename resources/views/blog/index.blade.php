@@ -2,8 +2,7 @@
     title="Blog & Insights – Digitale Produkte, SaaS & Automatisierung | Digitalpackt"
     metaDescription="Lesen Sie aktuelle Blogartikel, Tutorials und Experten-Insights zu SaaS, digitalen Produkten, Automatisierung und modernen Web-Technologien bei Digitalpackt."
 >
-
-    {{-- ================= PAGE HEADER ================= --}}
+    {{-- ================= PAGE HEADER (UI ONLY) ================= --}}
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
@@ -13,11 +12,11 @@
                     </svg>
                 </div>
                 <div>
-                    <h1 class="font-extrabold text-2xl text-gray-900 tracking-tight leading-none">
+                    <h2 class="font-extrabold text-2xl text-gray-900 tracking-tight leading-none">
                         Blog & Insights
-                    </h1>
+                    </h2>
                     <p class="text-[11px] font-black text-blue-700 uppercase tracking-[0.2em] mt-1.5">
-                        Digitale Produkte, SaaS & Automatisierung bei Digitalpackt
+                        Aktuelle Artikel zu SaaS, Automatisierung & digitalen Produkten
                     </p>
                 </div>
             </div>
@@ -28,32 +27,19 @@
     <div class="py-12 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-            {{-- ================= SEO INTRO TEXT (VERY IMPORTANT) ================= --}}
-            <section class="mb-12 max-w-4xl">
-                <p class="text-gray-700 leading-relaxed">
-                    Der <strong>Digitalpackt Blog</strong> ist Ihre zentrale Anlaufstelle für
-                    fundierte Inhalte rund um <strong>SaaS-Plattformen</strong>,
-                    <strong>digitale Produkte</strong>, <strong>Automatisierung</strong> und
-                    moderne Web-Technologien. Hier finden Sie praxisnahe Tutorials,
-                    Experten-Insights und technische Leitfäden für Unternehmen,
-                    Startups und Entwickler.
-                </p>
+            {{-- ================= SEO H1 + INTRO (FOR CRAWLERS) ================= --}}
+            <section class="mb-10 max-w-4xl">
+                <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">
+                    Digitalpackt Blog – SaaS, Automatisierung & digitale Produkte
+                </h1>
 
-                {{-- Contextual internal links --}}
-                <div class="mt-4 flex flex-wrap gap-4 text-sm font-semibold">
-                    <a href="{{ url('/') }}" class="text-blue-600 hover:underline">
-                        Zur Digitalpackt Startseite
-                    </a>
-                    <a href="{{ route('tools.index') }}" class="text-blue-600 hover:underline">
-                        Alle Tools entdecken
-                    </a>
-                    <a href="/pricing" class="text-blue-600 hover:underline">
-                        Preise & Pakete
-                    </a>
-                    <a href="/features" class="text-blue-600 hover:underline">
-                        Plattform-Funktionen
-                    </a>
-                </div>
+                <p class="mt-4 text-gray-700 leading-relaxed">
+                    Der Digitalpackt Blog bietet Ihnen fundierte Inhalte rund um professionelle
+                    SaaS-Lösungen, digitale Produkte und Automatisierung. Hier veröffentlichen wir
+                    regelmäßig Fachartikel, technische Einblicke und Updates zu modernen
+                    Web-Technologien, die Unternehmen und Entwickler bei der Umsetzung
+                    leistungsfähiger Softwarelösungen unterstützen.
+                </p>
             </section>
 
             {{-- ================= CATEGORY FILTER ================= --}}
@@ -79,7 +65,9 @@
                 <section aria-label="Blog Artikel">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                         @foreach($posts as $post)
-                            <article itemscope itemtype="https://schema.org/BlogPosting"
+                            <article
+                                itemscope
+                                itemtype="https://schema.org/BlogPosting"
                                 class="group bg-white/90 backdrop-blur-xl rounded-[2.5rem] border border-blue-100 shadow-md hover:shadow-2xl hover:shadow-blue-600/10 transition-all duration-500 flex flex-col h-full overflow-hidden">
 
                                 <div class="relative aspect-[16/10] overflow-hidden border-b border-blue-50 bg-gray-100">
@@ -131,14 +119,16 @@
                 </section>
 
                 <div class="mt-20 flex justify-center">
-                    {{ $posts->links() }}
+                    <div class="bg-white/80 backdrop-blur-md p-4 rounded-2xl border border-blue-100 shadow-xl">
+                        {{ $posts->links() }}
+                    </div>
                 </div>
             @else
-                <section class="text-center py-20">
+                <section class="bg-white/80 backdrop-blur-xl rounded-[3rem] p-20 text-center border-2 border-dashed border-blue-200 shadow-sm">
                     <h2 class="text-3xl font-black text-gray-900 mb-4">
                         Keine Artikel gefunden
                     </h2>
-                    <p class="text-gray-600 max-w-md mx-auto">
+                    <p class="text-gray-600 font-medium max-w-md mx-auto leading-relaxed">
                         Aktuell arbeiten wir an neuen Inhalten zu SaaS, Automatisierung und digitalen Produkten.
                     </p>
                 </section>
