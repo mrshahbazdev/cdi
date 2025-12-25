@@ -18,21 +18,34 @@ class NavItemsTable
     {
         return $table
             /* ================= ORDERING ================= */
+            ->defaultSort('parent_id')   // Parent first
+            ->defaultSort('sort_order')  // Then order inside parent
             ->reorderable('sort_order')
-            ->defaultSort('sort_order')
 
             /* ================= COLUMNS ================= */
             ->columns([
 
                 TextColumn::make('title')
-                    ->label('Title')
+                    ->label('Menu Title')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    // 👇 INDENT CHILD ITEMS
+                    ->formatStateUsing(function ($state, $record) {
+                        return $record->parent_id
+                            ? '↳ ' . $state
+                            : $state;
+                    })
+                    ->extraAttributes(fn ($record) => [
+                        'class' => $record->parent_id
+                            ? 'pl-6 text-gray-600'
+                            : 'font-bold text-gray-900',
+                    ]),
 
                 TextColumn::make('parent.title')
                     ->label('Parent')
                     ->placeholder('— Root —')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 BadgeColumn::make('children_count')
                     ->label('Children')
@@ -54,31 +67,25 @@ class NavItemsTable
 
             /* ================= FILTERS ================= */
             ->filters([
-                Filter::make('visible')
-                    ->label('Visible only')
-                    ->query(fn ($query) => $query->where('is_visible', true)),
-
-                Filter::make('hidden')
-                    ->label('Hidden only')
-                    ->query(fn ($query) => $query->where('is_visible', false)),
-
                 Filter::make('root')
-                    ->label('Root items')
+                    ->label('Root items only')
                     ->query(fn ($query) => $query->whereNull('parent_id')),
 
                 Filter::make('children')
-                    ->label('Child items')
+                    ->label('Child items only')
                     ->query(fn ($query) => $query->whereNotNull('parent_id')),
+
+                Filter::make('visible')
+                    ->label('Visible')
+                    ->query(fn ($query) => $query->where('is_visible', true)),
             ])
 
             /* ================= ROW ACTIONS ================= */
             ->recordActions([
                 EditAction::make()
-                    ->label('Edit')
                     ->icon('heroicon-o-pencil'),
 
                 DeleteAction::make()
-                    ->label('Delete')
                     ->icon('heroicon-o-trash'),
             ])
 
