@@ -88,7 +88,7 @@
       </p>
 
       <div class="mt-10 flex flex-wrap gap-4">
-        <a href="{{ route('register') }}" class="px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 transition-shadow hover:shadow-lg">
+        <a href="{{ route('register') }}" rel="nofollow" class="px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 transition-shadow hover:shadow-lg">
            Kostenlos starten
         </a>
         <a href="#plattform" class="px-8 py-4 rounded-2xl border border-slate-300 font-bold hover:bg-white transition-colors">
@@ -394,7 +394,7 @@
             <span class="text-green-600">✓</span> DSGVO-konform
           </li>
         </ul>
-        <a href="{{ route('register') }}" class="block text-center py-3 border-2 border-blue-600 text-blue-600 rounded-xl font-bold hover:bg-blue-50 transition-colors">
+        <a href="{{ route('register') }}" rel="nofollow" class="block text-center py-3 border-2 border-blue-600 text-blue-600 rounded-xl font-bold hover:bg-blue-50 transition-colors">
           Kostenlos starten
         </a>
       </div>
