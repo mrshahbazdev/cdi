@@ -558,7 +558,7 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-24  from-blue-600 to-blue-700 text-white">
+<section class="py-24 bg-blue-600 text-white">
   <div class="max-w-4xl mx-auto px-6 text-center">
     <h2 class="text-3xl md:text-5xl font-extrabold mb-6">
       Bereit, Ihre digitalen Produkte zu skalieren?
