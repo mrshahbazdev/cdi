@@ -49,7 +49,7 @@
                         @foreach($section->items as $item)
                             <a href="{{ $item->url }}"
                                target="_blank"
-                               rel="noopener"
+                               rel="noopener noreferrer"
                                aria-label="{{ $item->label }}"
                                class="hover:text-blue-400 transition-colors">
                                 {!! $item->icon !!}
@@ -66,15 +66,19 @@
     <div class="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-slate-800">
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
             <p>
-                © {{ date('Y') }} {{ config('app.name') }}. Alle Rechte vorbehalten.
+                © 2025 Digital Packt. All rights reserved.
             </p>
 
             <div class="flex gap-6">
-                @foreach($bottomLinks ?? [] as $link)
-                    <a href="{{ $link['url'] }}" class="hover:text-blue-400 transition">
-                        {{ $link['label'] }}
-                    </a>
-                @endforeach
+                <a href="{{ route('status') ?? '#' }}" class="hover:text-blue-400 transition">
+                    Status
+                </a>
+                <a href="{{ route('security') ?? '#' }}" class="hover:text-blue-400 transition">
+                    Security
+                </a>
+                <a href="{{ route('sitemap') ?? '#' }}" class="hover:text-blue-400 transition">
+                    Site Map
+                </a>
             </div>
         </div>
     </div>

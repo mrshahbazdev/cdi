@@ -4,94 +4,82 @@ namespace App\Filament\Resources\FooterSections\Schemas;
 
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 
 class FooterSectionForm
 {
     public static function configure(Schema $schema): Schema
     {
-        return $schema
-            ->components([
+        return $schema->components([
 
-                /* ================= SECTION SETTINGS ================= */
+            /* ================= SECTION ================= */
 
-                Select::make('type')
-                    ->label('Section Type')
-                    ->options([
-                        'brand'   => 'Brand / Description',
-                        'links'   => 'Links',
-                        'socials' => 'Social Icons',
-                    ])
-                    ->required()
-                    ->live()
-                    ->columnSpanFull(),
+            Select::make('type')
+                ->label('Section Type')
+                ->options([
+                    'brand'   => 'Brand / Description',
+                    'links'   => 'Links',
+                    'socials' => 'Social Icons',
+                ])
+                ->required()
+                ->live()
+                ->columnSpanFull(),
 
-                TextInput::make('title')
-                    ->label('Section Title')
-                    ->placeholder('e.g. Platform, Legal')
-                    ->maxLength(255)
-                    ->columnSpanFull()
-                    ->visible(fn ($get) => in_array($get('type'), ['links', 'socials'])),
+            TextInput::make('title')
+                ->label('Section Title')
+                ->visible(fn ($get) => in_array($get('type'), ['links', 'socials']))
+                ->columnSpanFull(),
 
-                Toggle::make('is_visible')
-                    ->label('Visible')
-                    ->default(true),
+            Toggle::make('is_visible')
+                ->default(true),
 
-                /* ================= ITEMS ================= */
+            /* ================= ITEMS ================= */
 
-                Repeater::make('items')
-                    ->label('Section Items')
-                    ->relationship()
-                    ->orderable('sort_order')
-                    ->reorderable()
-                    ->addActionLabel('Add Item')
-                    ->collapsible()
-                    ->collapsed(false)
-                    ->schema([
+            Repeater::make('items')
+                ->relationship()
+                ->orderable('sort_order')
+                ->reorderable()
+                ->schema([
 
-                        /* BRAND TEXT */
-                        Textarea::make('label')
-                            ->label('Text / Description')
-                            ->rows(4)
-                            ->required()
-                            ->visible(fn ($get) =>
-                                $get('../../type') === 'brand'
-                            ),
+                    /* LABEL (USED EVERYWHERE) */
+                    TextInput::make('label')
+                        ->label(fn ($get) =>
+                            $get('../../type') === 'brand'
+                                ? 'Text / Description'
+                                : 'Label'
+                        )
+                        ->required(fn ($get) =>
+                            in_array($get('../../type'), ['links', 'socials'])
+                        )
+                        ->dehydrated() // 🔥 VERY IMPORTANT
+                        ->columnSpanFull(),
 
-                        /* LINK LABEL */
-                        TextInput::make('label')
-                            ->label('Label')
-                            ->required()
-                            ->maxLength(255)
-                            ->visible(fn ($get) =>
-                                in_array($get('../../type'), ['links', 'socials'])
-                            ),
+                    /* URL (LINKS + SOCIALS ONLY) */
+                    TextInput::make('url')
+                        ->label('URL')
+                        ->visible(fn ($get) =>
+                            in_array($get('../../type'), ['links', 'socials'])
+                        ),
 
-                        /* URL */
-                        TextInput::make('url')
-                            ->label('URL')
-                            ->placeholder('https://example.com')
-                            ->visible(fn ($get) =>
-                                in_array($get('../../type'), ['links', 'socials'])
-                            ),
+                    /* SVG ICON (SOCIALS ONLY) */
+                    Textarea::make('icon')
+                        ->label('SVG Icon')
+                        ->rows(3)
+                        ->visible(fn ($get) =>
+                            $get('../../type') === 'socials'
+                        )
+                        ->dehydrated(fn ($get) =>
+                            $get('../../type') === 'socials'
+                        ),
 
-                        /* SOCIAL ICON (SVG / HTML) */
-                        Textarea::make('icon')
-                            ->label('Icon (SVG / HTML)')
-                            ->rows(3)
-                            ->helperText('Paste SVG or icon HTML (only for social links)')
-                            ->visible(fn ($get) =>
-                                $get('../../type') === 'socials'
-                            ),
-
-                        Toggle::make('is_visible')
-                            ->label('Visible')
-                            ->default(true),
-                    ])
-                    ->columns(2),
-            ]);
+                    Toggle::make('is_visible')
+                        ->default(true),
+                ])
+                ->columns(2)
+                ->columnSpanFull(),
+        ]);
     }
 }
