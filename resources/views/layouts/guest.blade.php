@@ -13,7 +13,7 @@
 
         <meta name="description" content="{{ $metaDescription ?? $settings->site_description ?? 'CIP Tools — Practical developer utilities.' }}">
         <link rel="canonical" href="{{ $canonical ?? url()->current() }}">
-        <meta name="robots" content="index, follow">
+        <meta name="robots" content="{{ $robots ?? 'index, follow' }}">
 
         <meta property="og:type" content="website">
         <meta property="og:title" content="{{ $title ?? config('app.name') }}">
