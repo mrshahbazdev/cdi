@@ -30,15 +30,15 @@
             {{-- ================= SEO H1 + INTRO (FOR CRAWLERS) ================= --}}
             <section class="mb-10 max-w-4xl">
                 <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">
-                    Digitalpackt Blog – SaaS, Automatisierung & digitale Produkte
+                    Digital Packt – Professional SaaS Platform Blog
                 </h1>
 
                 <p class="mt-4 text-gray-700 leading-relaxed">
-                    Der Digitalpackt Blog bietet Ihnen fundierte Inhalte rund um professionelle
-                    SaaS-Lösungen, digitale Produkte und Automatisierung. Hier veröffentlichen wir
-                    regelmäßig Fachartikel, technische Einblicke und Updates zu modernen
-                    Web-Technologien, die Unternehmen und Entwickler bei der Umsetzung
-                    leistungsfähiger Softwarelösungen unterstützen.
+                    Der <strong>Digital Packt – Professional SaaS Platform</strong> Blog bietet
+                    fundierte Inhalte rund um <strong>SaaS</strong>, digitale Produkte und
+                    Automatisierung. Auf <strong>Digitalpackt</strong> finden Sie technische
+                    Fachartikel, Produkt-Updates und praxisnahe Einblicke in moderne
+                    Web-Technologien für Unternehmen und Entwickler.
                 </p>
             </section>
 
@@ -64,12 +64,14 @@
             @if($posts->count() > 0)
                 <section aria-label="Blog Artikel">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
                         @foreach($posts as $post)
                             <article
                                 itemscope
                                 itemtype="https://schema.org/BlogPosting"
                                 class="group bg-white/90 backdrop-blur-xl rounded-[2.5rem] border border-blue-100 shadow-md hover:shadow-2xl hover:shadow-blue-600/10 transition-all duration-500 flex flex-col h-full overflow-hidden">
 
+                                {{-- IMAGE --}}
                                 <div class="relative aspect-[16/10] overflow-hidden border-b border-blue-50 bg-gray-100">
                                     @if($post->cover_image)
                                         <img src="{{ Storage::url($post->cover_image) }}"
@@ -85,6 +87,7 @@
                                     </div>
                                 </div>
 
+                                {{-- CONTENT --}}
                                 <div class="p-8 flex-1 flex flex-col">
                                     <div class="text-[11px] font-black text-blue-700 uppercase tracking-widest mb-4">
                                         <time itemprop="datePublished" datetime="{{ $post->published_at->toIso8601String() }}">
@@ -118,11 +121,13 @@
                     </div>
                 </section>
 
+                {{-- PAGINATION --}}
                 <div class="mt-20 flex justify-center">
                     <div class="bg-white/80 backdrop-blur-md p-4 rounded-2xl border border-blue-100 shadow-xl">
                         {{ $posts->links() }}
                     </div>
                 </div>
+
             @else
                 <section class="bg-white/80 backdrop-blur-xl rounded-[3rem] p-20 text-center border-2 border-dashed border-blue-200 shadow-sm">
                     <h2 class="text-3xl font-black text-gray-900 mb-4">
