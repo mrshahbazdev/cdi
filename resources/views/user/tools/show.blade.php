@@ -10,10 +10,13 @@ $currentPage = request()->get('page');
 $pageSuffix = ($currentPage && $currentPage > 1) ? " (S.$currentPage)" : "";
 
 // Titel kürzen, um unter 580px/60 Zeichen zu bleiben
-$seoTitle = Str::limit($tool->name, 20) . " – Details & Preise" . $pageSuffix;
+$seoTitle = $tool->name . " – Details & Preise" . $pageSuffix;
 
 $rawDescription = $tool->description ?? "Technische Spezifikationen und Pakete für $tool->name.";
 $seoDescription = Str::limit(strip_tags($rawDescription), 140) . $pageSuffix;
+
+// Brand-Name für Schema
+$brandName = "Digital Packt";
 
 $schemaJson = json_encode([
     "@context" => "https://schema.org",
@@ -23,6 +26,10 @@ $schemaJson = json_encode([
     "applicationCategory" => "DeveloperApplication",
     "operatingSystem" => "All",
     "url" => route('tools.show', $tool),
+    "provider" => [
+        "@type" => "Organization",
+        "name" => $brandName
+    ],
     "offers" => $tool->packages->map(function($package) {
         return [
             "@type" => "Offer",
@@ -44,8 +51,8 @@ $schemaJson = json_encode([
         <script type="application/ld+json">{!! $schemaJson !!}</script>
     @endpush
 
-    {{-- SEO H1 --}}
-    <h1 class="sr-only">{{ $tool->name }} – Vollständige Spezifikationen, Preise und Lizenzmodelle für Deutschland {{ $pageSuffix }}</h1>
+    {{-- SEO H1 mit allen Title-Keywords --}}
+    <h1 class="sr-only">{{ $tool->name }} – Vollständige Details, Preise und Spezifikationen bei {{ $brandName }} {{ $pageSuffix }}</h1>
 
     <x-slot name="header">
         <div class="flex items-center justify-between">
@@ -59,7 +66,7 @@ $schemaJson = json_encode([
                 </a>
                 <div>
                     <h2 class="font-extrabold text-2xl text-gray-900 leading-none">{{ $tool->name }}</h2>
-                    <p class="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mt-1.5">Spezifikationen & Lizenzierung</p>
+                    <p class="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mt-1.5">Details, Spezifikationen & Preise</p>
                 </div>
             </div>
         </div>
@@ -87,18 +94,22 @@ $schemaJson = json_encode([
                     </div>
 
                     <div class="flex-1 text-center lg:text-left">
-                        <h2 class="text-4xl font-black text-gray-900 mb-6">{{ $tool->name }}</h2>
+                        {{-- Nur EINMAL strong für Tool-Name --}}
+                        <h2 class="text-4xl font-black text-gray-900 mb-6">
+                            <strong>{{ $tool->name }}</strong>
+                        </h2>
                         <div class="text-gray-600 font-medium text-lg leading-relaxed mb-6">
                             {{ $tool->description }}
                         </div>
                         
-                        {{-- Zusätzlicher Einleitungstext für mehr Content --}}
+                        {{-- Einleitungstext mit Title-Keywords --}}
                         <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100">
                             <p class="text-gray-700 leading-relaxed">
-                                <strong>{{ $tool->name }}</strong> wurde speziell für Unternehmen entwickelt, die im deutschen Rechtsraum tätig sind. 
-                                Die Plattform bietet umfassende Unterstützung bei der Einhaltung gesetzlicher Vorgaben und ermöglicht eine effiziente 
-                                Verwaltung compliance-relevanter Prozesse. Mit regelmäßigen Updates und praxisnahen Erklärungen erhalten Sie stets 
-                                aktuelle Informationen zu rechtlichen Entwicklungen.
+                                Auf dieser Seite finden Sie alle <strong>Details</strong> und transparente <strong>Preise</strong> 
+                                für {{ $tool->name }}. Die Plattform von <strong>{{ $brandName }}</strong> wurde speziell für 
+                                Unternehmen entwickelt, die im deutschen Rechtsraum tätig sind. Mit umfassender Dokumentation, 
+                                regelmäßigen Updates und professionellem Support erhalten Sie eine verlässliche Compliance-Lösung 
+                                zu fairen Konditionen.
                             </p>
                         </div>
                     </div>
@@ -111,24 +122,30 @@ $schemaJson = json_encode([
                 {{-- Block 1: Detaillierte Analyse --}}
                 <article class="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm">
                     <h3 class="text-2xl font-black text-gray-900 mb-6">
-                        Detaillierte Analyse & Technische Spezifikationen
+                        Technische Details & Spezifikationen
                     </h3>
                     <div class="text-gray-600 leading-relaxed space-y-4">
                         <p>
-                            Die Nutzung von <strong>{{ $tool->name }}</strong> bietet Unternehmen und Fachanwendern eine strukturierte Grundlage 
-                            für effiziente und rechtssichere Prozesse. Durch die Bereitstellung detaillierter technischer Spezifikationen und 
-                            spezifischer Lizenzmodelle ermöglicht diese Plattform eine fundierte Entscheidungshilfe bei der Auswahl des passenden Tarifs.
+                            Die Nutzung von {{ $tool->name }} bietet Unternehmen und Fachanwendern eine strukturierte Grundlage 
+                            für effiziente und rechtssichere Prozesse. Auf dieser Detailseite finden Sie alle relevanten 
+                            technischen Informationen sowie eine übersichtliche Darstellung der verfügbaren Lizenzmodelle 
+                            und deren Preise.
                         </p>
                         <p>
-                            Besonders im Bereich der <strong>Compliance und Rechtssicherheit</strong> setzt {{ $tool->name }} neue Maßstäbe. 
-                            Die hier aufgeführten Tarife sind darauf ausgelegt, sowohl für Einzelprojekte als auch für skalierende Unternehmen 
-                            in Deutschland maximale Transparenz und Flexibilität zu gewährleisten. Jedes Paket beinhaltet umfassende 
-                            Dokumentation, Support-Leistungen und regelmäßige Updates.
+                            Besonders im Bereich der Compliance und Rechtssicherheit setzt die Lösung neue Maßstäbe. 
+                            Die hier aufgeführten Tarife sind darauf ausgelegt, sowohl für Einzelprojekte als auch für 
+                            skalierende Unternehmen in Deutschland maximale Transparenz und Flexibilität zu gewährleisten. 
+                            Jedes Paket beinhaltet umfassende Dokumentation, Support-Leistungen und regelmäßige Updates.
                         </p>
                         <p>
-                            Die Plattform unterstützt Unternehmen dabei, gesetzliche Vorgaben wie das <strong>Lieferkettensorgfaltspflichtengesetz (LkSG)</strong>, 
-                            die <strong>EU-Whistleblower-Richtlinie</strong> und branchenspezifische Regularien einzuhalten. Mit praxisnahen 
-                            Erklärungen und Fallbeispielen aus der deutschen Rechtsprechung bietet {{ $tool->name }} eine verlässliche Wissensquelle.
+                            Die Plattform unterstützt Unternehmen dabei, gesetzliche Vorgaben wie das Lieferkettensorgfaltspflichtengesetz (LkSG), 
+                            die EU-Whistleblower-Richtlinie und branchenspezifische Regularien einzuhalten. Mit praxisnahen 
+                            Erklärungen und Fallbeispielen aus der deutschen Rechtsprechung erhalten Sie eine verlässliche Wissensquelle.
+                        </p>
+                        <p>
+                            {{ $brandName }} stellt sicher, dass alle bereitgestellten Inhalte höchsten Qualitätsansprüchen genügen 
+                            und kontinuierlich aktualisiert werden. Ein Team aus Fachjuristen überwacht die Rechtsentwicklung 
+                            und pflegt Änderungen zeitnah ein.
                         </p>
                     </div>
                 </article>
@@ -136,21 +153,23 @@ $schemaJson = json_encode([
                 {{-- Block 2: Häufige Fragen (FAQ) --}}
                 <article class="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm">
                     <h3 class="text-2xl font-black text-gray-900 mb-6">
-                        Häufig gestellte Fragen zu {{ $tool->name }}
+                        Häufig gestellte Fragen
                     </h3>
                     <div class="space-y-4">
                         <details class="group border-b border-slate-100 pb-4">
                             <summary class="list-none font-bold text-gray-800 cursor-pointer flex justify-between items-center hover:text-blue-600 transition">
-                                Was ist der Hauptvorteil von {{ $tool->name }}?
+                                Welche Details umfasst die Plattform?
                                 <span class="text-blue-600 group-open:rotate-180 transition-transform text-2xl">+</span>
                             </summary>
                             <div class="text-gray-600 text-sm mt-4 leading-relaxed space-y-2">
                                 <p>
-                                    {{ $tool->name }} bietet eine spezialisierte Lösung zur systematischen Aufbereitung komplexer Daten 
-                                    und rechtlicher Compliance-Begriffe, die speziell für den deutschen Markt optimiert wurde.
+                                    Die Plattform bietet eine spezialisierte Lösung zur systematischen Aufbereitung komplexer Daten 
+                                    und rechtlicher Compliance-Begriffe, die speziell für den deutschen Markt optimiert wurde. 
+                                    Alle Details umfassen technische Spezifikationen, Anwendungsbeispiele, rechtliche Grundlagen 
+                                    und Integrationsmöglichkeiten.
                                 </p>
                                 <p>
-                                    Die Plattform zeichnet sich durch ihre benutzerfreundliche Oberfläche, umfassende Suchfunktionen 
+                                    Die Lösung zeichnet sich durch ihre benutzerfreundliche Oberfläche, umfassende Suchfunktionen 
                                     und regelmäßige Aktualisierungen aus. Unternehmen profitieren von klaren Definitionen, praktischen 
                                     Anwendungsbeispielen und direktem Zugang zu relevantem Fachwissen.
                                 </p>
@@ -159,36 +178,39 @@ $schemaJson = json_encode([
 
                         <details class="group border-b border-slate-100 pb-4">
                             <summary class="list-none font-bold text-gray-800 cursor-pointer flex justify-between items-center hover:text-blue-600 transition">
-                                Sind die Preise für {{ $tool->name }} inkl. Support?
+                                Wie sind die Preise strukturiert?
                                 <span class="text-blue-600 group-open:rotate-180 transition-transform text-2xl">+</span>
                             </summary>
                             <div class="text-gray-600 text-sm mt-4 leading-relaxed space-y-2">
                                 <p>
-                                    Ja, je nach gewähltem Tarif (siehe unten) ist ein Standard- oder Priority-Support enthalten, 
-                                    um eine reibungslose Anwendung zu garantieren. Der Support umfasst technische Hilfestellung, 
-                                    Fragen zur Interpretation rechtlicher Begriffe und Unterstützung bei der Integration in bestehende Systeme.
+                                    Die Preise sind transparent und fair kalkuliert. Je nach gewähltem Tarif erhalten Sie 
+                                    unterschiedliche Leistungsumfänge – von Basis-Zugang bis hin zu Premium-Features mit 
+                                    Priority-Support. Alle Preise verstehen sich zzgl. der gesetzlichen Mehrwertsteuer.
                                 </p>
                                 <p>
-                                    Premium-Tarife beinhalten zusätzlich einen dedizierten Account-Manager und beschleunigte 
-                                    Reaktionszeiten bei Supportanfragen.
+                                    Bei {{ $brandName }} gibt es keine versteckten Kosten. Die auf dieser Detailseite 
+                                    angegebenen Preise beinhalten bereits alle Standard-Leistungen wie regelmäßige Updates, 
+                                    Dokumentation und E-Mail-Support. Premium-Tarife umfassen zusätzlich API-Zugriff und 
+                                    dedizierten Account-Support.
                                 </p>
                             </div>
                         </details>
 
                         <details class="group border-b border-slate-100 pb-4">
                             <summary class="list-none font-bold text-gray-800 cursor-pointer flex justify-between items-center hover:text-blue-600 transition">
-                                Für wen eignet sich {{ $tool->name }}?
+                                Für wen eignet sich die Lösung?
                                 <span class="text-blue-600 group-open:rotate-180 transition-transform text-2xl">+</span>
                             </summary>
                             <div class="text-gray-600 text-sm mt-4 leading-relaxed space-y-2">
                                 <p>
-                                    {{ $tool->name }} richtet sich primär an <strong>Compliance-Beauftragte</strong>, 
-                                    <strong>Rechtsabteilungen</strong>, <strong>Geschäftsführer</strong> und alle Fachkräfte, 
-                                    die sich mit regulatorischen Anforderungen in Deutschland auseinandersetzen müssen.
+                                    Die Lösung richtet sich primär an Compliance-Beauftragte, Rechtsabteilungen, Geschäftsführer 
+                                    und alle Fachkräfte, die sich mit regulatorischen Anforderungen in Deutschland auseinandersetzen müssen. 
+                                    Die Details auf dieser Seite helfen Ihnen bei der Entscheidung für den passenden Tarif.
                                 </p>
                                 <p>
                                     Auch kleine und mittlere Unternehmen (KMU) profitieren von der übersichtlichen Darstellung 
-                                    komplexer rechtlicher Zusammenhänge und können so Compliance-Risiken minimieren.
+                                    komplexer rechtlicher Zusammenhänge und können so Compliance-Risiken minimieren – zu 
+                                    transparenten Preisen ohne langfristige Bindung.
                                 </p>
                             </div>
                         </details>
@@ -201,11 +223,13 @@ $schemaJson = json_encode([
                             <div class="text-gray-600 text-sm mt-4 leading-relaxed space-y-2">
                                 <p>
                                     Alle Nutzer erhalten automatische Updates zu neuen Gesetzen, Verordnungen und rechtlichen Entwicklungen. 
-                                    Die Updates werden in Echtzeit in die Plattform integriert und per E-Mail-Benachrichtigung kommuniziert.
+                                    Die Updates werden in Echtzeit in die Plattform integriert und per E-Mail-Benachrichtigung kommuniziert – 
+                                    ohne zusätzliche Preise oder versteckte Kosten.
                                 </p>
                                 <p>
                                     Premium-Nutzer erhalten zusätzlich monatliche Newsletter mit detaillierten Analysen und 
-                                    Handlungsempfehlungen zu relevanten Rechtsänderungen.
+                                    Handlungsempfehlungen zu relevanten Rechtsänderungen. {{ $brandName }} garantiert, dass 
+                                    alle Inhalte stets aktuell und rechtssicher sind.
                                 </p>
                             </div>
                         </details>
@@ -217,11 +241,12 @@ $schemaJson = json_encode([
             <section class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-[3rem] p-10 md:p-16 mb-16 border border-blue-100">
                 <div class="text-center mb-12">
                     <h3 class="text-3xl font-black text-gray-900 mb-4">
-                        Kernfunktionen von {{ $tool->name }}
+                        Kernfunktionen im Detail
                     </h3>
                     <p class="text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                        Entdecken Sie die umfassenden Funktionen, die {{ $tool->name }} zur führenden Compliance-Plattform 
-                        für den deutschen Markt machen. Jede Funktion wurde sorgfältig entwickelt, um Ihre tägliche Arbeit zu erleichtern.
+                        Entdecken Sie die umfassenden Funktionen, die diese Lösung zur führenden Compliance-Plattform 
+                        für den deutschen Markt machen. Jede Funktion wurde sorgfältig entwickelt, um Ihre tägliche Arbeit zu erleichtern. 
+                        Alle Details und Preise finden Sie weiter unten auf dieser Seite.
                     </p>
                 </div>
 
@@ -235,7 +260,8 @@ $schemaJson = json_encode([
                         <h4 class="text-xl font-black text-gray-900 mb-3">Umfassende Dokumentation</h4>
                         <p class="text-gray-600 leading-relaxed text-sm">
                             Zugriff auf über 5.000 rechtliche Begriffe und Definitionen mit Praxisbeispielen, 
-                            Querverweisen und aktuellen Rechtsprechungen aus Deutschland.
+                            Querverweisen und aktuellen Rechtsprechungen aus Deutschland. Alle Details sind 
+                            übersichtlich strukturiert und jederzeit verfügbar.
                         </p>
                     </div>
 
@@ -248,7 +274,8 @@ $schemaJson = json_encode([
                         <h4 class="text-xl font-black text-gray-900 mb-3">Intelligente Suchfunktion</h4>
                         <p class="text-gray-600 leading-relaxed text-sm">
                             Finden Sie binnen Sekunden relevante Informationen dank KI-gestützter Suche mit 
-                            Synonymerkennung, Filteroptionen und thematischer Kategorisierung.
+                            Synonymerkennung, Filteroptionen und thematischer Kategorisierung. Schneller Zugriff 
+                            auf alle benötigten Details.
                         </p>
                     </div>
 
@@ -261,7 +288,8 @@ $schemaJson = json_encode([
                         <h4 class="text-xl font-black text-gray-900 mb-3">Individuelle Anpassung</h4>
                         <p class="text-gray-600 leading-relaxed text-sm">
                             Passen Sie die Plattform an Ihre spezifischen Anforderungen an: Erstellen Sie Merkzettel, 
-                            exportieren Sie Berichte und integrieren Sie Inhalte in Ihre Systeme.
+                            exportieren Sie Berichte und integrieren Sie Inhalte in Ihre Systeme. Flexible Preismodelle 
+                            für jeden Bedarf.
                         </p>
                     </div>
 
@@ -274,7 +302,7 @@ $schemaJson = json_encode([
                         <h4 class="text-xl font-black text-gray-900 mb-3">Automatische Benachrichtigungen</h4>
                         <p class="text-gray-600 leading-relaxed text-sm">
                             Bleiben Sie auf dem Laufenden mit automatischen Benachrichtigungen zu Gesetzesänderungen, 
-                            neuen Urteilen und relevanten Compliance-Entwicklungen in Ihrem Fachbereich.
+                            neuen Urteilen und relevanten Compliance-Entwicklungen in Ihrem Fachbereich – bereits in allen Preismodellen inkludiert.
                         </p>
                     </div>
 
@@ -287,7 +315,8 @@ $schemaJson = json_encode([
                         <h4 class="text-xl font-black text-gray-900 mb-3">DSGVO-konform</h4>
                         <p class="text-gray-600 leading-relaxed text-sm">
                             Alle Daten werden ausschließlich auf deutschen Servern gespeichert und verarbeitet. 
-                            Höchste Sicherheitsstandards und vollständige DSGVO-Konformität sind garantiert.
+                            Höchste Sicherheitsstandards und vollständige DSGVO-Konformität sind garantiert – 
+                            ohne Aufpreis in allen Tarifen enthalten.
                         </p>
                     </div>
 
@@ -300,21 +329,22 @@ $schemaJson = json_encode([
                         <h4 class="text-xl font-black text-gray-900 mb-3">Team-Collaboration</h4>
                         <p class="text-gray-600 leading-relaxed text-sm">
                             Arbeiten Sie gemeinsam mit Ihrem Team: Teilen Sie Notizen, kommentieren Sie Inhalte 
-                            und erstellen Sie gemeinsame Projekt-Ordner für eine effiziente Zusammenarbeit.
+                            und erstellen Sie gemeinsame Projekt-Ordner für eine effiziente Zusammenarbeit. 
+                            Team-Lizenzen zu attraktiven Preisen verfügbar.
                         </p>
                     </div>
                 </div>
             </section>
 
-            {{-- Pakete-Überschrift --}}
-            <div class="text-center mb-10">
+            {{-- Pakete-Überschrift mit allen Title-Keywords --}}
+            <div class="text-center mb-10" id="preise">
                 <h3 class="text-4xl font-black text-gray-900 mb-3">
-                    Verfügbare Tarife & Lizenzpakete
+                    Verfügbare Tarife, Details & Preise
                 </h3>
                 <p class="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed">
-                    Wählen Sie die passende Lizenzierung für {{ $tool->name }} – transparent, flexibel und 
-                    speziell auf die Bedürfnisse deutscher Unternehmen zugeschnitten. Alle Preise verstehen sich 
-                    zzgl. der gesetzlichen Mehrwertsteuer.
+                    Wählen Sie die passende Lizenzierung – transparent, flexibel und speziell auf die Bedürfnisse 
+                    deutscher Unternehmen zugeschnitten. Alle Preise verstehen sich zzgl. der gesetzlichen Mehrwertsteuer. 
+                    Detaillierte Informationen zu jedem Paket finden Sie in der untenstehenden Übersicht von {{ $brandName }}.
                 </p>
             </div>
 
@@ -349,7 +379,7 @@ $schemaJson = json_encode([
                             <ul class="space-y-4 mb-10">
                                 @if($package->features && is_array($package->features))
                                     @foreach($package->features as $feature)
-                                        <li class="flex items-start text-slate-600 font-bold text-sm leading-tight">
+                                        <li class="flex items-start text-slate-600 font-semibold text-sm leading-tight">
                                             <div class="shrink-0 w-5 h-5 bg-green-50 rounded-md flex items-center justify-center mr-3 mt-0.5 group-hover:bg-green-500 transition-colors">
                                                 <svg class="h-3 w-3 text-green-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
@@ -359,16 +389,16 @@ $schemaJson = json_encode([
                                         </li>
                                     @endforeach
                                 @else
-                                    <li class="flex items-start text-slate-600 font-bold text-sm leading-tight">
+                                    <li class="flex items-start text-slate-600 font-semibold text-sm leading-tight">
                                         <div class="shrink-0 w-5 h-5 bg-green-50 rounded-md flex items-center justify-center mr-3 mt-0.5">
                                             <svg class="h-3 w-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
                                             </svg>
                                         </div>
-                                        Standard-Zugriff auf {{ $tool->name }}
+                                        Standard-Zugriff
                                     </li>
-                                    <li class="flex items-start text-slate-600 font-bold text-sm leading-tight">
-                                        <div class="shrink-0 w-5 h-5 bg-green-50 rounded-md flex items-center justify-center mr-3 mt-0.5">
+                                    <li class="flex items-start text-slate-600 font-semibold text-sm leading-tight">
+                                                                                <div class="shrink-0 w-5 h-5 bg-green-50 rounded-md flex items-center justify-center mr-3 mt-0.5">
                                             <svg class="h-3 w-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
                                             </svg>
@@ -397,11 +427,11 @@ $schemaJson = json_encode([
                     </article>
                 @empty
                     <div class="col-span-full py-12 text-center bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
-                                                <svg class="w-16 h-16 mx-auto text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-16 h-16 mx-auto text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                         </svg>
                         <p class="text-slate-400 font-bold text-lg mb-2">Keine Tarife verfügbar</p>
-                        <p class="text-slate-500 text-sm">Aktuell sind keine speziellen Tarife für {{ $tool->name }} hinterlegt.</p>
+                        <p class="text-slate-500 text-sm">Aktuell sind keine speziellen Preise hinterlegt. Kontaktieren Sie {{ $brandName }} für individuelle Angebote.</p>
                     </div>
                 @endforelse
             </div>
@@ -410,10 +440,10 @@ $schemaJson = json_encode([
             @if($tool->packages->count() > 1)
             <section class="bg-white rounded-[3rem] p-10 md:p-16 shadow-sm border border-slate-100 mb-16">
                 <div class="text-center mb-12">
-                    <h3 class="text-3xl font-black text-gray-900 mb-4">Detaillierter Paket-Vergleich</h3>
+                    <h3 class="text-3xl font-black text-gray-900 mb-4">Detaillierter Preis- und Leistungsvergleich</h3>
                     <p class="text-gray-600 max-w-2xl mx-auto">
                         Finden Sie auf einen Blick das passende Paket für Ihre Anforderungen. Alle Tarife beinhalten 
-                        regelmäßige Updates und Zugang zur vollständigen Dokumentation.
+                        regelmäßige Updates und Zugang zur vollständigen Dokumentation. Transparente Preise ohne versteckte Kosten.
                     </p>
                 </div>
 
@@ -421,7 +451,7 @@ $schemaJson = json_encode([
                     <table class="w-full text-left">
                         <thead>
                             <tr class="border-b-2 border-slate-200">
-                                <th class="py-4 px-6 font-black text-gray-900">Funktion</th>
+                                <th class="py-4 px-6 font-black text-gray-900">Funktion / Detail</th>
                                 @foreach($tool->packages as $package)
                                     <th class="py-4 px-6 font-black text-gray-900 text-center">{{ $package->name }}</th>
                                 @endforeach
@@ -439,7 +469,7 @@ $schemaJson = json_encode([
                                 @endforeach
                             </tr>
                             <tr class="border-b border-slate-100 bg-slate-50">
-                                <td class="py-4 px-6 font-semibold text-gray-700">Support-Level</td>
+                                <td class="py-4 px-6 font-semibold text-gray-700">Support-Level (Details)</td>
                                 @foreach($tool->packages as $package)
                                     <td class="py-4 px-6 text-center text-sm font-bold text-gray-600">
                                         @if($package->price == 0)
@@ -498,6 +528,14 @@ $schemaJson = json_encode([
                                     </td>
                                 @endforeach
                             </tr>
+                            <tr class="border-b border-slate-100 bg-slate-50">
+                                <td class="py-4 px-6 font-semibold text-gray-700">Monatlicher Preis (netto)</td>
+                                @foreach($tool->packages as $package)
+                                    <td class="py-4 px-6 text-center text-lg font-black text-gray-900">
+                                        €{{ number_format($package->price, 2, ',', '.') }}
+                                    </td>
+                                @endforeach
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -514,7 +552,7 @@ $schemaJson = json_encode([
                     </div>
                     <h4 class="text-2xl font-black text-gray-900 mb-3">5.000+</h4>
                     <p class="text-gray-600 font-semibold">Aktive Nutzer</p>
-                    <p class="text-sm text-gray-500 mt-2">Vertrauen auf {{ $tool->name }}</p>
+                    <p class="text-sm text-gray-500 mt-2">Vertrauen auf die Lösung von {{ $brandName }}</p>
                 </div>
 
                 <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 text-center">
@@ -525,7 +563,7 @@ $schemaJson = json_encode([
                     </div>
                     <h4 class="text-2xl font-black text-gray-900 mb-3">99,9%</h4>
                     <p class="text-gray-600 font-semibold">Verfügbarkeit</p>
-                    <p class="text-sm text-gray-500 mt-2">Garantierte Uptime</p>
+                    <p class="text-sm text-gray-500 mt-2">Garantierte Uptime – Details in unseren SLAs</p>
                 </div>
 
                 <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 text-center">
@@ -543,17 +581,17 @@ $schemaJson = json_encode([
             {{-- Abschluss-CTA --}}
             <section class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[3rem] p-10 md:p-16 text-center text-white shadow-2xl">
                 <h3 class="text-4xl font-black mb-6">
-                    Starten Sie jetzt mit {{ $tool->name }}
+                    Starten Sie jetzt – Alle Details & Preise im Überblick
                 </h3>
                 <p class="text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
-                    Überzeugen Sie sich selbst von der Qualität und Vollständigkeit unserer Compliance-Plattform. 
+                    Überzeugen Sie sich selbst von der Qualität und Vollständigkeit der Compliance-Plattform. 
                     Wählen Sie einen passenden Tarif und profitieren Sie von umfassender Dokumentation, 
-                    regelmäßigen Updates und professionellem Support.
+                    regelmäßigen Updates und professionellem Support – zu fairen und transparenten Preisen bei {{ $brandName }}.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     @auth
                         @if($tool->packages->count() > 0)
-                            <a href="#packages" 
+                            <a href="#preise" 
                                class="inline-flex items-center justify-center px-10 py-5 bg-white text-blue-600 rounded-2xl font-black text-lg hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl">
                                 Tarif auswählen
                             </a>
@@ -573,62 +611,80 @@ $schemaJson = json_encode([
                 <div class="mt-12 pt-8 border-t border-blue-400/30">
                     <p class="text-sm text-blue-200">
                         🔒 Ihre Daten werden ausschließlich in Deutschland gehostet und nach höchsten Sicherheitsstandards verarbeitet. 
-                        Vollständige DSGVO-Konformität garantiert.
+                        Vollständige DSGVO-Konformität garantiert – Details in unserer Datenschutzerklärung.
                     </p>
                 </div>
             </section>
 
-            {{-- Zusätzliche SEO-Informationen --}}
+            {{-- Zusätzliche SEO-Informationen mit allen Title-Keywords --}}
             <section class="mt-16 prose prose-slate max-w-none">
                 <div class="bg-white rounded-2xl p-10 border border-slate-100">
                     <h3 class="text-2xl font-black text-gray-900 mb-6">
-                        Weitere Informationen zu {{ $tool->name }}
+                        Weitere Details zu den Preisen und Leistungen
                     </h3>
                     
                     <div class="space-y-6 text-gray-600 leading-relaxed">
                         <div>
-                            <h4 class="text-lg font-bold text-gray-800 mb-3">Warum {{ $tool->name }} wählen?</h4>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Warum diese Lösung wählen?</h4>
                             <p>
                                 In der heutigen komplexen Rechtslandschaft ist es für Unternehmen in Deutschland unerlässlich, 
-                                stets über aktuelle Compliance-Anforderungen informiert zu sein. {{ $tool->name }} bietet eine 
+                                stets über aktuelle Compliance-Anforderungen informiert zu sein. Die Plattform von {{ $brandName }} bietet eine 
                                 zentrale Anlaufstelle für alle rechtlichen Begriffe und Definitionen, die im deutschen Wirtschaftsraum 
-                                relevant sind. Die Plattform wird kontinuierlich aktualisiert und spiegelt die neuesten gesetzlichen 
-                                Entwicklungen wider.
-                            </p>
-                        </div>
-
-                        <div>
-                            <h4 class="text-lg font-bold text-gray-800 mb-3">Für wen ist {{ $tool->name }} geeignet?</h4>
-                            <p>
-                                Die Plattform richtet sich primär an Compliance-Beauftragte, Rechtsabteilungen, Datenschutzbeauftragte, 
-                                Wirtschaftsprüfer, Steuerberater und Unternehmensberater. Auch Geschäftsführer und Vorstände, die einen 
-                                schnellen Überblick über relevante Compliance-Themen benötigen, profitieren von der übersichtlichen 
-                                Aufbereitung komplexer rechtlicher Zusammenhänge.
+                                relevant sind. Auf dieser Detailseite finden Sie alle wichtigen Informationen zu Funktionsumfang, 
+                                technischen Spezifikationen und transparenten Preisen.
                             </p>
                             <p class="mt-3">
-                                Kleine und mittlere Unternehmen (KMU) finden in {{ $tool->name }} eine kostengünstige Alternative zu 
-                                teuren Rechtsberatungen für standardisierte Fragestellungen. Die klare Strukturierung ermöglicht auch 
-                                Nicht-Juristen ein fundiertes Verständnis der wichtigsten Compliance-Begriffe.
+                                Die Plattform wird kontinuierlich aktualisiert und spiegelt die neuesten gesetzlichen 
+                                Entwicklungen wider. Alle Details werden von Fachjuristen geprüft und regelmäßig überarbeitet, 
+                                um höchste Qualitätsstandards zu gewährleisten.
                             </p>
                         </div>
 
                         <div>
-                            <h4 class="text-lg font-bold text-gray-800 mb-3">Technische Integration</h4>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Für wen sind diese Preise und Details relevant?</h4>
                             <p>
-                                {{ $tool->name }} lässt sich nahtlos in bestehende Unternehmens-Systeme integrieren. Über eine 
-                                REST-API (ab Professional-Tarif) können Inhalte in interne Wissensdatenbanken, Intranets oder 
+                                Die Lösung richtet sich primär an Compliance-Beauftragte, Rechtsabteilungen, Datenschutzbeauftragte, 
+                                Wirtschaftsprüfer, Steuerberater und Unternehmensberater. Auch Geschäftsführer und Vorstände, die einen 
+                                schnellen Überblick über relevante Compliance-Themen benötigen, profitieren von der übersichtlichen 
+                                Aufbereitung komplexer rechtlicher Zusammenhänge. Die Preise sind so kalkuliert, dass sowohl 
+                                Einzelanwender als auch große Organisationen ein passendes Modell finden.
+                            </p>
+                            <p class="mt-3">
+                                Kleine und mittlere Unternehmen (KMU) finden hier eine kostengünstige Alternative zu 
+                                teuren Rechtsberatungen für standardisierte Fragestellungen. Die klare Strukturierung ermöglicht auch 
+                                Nicht-Juristen ein fundiertes Verständnis der wichtigsten Compliance-Begriffe. Alle Details sind 
+                                so aufbereitet, dass sie ohne juristische Vorkenntnisse verständlich sind.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Technische Integration und Details</h4>
+                            <p>
+                                Die Lösung lässt sich nahtlos in bestehende Unternehmens-Systeme integrieren. Über eine 
+                                REST-API (ab Professional-Tarif – siehe Preise oben) können Inhalte in interne Wissensdatenbanken, Intranets oder 
                                 Compliance-Management-Systeme eingebunden werden. Die Plattform unterstützt gängige Authentifizierungsverfahren 
                                 wie OAuth 2.0 und SAML, wodurch eine sichere Single-Sign-On-Integration möglich ist.
                             </p>
+                            <p class="mt-3">
+                                Alle technischen Details zur API-Nutzung, Webhook-Integration und Datenexport finden Sie in 
+                                unserer umfassenden Entwickler-Dokumentation. {{ $brandName }} stellt sicher, dass die Integration 
+                                reibungslos verläuft und bietet dazu professionellen Support – bereits in den Standard-Preisen enthalten.
+                            </p>
                         </div>
 
                         <div>
-                            <h4 class="text-lg font-bold text-gray-800 mb-3">Aktualität und Qualitätssicherung</h4>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Aktualität und Qualitätssicherung – Weitere Details</h4>
                             <p>
                                 Ein Team aus Fachjuristen und Compliance-Experten überwacht kontinuierlich die Rechtsprechung und 
                                 gesetzgeberische Aktivitäten in Deutschland. Änderungen werden zeitnah in die Plattform eingepflegt 
-                                und den Nutzern über automatische Benachrichtigungen mitgeteilt. Jeder Eintrag wird vor Veröffentlichung 
-                                von mindestens zwei unabhängigen Experten geprüft, um höchste Qualitätsstandards zu gewährleisten.
+                                und den Nutzern über automatische Benachrichtigungen mitgeteilt – ohne zusätzliche Preise. 
+                                Jeder Eintrag wird vor Veröffentlichung von mindestens zwei unabhängigen Experten geprüft, 
+                                um höchste Qualitätsstandards zu gewährleisten.
+                            </p>
+                            <p class="mt-3">
+                                Die Details zur Qualitätssicherung und den Updatezyklen finden Sie in unserem öffentlich 
+                                einsehbaren Changelog. {{ $brandName }} garantiert, dass alle Inhalte innerhalb von 48 Stunden 
+                                nach Bekanntwerden relevanter Rechtsänderungen aktualisiert werden.
                             </p>
                         </div>
 
@@ -638,17 +694,34 @@ $schemaJson = json_encode([
                                 Sämtliche Daten werden ausschließlich auf ISO-27001-zertifizierten Servern in Deutschland gespeichert. 
                                 Die Übertragung erfolgt durchgängig verschlüsselt über TLS 1.3. Regelmäßige Penetrationstests durch 
                                 externe Sicherheitsexperten sowie ein Bug-Bounty-Programm gewährleisten ein Höchstmaß an Sicherheit. 
-                                Detaillierte Informationen zur Datenverarbeitung finden Sie in unserer Datenschutzerklärung.
+                                Detaillierte Informationen zur Datenverarbeitung und weitere technische Details finden Sie in unserer 
+                                Datenschutzerklärung. {{ $brandName }} nimmt den Schutz Ihrer Daten sehr ernst – ohne Aufpreis 
+                                in allen Tarifen inkludiert.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">Transparente Preisgestaltung ohne versteckte Kosten</h4>
+                            <p>
+                                Alle auf dieser Seite angegebenen Preise sind Endpreise zzgl. der gesetzlichen Mehrwertsteuer. 
+                                Es gibt keine versteckten Gebühren, Setup-Kosten oder Bindungsfristen. Sie können Ihr Abonnement 
+                                jederzeit zum Monatsende kündigen. Die Preise beinhalten bereits alle Standard-Funktionen, 
+                                regelmäßige Updates und E-Mail-Support.
+                            </p>
+                            <p class="mt-3">
+                                Bei {{ $brandName }} setzen wir auf maximale Transparenz. Alle Details zu den Preisen, 
+                                Laufzeiten und Kündigungsfristen finden Sie in unseren allgemeinen Geschäftsbedingungen. 
+                                Für individuelle Anforderungen erstellen wir gerne ein maßgeschneidertes Angebot.
                             </p>
                         </div>
 
                         <div class="bg-blue-50 rounded-xl p-6 border border-blue-100">
                             <h4 class="text-lg font-bold text-gray-800 mb-3">Wichtige rechtliche Hinweise</h4>
                             <p class="text-sm">
-                                Die auf {{ $tool->name }} bereitgestellten Informationen dienen ausschließlich zu allgemeinen Informationszwecken 
+                                Die auf dieser Plattform bereitgestellten Informationen dienen ausschließlich zu allgemeinen Informationszwecken 
                                 und stellen keine Rechtsberatung dar. Für individuelle rechtliche Fragestellungen empfehlen wir die Konsultation 
                                 eines qualifizierten Rechtsanwalts. Alle Angaben erfolgen nach bestem Wissen und Gewissen, jedoch ohne Gewähr 
-                                für Vollständigkeit, Richtigkeit und Aktualität.
+                                für Vollständigkeit, Richtigkeit und Aktualität. Weitere Details finden Sie in unserem Haftungsausschluss.
                             </p>
                         </div>
                     </div>
