@@ -100,6 +100,11 @@ $schemaJson = json_encode(
     <div class="py-16 bg-slate-50/50 relative overflow-hidden min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
+            {{-- ✅ H2 – Search Section --}}
+            <h2 class="sr-only">
+                Entwickler-Tools durchsuchen
+            </h2>
+
             {{-- SEARCH --}}
             <div class="mb-16">
                 <div class="bg-white rounded-[2.5rem] shadow p-10 border">
@@ -118,6 +123,11 @@ $schemaJson = json_encode(
                     </form>
                 </div>
             </div>
+
+            {{-- ✅ H2 – Tools Listing Section (CRITICAL FIX) --}}
+            <h2 class="sr-only">
+                Verfügbare Entwickler-Tools und Utilities
+            </h2>
 
             {{-- TOOLS GRID --}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -139,7 +149,7 @@ $schemaJson = json_encode(
                                 {{ $tool->description ?? 'Skalierbares Entwickler-Utility mit sicherer Infrastruktur.' }}
                             </p>
 
-                            {{-- PRICE (NO HEADING = NO DUPLICATE SEO ISSUE) --}}
+                            {{-- PRICE --}}
                             <div class="p-6 bg-slate-50 rounded-[1.5rem] border border-slate-100">
                                 <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
                                     Ab Preis
