@@ -3,7 +3,7 @@ use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
-| Schema.org Data (SAFE – no Blade parsing issues)
+| Schema.org Data
 |--------------------------------------------------------------------------
 */
 $schemaItems = [];
@@ -44,18 +44,18 @@ $schemaJson = json_encode(
 
 
 <x-app-layout
-    title="Entwickler-Tools & Utilities | DigitalPackt"
-    metaDescription="Entdecken Sie Premium Entwickler-Tools, skalierbare Utilities und professionelle Softwarelösungen für moderne digitale Projekte.">
+    title="Digital Packt – Professional SaaS Platform | Entwickler-Tools & Utilities"
+    metaDescription="Digital Packt ist eine professionelle SaaS-Plattform für Entwickler. Entdecken Sie Premium Development Tools, Utilities und skalierbare Softwarelösungen.">
 
     {{-- ===================== --}}
-    {{-- SEO H1 (ONLY ONE) --}}
+    {{-- SEO H1 --}}
     {{-- ===================== --}}
     <h1 class="sr-only">
-        Entwickler-Ökosystem entdecken – Premium Entwicklungs-Tools & Utilities
+        Explore the Developer Ecosystem – Premium Development Tools & Utilities
     </h1>
 
     {{-- ===================== --}}
-    {{-- Schema.org JSON-LD --}}
+    {{-- Schema.org --}}
     {{-- ===================== --}}
     @push('meta')
         <script type="application/ld+json">
@@ -69,7 +69,7 @@ $schemaJson = json_encode(
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20">
+                <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
                     <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
@@ -81,15 +81,9 @@ $schemaJson = json_encode(
                         Entwickler-Ökosystem entdecken
                     </h2>
                     <p class="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mt-1">
-                        Premium Entwicklungs-Utilities
+                        Premium Development Tools & Utilities
                     </p>
                 </div>
-            </div>
-
-            <div class="hidden sm:flex items-center px-4 py-2 bg-indigo-50 border border-indigo-100 rounded-xl">
-                <span class="text-sm font-black text-indigo-700">
-                    {{ $tools->total() }} verfügbare Utilities
-                </span>
             </div>
         </div>
     </x-slot>
@@ -97,16 +91,25 @@ $schemaJson = json_encode(
     {{-- ===================== --}}
     {{-- CONTENT --}}
     {{-- ===================== --}}
-    <div class="py-16 bg-slate-50/50 relative overflow-hidden min-h-screen">
+    <div class="py-16 bg-slate-50/50 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            {{-- ✅ H2 – Search Section --}}
-            <h2 class="sr-only">
-                Entwickler-Tools durchsuchen
-            </h2>
+            {{-- ✅ TEXT BLOCK 1 (CRITICAL SEO FIX) --}}
+            <section class="mb-12 max-w-4xl">
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    <strong>Digital Packt</strong> ist eine <strong>professionelle SaaS-Plattform</strong>,
+                    die ein modernes <strong>Developer Ecosystem</strong> bereitstellt.
+                    Hier finden Entwickler, Startups und Unternehmen leistungsstarke
+                    <strong>Development Tools und Utilities</strong>, um digitale Produkte
+                    effizient zu planen, zu entwickeln und zu skalieren.
+                </p>
+            </section>
+
+            {{-- ✅ H2 – Search --}}
+            <h2 class="sr-only">Development Tools durchsuchen</h2>
 
             {{-- SEARCH --}}
-            <div class="mb-16">
+            <div class="mb-12">
                 <div class="bg-white rounded-[2.5rem] shadow p-10 border">
                     <form method="GET" action="{{ route('tools.index') }}"
                           class="flex flex-col lg:flex-row gap-6">
@@ -117,77 +120,39 @@ $schemaJson = json_encode(
                                class="w-full pl-6 pr-6 py-5 bg-slate-50 border rounded-xl"/>
 
                         <button type="submit"
-                                class="px-12 py-5 bg-gray-900 text-white font-black rounded-xl hover:bg-blue-600 transition">
+                                class="px-12 py-5 bg-gray-900 text-white font-black rounded-xl">
                             Utility finden
                         </button>
                     </form>
                 </div>
             </div>
 
-            {{-- ✅ H2 – Tools Listing Section (CRITICAL FIX) --}}
-            <h2 class="sr-only">
-                Verfügbare Entwickler-Tools und Utilities
-            </h2>
+            {{-- ✅ TEXT BLOCK 2 --}}
+            <section class="mb-16 max-w-4xl">
+                <p class="text-gray-600 leading-relaxed">
+                    Alle Tools auf Digital Packt sind als professionelle SaaS-Lösungen konzipiert.
+                    Sie unterstützen Teams bei Innovation, Produktentwicklung, Compliance,
+                    Ideenmanagement und weiteren geschäftskritischen Prozessen innerhalb
+                    eines modernen Software-Ökosystems.
+                </p>
+            </section>
+
+            {{-- ✅ H2 – Tools Listing --}}
+            <h2 class="sr-only">Verfügbare Entwickler Tools & Utilities</h2>
 
             {{-- TOOLS GRID --}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                @forelse($tools as $tool)
-                    <article class="group bg-white rounded-[3rem] shadow-[0_10px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_60px_rgba(37,99,235,0.15)] transition-all">
-
-                        <div class="p-10">
-
-                            {{-- H3 --}}
-                            <h3 class="text-2xl font-black text-gray-900 mb-2">
-                                {{ $tool->name }}
-                            </h3>
-
-                            <p class="text-xs font-bold text-gray-400 mb-4">
-                                {{ $tool->domain }}
-                            </p>
-
-                            <p class="text-gray-500 mb-8 leading-relaxed">
-                                {{ $tool->description ?? 'Skalierbares Entwickler-Utility mit sicherer Infrastruktur.' }}
-                            </p>
-
-                            {{-- PRICE --}}
-                            <div class="p-6 bg-slate-50 rounded-[1.5rem] border border-slate-100">
-                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                                    Ab Preis
-                                </span>
-
-                                <div class="text-3xl font-black text-gray-900 mt-1">
-                                    @if($tool->packages->count())
-                                        €{{ number_format($tool->packages->min('price'), 2) }}
-                                    @else
-                                        Preis auf Anfrage
-                                    @endif
-                                </div>
-
-                                <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest">
-                                    {{ $tool->packages->count() }} Tarife
-                                </span>
-                            </div>
-
-                        </div>
-                    </article>
-                @empty
-                    <div class="col-span-3 text-center py-20 bg-white rounded-3xl border border-dashed">
-                        <h2 class="text-2xl font-black text-gray-900 mb-4">
-                            Keine Tools gefunden
-                        </h2>
-                        <p class="text-gray-500">
-                            Bitte versuchen Sie einen anderen Suchbegriff.
+                @foreach($tools as $tool)
+                    <article class="bg-white rounded-[3rem] shadow transition p-10">
+                        <h3 class="text-2xl font-black text-gray-900 mb-2">
+                            {{ $tool->name }}
+                        </h3>
+                        <p class="text-gray-500 mb-6">
+                            {{ $tool->description }}
                         </p>
-                    </div>
-                @endforelse
+                    </article>
+                @endforeach
             </div>
-
-            {{-- PAGINATION --}}
-            @if($tools->hasPages())
-                <div class="mt-20 flex justify-center">
-                    {{ $tools->links() }}
-                </div>
-            @endif
 
         </div>
     </div>
