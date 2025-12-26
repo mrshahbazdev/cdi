@@ -219,14 +219,14 @@ $schemaJson = json_encode(
 
                         <div class="px-12 pb-12 mt-auto">
                             @auth
-                                <a href="{{ route('user.subscriptions.checkout', $package) }}" 
+                                <!-- <a href="{{ route('user.subscriptions.checkout', $package) }}" 
                                    class="flex items-center justify-center w-full py-5 rounded-[1.5rem] font-black text-lg transition-all shadow-xl hover:-translate-y-1
                                    {{ $isLifetime ? 'bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-blue-500/25 hover:shadow-indigo-500/40' : 'bg-gray-900 text-white hover:bg-blue-600 shadow-gray-900/10' }}">
                                     Zugang freischalten 
                                     <svg class="w-5 h-5 ml-3 transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                     </svg>
-                                </a>
+                                </a> -->
                             @else
                                 <a href="{{ route('login') }}" 
                                    class="flex items-center justify-center w-full py-5 bg-slate-100 text-slate-600 rounded-[1.5rem] font-black text-lg hover:bg-blue-600 hover:text-white transition-all shadow-sm">
