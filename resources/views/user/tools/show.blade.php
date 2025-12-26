@@ -6,9 +6,11 @@ use Illuminate\Support\Str;
 | Dynamische SEO-Variablen (Verhindert Duplicate Content)
 |--------------------------------------------------------------------------
 */
+// Wir prüfen, ob eine Seitenzahl in der URL vorhanden ist (z.B. für Pakete-Pagination oder Listen)
 $currentPage = request()->get('page');
-$pageSuffix = $currentPage > 1 ? " – Seite $currentPage" : "";
+$pageSuffix = ($currentPage && $currentPage > 1) ? " – Seite $currentPage" : "";
 
+// Wir bauen den SEO Titel und die Beschreibung dynamisch auf
 $seoTitle = $tool->name . " – Professionelles Entwickler-Tool" . $pageSuffix . " | Digital Packt";
 $seoDescription = Str::limit(strip_tags($tool->description ?? 'Nutzen Sie diese Hochleistungs-Utility mit automatisierter Bereitstellung und API-Integration.'), 150) . $pageSuffix;
 
@@ -41,22 +43,28 @@ $schemaJson = json_encode(
 @endphp
 
 <x-app-layout
-    title="{{ $tool->name }} – Spezifikationen, Lizenzen und Enterprise-Lösungen {{ $pageSuffix }}"
-    :metaTitle="$seoTitle"
-    :metaDescription="$seoDescription"
-    :canonical="route('tools.show', $tool)"
-    robots="index, follow">
+    :title="$seoTitle"
+    :metaDescription="$seoDescription">
 
-    {{-- ✅ SEO & Schema --}}
+    {{-- ✅ SEO & Schema STEUERUNG --}}
     @push('meta')
-        {{-- Canonical URL zeigt immer auf die saubere Basis-URL ohne Query-Strings, um Duplikate zu vermeiden --}}
-        <link rel="canonical" href="{{ route('tools.show', $tool) }}">
+        <title>{{ $seoTitle }}</title>
+        <meta name="description" content="{{ $seoDescription }}">
+        
+        {{-- Der Canonical Link verhindert, dass /tools/2 als Duplikat von /tools gewertet wird --}}
+        <link rel="canonical" href="{{ url()->current() }}">
+        
+        {{-- Open Graph für Social Media --}}
+        <meta property="og:title" content="{{ $seoTitle }}">
+        <meta property="og:description" content="{{ $seoDescription }}">
+        <meta property="og:url" content="{{ url()->current() }}">
+
         <script type="application/ld+json">
         {!! $schemaJson !!}
         </script>
     @endpush
 
-    {{-- ✅ H1 für SEO (Hidden, aber für Crawler wichtig) --}}
+    {{-- ✅ H1 für SEO (Hidden, für Google extrem wichtig) --}}
     <h1 class="sr-only">
         {{ $tool->name }} – Spezifikationen, Lizenzen und Enterprise-Lösungen {{ $pageSuffix }}
     </h1>
@@ -119,7 +127,7 @@ $schemaJson = json_encode(
                         </div>
                         
                         <p class="text-xl text-gray-500 font-medium leading-relaxed mb-10 max-w-4xl">
-                            {{ $tool->description ?? 'Nutzen Sie diese Hochleistungs-Utility auf Ihrer eigenen Subdomain mit automatisierter Bereitstellung, modernsten Sicherheitsstandards und nahtloser API-Integration.' }}
+                            {{ $tool->description ?? 'Nutzen Sie diese Hochleistungs-Utility auf Ihrer eigenen Subdomain.' }}
                         </p>
 
                         <div class="flex flex-wrap items-center justify-center lg:justify-start gap-6">
@@ -164,53 +172,21 @@ $schemaJson = json_encode(
                     <div class="group relative bg-white rounded-[3rem] shadow-[0_10px_40px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_70px_rgba(37,99,235,0.15)] transition-all duration-500 border-2 flex flex-col 
                         {{ $isLifetime ? 'border-indigo-600 ring-8 ring-indigo-500/5' : 'border-transparent hover:border-blue-100' }}">
                         
-                        @if($isLifetime)
-                            <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-700 text-white text-[11px] font-black px-8 py-2 rounded-full uppercase tracking-[0.2em] shadow-2xl">
-                                Empfohlen
-                            </div>
-                        @endif
-
                         <div class="p-12 flex-1">
-                            <div class="mb-10 flex justify-between items-start">
-                                <div class="w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-inner
-                                    {{ $isTrial ? 'bg-orange-50 text-orange-600' : ($isLifetime ? 'bg-indigo-600 text-white shadow-indigo-200' : 'bg-blue-50 text-blue-600') }}">
-                                    @if($isTrial)
-                                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                    @elseif($isLifetime)
-                                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                                    @else
-                                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
-                                    @endif
-                                </div>
-                                <span class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-blue-600 transition-colors">
-                                    {{ $displayDuration }}
-                                </span>
-                            </div>
-
                             <h3 class="text-3xl font-black text-gray-900 mb-2">{{ $package->name }}</h3>
-                            
                             <div class="mb-10">
-                                <div class="flex items-baseline">
-                                    <span class="text-5xl font-black text-gray-900 tracking-tighter">€{{ number_format($package->price, 2) }}</span>
-                                    <span class="ml-2 text-slate-400 font-bold text-sm italic">
-                                        @if($isLifetime) / dauerhaft
-                                        @elseif($isTrial) / Testphase
-                                        @else / {{ $package->duration_value }} {{ $displayDuration }}
-                                        @endif
-                                    </span>
-                                </div>
+                                <span class="text-5xl font-black text-gray-900 tracking-tighter">€{{ number_format($package->price, 2) }}</span>
+                                <span class="text-slate-400 font-bold">/ {{ $displayDuration }}</span>
                             </div>
 
                             @if($package->features)
                                 <ul class="space-y-5 mb-10">
                                     @foreach($package->features as $feature)
                                         <li class="flex items-start">
-                                            <div class="shrink-0 w-6 h-6 rounded-full bg-green-50 flex items-center justify-center mr-4 mt-0.5 group-hover:bg-green-500 transition-colors">
-                                                <svg class="h-3.5 w-3.5 text-green-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7" />
-                                                </svg>
+                                            <div class="shrink-0 w-6 h-6 rounded-full bg-green-50 flex items-center justify-center mr-4 mt-0.5">
+                                                <svg class="h-3.5 w-3.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7" /></svg>
                                             </div>
-                                            <span class="text-sm font-bold text-slate-600 group-hover:text-gray-900 transition-colors leading-tight">{{ $feature }}</span>
+                                            <span class="text-sm font-bold text-slate-600">{{ $feature }}</span>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -219,39 +195,30 @@ $schemaJson = json_encode(
 
                         <div class="px-12 pb-12 mt-auto">
                             @auth
-                                <!-- <a href="{{ route('user.subscriptions.checkout', $package) }}" 
-                                   class="flex items-center justify-center w-full py-5 rounded-[1.5rem] font-black text-lg transition-all shadow-xl hover:-translate-y-1
-                                   {{ $isLifetime ? 'bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-blue-500/25 hover:shadow-indigo-500/40' : 'bg-gray-900 text-white hover:bg-blue-600 shadow-gray-900/10' }}">
+                                <a href="{{ route('user.subscriptions.checkout', $package) }}" 
+                                   class="flex items-center justify-center w-full py-5 rounded-[1.5rem] font-black text-lg transition-all shadow-xl
+                                   {{ $isLifetime ? 'bg-gradient-to-r from-blue-600 to-indigo-700 text-white' : 'bg-gray-900 text-white' }}">
                                     Zugang freischalten 
-                                    <svg class="w-5 h-5 ml-3 transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                    </svg>
-                                </a> -->
+                                </a>
                             @else
-                                <a href="{{ route('login') }}" 
-                                   class="flex items-center justify-center w-full py-5 bg-slate-100 text-slate-600 rounded-[1.5rem] font-black text-lg hover:bg-blue-600 hover:text-white transition-all shadow-sm">
+                                <a href="{{ route('login') }}" class="flex items-center justify-center w-full py-5 bg-slate-100 text-slate-600 rounded-[1.5rem] font-black text-lg">
                                     Anmelden zum Lizenzieren
                                 </a>
                             @endauth
                         </div>
                     </div>
                 @empty
-                    <div class="col-span-full py-24 text-center">
-                        <div class="bg-white rounded-[3rem] p-20 border-2 border-dashed border-slate-200">
-                            <h3 class="text-3xl font-black text-slate-400">Aktuell keine Pläne für diese Utility verfügbar.</h3>
-                        </div>
-                    </div>
+                    <div class="col-span-full py-12 text-center text-slate-400 font-bold">Aktuell keine Pläne verfügbar.</div>
                 @endforelse
             </div>
 
             {{-- Support Sektion --}}
-            <div class="bg-gray-950 rounded-[3.5rem] p-12 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-10 shadow-2xl shadow-indigo-900/20 relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+            <div class="bg-gray-950 rounded-[3.5rem] p-12 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-10 shadow-2xl relative overflow-hidden">
                 <div class="text-center lg:text-left relative z-10">
-                    <h4 class="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">Individuelle Lösung?</h4>
-                    <p class="text-xl text-slate-400 font-medium">Kontaktieren Sie uns für spezielle Deployments.</p>
+                    <h4 class="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">Benötigen Sie Hilfe?</h4>
+                    <p class="text-xl text-slate-400 font-medium">Kontaktieren Sie unser Architektur-Team.</p>
                 </div>
-                <a href="mailto:sales@digitalpackt.com" class="px-12 py-5 bg-white text-gray-950 rounded-[1.5rem] font-black text-lg hover:bg-blue-50 transition-all shadow-xl hover:-translate-y-1 shrink-0 relative z-10 flex items-center">
+                <a href="mailto:sales@digitalpackt.com" class="px-12 py-5 bg-white text-gray-950 rounded-[1.5rem] font-black text-lg shadow-xl shrink-0">
                     Kontakt aufnehmen
                 </a>
             </div>
