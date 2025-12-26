@@ -44,7 +44,7 @@ $schemaJson = json_encode([
 
 {{-- ✅ Überschreibt @yield('title') in deinem Layout --}}
 @section('title', $seoTitle)
-
+@section('metaDescription', $seoDescription)
 <x-app-layout :metaDescription="$seoDescription">
 
     {{-- ✅ SEO-Header-Steuerung --}}
