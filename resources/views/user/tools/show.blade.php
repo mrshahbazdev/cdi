@@ -84,7 +84,7 @@ $schemaJson = json_encode(
                     <div class="shrink-0">
                         <div class="w-48 h-48 bg-gradient-to-br from-slate-50 to-blue-50 border-4 border-white rounded-[2.5rem] flex items-center justify-center shadow-2xl shadow-blue-500/10 relative">
                             @if($tool->logo)
-                                <img src="{{ Storage::url($tool->logo) }}" alt="{{ $tool->name }}" class="h-28 w-28 object-contain">
+                                <img src="{{ url('/tool-logo/' . basename($tool->logo)) }}" alt="{{ $tool->name }}" class="h-28 w-28 object-contain">
                             @else
                                 <span class="text-6xl font-black text-blue-600">{{ strtoupper(substr($tool->name, 0, 1)) }}</span>
                             @endif
