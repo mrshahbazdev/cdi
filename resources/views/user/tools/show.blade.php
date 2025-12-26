@@ -41,8 +41,11 @@ $schemaJson = json_encode(
 @endphp
 
 <x-app-layout
-    :title="{{ $tool->name }} – Spezifikationen, Lizenzen und Enterprise-Lösungen {{ $pageSuffix }}" :metaTitle="$seoTitle"
-    :metaDescription="{{ $seoDescription }}" :canonical="route('tools.show', $tool)" :robots="index, follow">
+    title="{{ $tool->name }} – Spezifikationen, Lizenzen und Enterprise-Lösungen {{ $pageSuffix }}"
+    :metaTitle="$seoTitle"
+    :metaDescription="$seoDescription"
+    :canonical="route('tools.show', $tool)"
+    robots="index, follow">
 
     {{-- ✅ SEO & Schema --}}
     @push('meta')
