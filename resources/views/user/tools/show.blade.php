@@ -3,37 +3,34 @@ use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
-| SEO-Optimierung mit dynamischer Keyword-Differenzierung
+| SEO-Optimierung mit vollständiger Keyword-Integration
 |--------------------------------------------------------------------------
 */
 $currentPage = request()->get('page');
 $pageSuffix = ($currentPage && $currentPage > 1) ? " (S.$currentPage)" : "";
 
-// Dynamische Keyword-Varianz je Tool-ID (verhindert Kannibalisierung)
+// Dynamische Keyword-Varianz je Tool-ID
 $uniqueKeywords = [
     'title_primary' => 'Funktionen & Lizenzierung',
-    'title_secondary' => 'Compliance-Lösung & Tarife',
-    'h1_keyword' => 'Technische Spezifikationen',
-    'description_focus' => 'rechtliche Compliance-Begriffe'
+    'title_secondary' => 'Technische Spezifikationen',
+    'h1_keyword' => 'Funktionsumfang & Features',
+    'description_focus' => 'rechtliche Compliance-Begriffe',
+    'main_keyword' => 'Compliance-Software'
 ];
 
-// Alternative Keywords für bessere Differenzierung
 if ($tool->id % 2 == 0) {
     $uniqueKeywords = [
         'title_primary' => 'Compliance-Lösung & Tarife',
         'title_secondary' => 'Rechtssichere Dokumentation',
         'h1_keyword' => 'Vollständige Produktdetails',
-        'description_focus' => 'Compliance-Management in Deutschland'
+        'description_focus' => 'Compliance-Management in Deutschland',
+        'main_keyword' => 'Compliance-Lösung'
     ];
 }
 
-// SEO-Titel ohne "Details & Preise" (zu generisch)
-$seoTitle = $tool->name . " – " . $uniqueKeywords['title_primary'] . $pageSuffix;
-
+$seoTitle = $tool->name . " – " . $uniqueKeywords['title_primary'];
 $rawDescription = $tool->description ?? "Informationen zu $tool->name – " . $uniqueKeywords['description_focus'];
 $seoDescription = Str::limit(strip_tags($rawDescription), 140) . $pageSuffix;
-
-// Brand-Name nur in Schema, nicht im Title
 $brandName = "Digital Packt";
 
 $schemaJson = json_encode([
@@ -61,7 +58,7 @@ $schemaJson = json_encode([
 ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 @endphp
 
-@section('title', $seoTitle)
+@section('title', $seoTitle . ' – ' . $brandName)
 @section('meta_description', $seoDescription)
 
 <x-app-layout>
@@ -70,7 +67,7 @@ $schemaJson = json_encode([
         <script type="application/ld+json">{!! $schemaJson !!}</script>
     @endpush
 
-    {{-- SEO H1 mit unique Keywords --}}
+    {{-- SEO H1 mit ALLEN Keywords --}}
     <h1 class="sr-only">{{ $tool->name }} – {{ $uniqueKeywords['h1_keyword'] }}, Lizenzmodelle und Funktionsumfang {{ $pageSuffix }}</h1>
 
     <x-slot name="header">
@@ -96,7 +93,7 @@ $schemaJson = json_encode([
     <div class="py-16 bg-slate-50/50 relative min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             
-            {{-- Tool Info --}}
+            {{-- Tool Info mit ALLEN Title-Keywords --}}
             <article class="bg-white rounded-[3rem] shadow-sm p-10 md:p-16 border border-white mb-10">
                 <div class="flex flex-col lg:flex-row gap-12 items-center lg:items-start">
                     <div class="shrink-0">
@@ -122,12 +119,18 @@ $schemaJson = json_encode([
                             {{ $tool->description }}
                         </div>
                         
-                        {{-- Einleitungstext mit unique Keywords --}}
+                        {{-- ✅ WICHTIG: Einleitungstext mit ALLEN Title- und H1-Keywords --}}
                         <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100">
+                            <p class="text-gray-700 leading-relaxed mb-4">
+                                <strong>{{ $brandName }}</strong> präsentiert Ihnen auf dieser Seite 
+                                <strong>{{ $uniqueKeywords['h1_keyword'] }}</strong> zu {{ $tool->name }} – 
+                                einer professionellen <strong>{{ $uniqueKeywords['main_keyword'] }}</strong> für Unternehmen in Deutschland.
+                            </p>
                             <p class="text-gray-700 leading-relaxed">
-                                Auf dieser Seite finden Sie alle wichtigen <strong>Informationen</strong> zu {{ $tool->name }}: 
-                                {{ $uniqueKeywords['description_focus'] }}. Die Plattform wurde speziell für 
-                                Unternehmen entwickelt, die im deutschen Rechtsraum tätig sind. Mit umfassender Dokumentation, 
+                                Hier finden Sie alle wichtigen <strong>Produktdetails</strong>, transparente <strong>Tarife</strong> 
+                                und eine <strong>vollständige</strong> Übersicht zu den verfügbaren <strong>Lizenzmodellen</strong>. 
+                                Der <strong>Funktionsumfang</strong> umfasst {{ $uniqueKeywords['description_focus'] }} 
+                                und wurde speziell für den deutschen Rechtsraum entwickelt. Mit umfassender Dokumentation, 
                                 regelmäßigen Updates und professionellem Support erhalten Sie eine verlässliche Lösung 
                                 für Ihre Compliance-Anforderungen.
                             </p>
@@ -136,26 +139,32 @@ $schemaJson = json_encode([
                 </div>
             </article>
 
-            {{-- Erweiterte Inhaltsblöcke --}}
+            {{-- Erweiterte Inhaltsblöcke mit H1-Keywords --}}
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
                 
-                {{-- Block 1: Technische Analyse --}}
+                {{-- Block 1: Produktdetails & Funktionsumfang (H1-Keywords) --}}
                 <article class="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm">
                     <h3 class="text-2xl font-black text-gray-900 mb-6">
-                        Technische Spezifikationen & Funktionsumfang
+                        Produktdetails & Funktionsumfang im Überblick
                     </h3>
                     <div class="text-gray-600 leading-relaxed space-y-4">
                         <p>
-                            Die Nutzung von {{ $tool->name }} bietet Unternehmen und Fachanwendern eine strukturierte Grundlage 
-                            für effiziente und rechtssichere Prozesse. Hier erhalten Sie alle relevanten 
-                            technischen Informationen sowie eine übersichtliche Darstellung der verfügbaren Funktionen 
-                            und Lizenzmodelle.
+                            Die Nutzung von <strong>{{ $tool->name }}</strong> bietet Unternehmen und Fachanwendern eine strukturierte 
+                            Grundlage für effiziente und rechtssichere Prozesse. Auf dieser Seite erhalten Sie 
+                            <strong>vollständige Produktdetails</strong> sowie eine übersichtliche Darstellung des gesamten 
+                            <strong>Funktionsumfangs</strong>.
                         </p>
                         <p>
-                            Besonders im Bereich der <strong>{{ $uniqueKeywords['description_focus'] }}</strong> setzt die Lösung neue Maßstäbe. 
-                            Die verfügbaren Tarife sind darauf ausgelegt, sowohl für Einzelprojekte als auch für 
-                            skalierende Unternehmen in Deutschland maximale Transparenz und Flexibilität zu gewährleisten. 
-                            Jedes Paket beinhaltet umfassende Dokumentation, Support-Leistungen und regelmäßige Updates.
+                            Die verfügbaren <strong>Lizenzmodelle</strong> sind flexibel gestaltet und decken unterschiedliche 
+                            Anforderungen ab – von Einzellizenzen bis hin zu Unternehmenslizenzen. Jedes Modell beinhaltet 
+                            eine transparente Darstellung der <strong>Tarife</strong> und Leistungen, sodass Sie das für Ihre 
+                            Organisation passende Angebot wählen können.
+                        </p>
+                        <p>
+                            Besonders im Bereich der <strong>{{ $uniqueKeywords['description_focus'] }}</strong> setzt 
+                            diese <strong>{{ $uniqueKeywords['main_keyword'] }}</strong> neue Maßstäbe. Die hier aufgeführten 
+                            <strong>Tarife</strong> sind darauf ausgelegt, sowohl für Einzelprojekte als auch für 
+                            skalierende Unternehmen in Deutschland maximale Transparenz und Flexibilität zu gewährleisten.
                         </p>
                         <p>
                             Die Plattform unterstützt Unternehmen dabei, gesetzliche Vorgaben wie das Lieferkettensorgfaltspflichtengesetz (LkSG), 
@@ -163,107 +172,155 @@ $schemaJson = json_encode([
                             Erklärungen und Fallbeispielen aus der deutschen Rechtsprechung erhalten Sie eine verlässliche Wissensquelle.
                         </p>
                         <p>
-                            {{ $brandName }} stellt sicher, dass alle bereitgestellten Inhalte höchsten Qualitätsansprüchen genügen 
-                            und kontinuierlich aktualisiert werden. Ein Team aus Fachjuristen überwacht die Rechtsentwicklung 
-                            und pflegt Änderungen zeitnah ein.
+                            <strong>{{ $brandName }}</strong> stellt sicher, dass alle bereitgestellten <strong>Produktdetails</strong> 
+                            höchsten Qualitätsansprüchen genügen und kontinuierlich aktualisiert werden. Ein Team aus Fachjuristen 
+                            überwacht die Rechtsentwicklung und pflegt Änderungen zeitnah ein, damit Sie stets über den aktuellen 
+                            Stand der Gesetzgebung informiert sind.
                         </p>
                     </div>
                 </article>
 
-                {{-- Block 2: Häufige Fragen (FAQ) --}}
+                {{-- Block 2: Lizenzmodelle & Tarife (Title-Keywords) --}}
                 <article class="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm">
                     <h3 class="text-2xl font-black text-gray-900 mb-6">
-                        Häufig gestellte Fragen zu {{ $tool->name }}
+                        Lizenzmodelle & Tarife im Detail
                     </h3>
-                    <div class="space-y-4">
-                        <details class="group border-b border-slate-100 pb-4">
-                            <summary class="list-none font-bold text-gray-800 cursor-pointer flex justify-between items-center hover:text-blue-600 transition">
-                                Welche Funktionen umfasst {{ $tool->name }}?
-                                <span class="text-blue-600 group-open:rotate-180 transition-transform text-2xl">+</span>
-                            </summary>
-                            <div class="text-gray-600 text-sm mt-4 leading-relaxed space-y-2">
-                                <p>
-                                    Die Plattform bietet eine spezialisierte Lösung zur systematischen Aufbereitung komplexer Daten 
-                                    und rechtlicher Compliance-Begriffe, die speziell für den deutschen Markt optimiert wurde. 
-                                    Der Funktionsumfang umfasst technische Spezifikationen, Anwendungsbeispiele, rechtliche Grundlagen 
-                                    und Integrationsmöglichkeiten.
-                                </p>
-                                <p>
-                                    Die Lösung zeichnet sich durch ihre benutzerfreundliche Oberfläche, umfassende Suchfunktionen 
-                                    und regelmäßige Aktualisierungen aus. Unternehmen profitieren von klaren Definitionen, praktischen 
-                                    Anwendungsbeispielen und direktem Zugang zu relevantem Fachwissen.
-                                </p>
-                            </div>
-                        </details>
-
-                        <details class="group border-b border-slate-100 pb-4">
-                            <summary class="list-none font-bold text-gray-800 cursor-pointer flex justify-between items-center hover:text-blue-600 transition">
-                                Wie sind die Lizenzmodelle strukturiert?
-                                <span class="text-blue-600 group-open:rotate-180 transition-transform text-2xl">+</span>
-                            </summary>
-                            <div class="text-gray-600 text-sm mt-4 leading-relaxed space-y-2">
-                                <p>
-                                    Die Lizenzierung ist transparent und fair kalkuliert. Je nach gewähltem Tarif erhalten Sie 
-                                    unterschiedliche Leistungsumfänge – von Basis-Zugang bis hin zu Premium-Features mit 
-                                    Priority-Support. Alle Konditionen verstehen sich zzgl. der gesetzlichen Mehrwertsteuer.
-                                </p>
-                                <p>
-                                    Bei {{ $brandName }} gibt es keine versteckten Kosten. Die angegebenen Konditionen beinhalten bereits 
-                                    alle Standard-Leistungen wie regelmäßige Updates, Dokumentation und E-Mail-Support. 
-                                    Premium-Tarife umfassen zusätzlich API-Zugriff und dedizierten Account-Support.
-                                </p>
-                            </div>
-                        </details>
-
-                        <details class="group border-b border-slate-100 pb-4">
-                            <summary class="list-none font-bold text-gray-800 cursor-pointer flex justify-between items-center hover:text-blue-600 transition">
-                                Für wen eignet sich {{ $tool->name }}?
-                                <span class="text-blue-600 group-open:rotate-180 transition-transform text-2xl">+</span>
-                            </summary>
-                            <div class="text-gray-600 text-sm mt-4 leading-relaxed space-y-2">
-                                <p>
-                                    Die Lösung richtet sich primär an Compliance-Beauftragte, Rechtsabteilungen, Geschäftsführer 
-                                    und alle Fachkräfte, die sich mit regulatorischen Anforderungen in Deutschland auseinandersetzen müssen.
-                                </p>
-                                <p>
-                                    Auch kleine und mittlere Unternehmen (KMU) profitieren von der übersichtlichen Darstellung 
-                                    komplexer rechtlicher Zusammenhänge und können so Compliance-Risiken minimieren – mit 
-                                    flexiblen Lizenzmodellen ohne langfristige Bindung.
-                                </p>
-                            </div>
-                        </details>
-
-                        <details class="group">
-                            <summary class="list-none font-bold text-gray-800 cursor-pointer flex justify-between items-center hover:text-blue-600 transition">
-                                Wie werden Updates bereitgestellt?
-                                <span class="text-blue-600 group-open:rotate-180 transition-transform text-2xl">+</span>
-                            </summary>
-                            <div class="text-gray-600 text-sm mt-4 leading-relaxed space-y-2">
-                                <p>
-                                    Alle Nutzer erhalten automatische Updates zu neuen Gesetzen, Verordnungen und rechtlichen Entwicklungen. 
-                                    Die Updates werden in Echtzeit in die Plattform integriert und per E-Mail-Benachrichtigung kommuniziert – 
-                                    ohne zusätzliche Gebühren.
-                                </p>
-                                <p>
-                                    Premium-Nutzer erhalten zusätzlich monatliche Newsletter mit detaillierten Analysen und 
-                                    Handlungsempfehlungen zu relevanten Rechtsänderungen. {{ $brandName }} garantiert, dass 
-                                    alle Inhalte stets aktuell und rechtssicher sind.
-                                </p>
-                            </div>
-                        </details>
+                    <div class="text-gray-600 leading-relaxed space-y-4">
+                        <p>
+                            Die <strong>Lizenzmodelle</strong> von {{ $tool->name }} wurden speziell entwickelt, um 
+                            unterschiedlichen Unternehmensgrößen und Anforderungen gerecht zu werden. Jedes Modell 
+                            bietet einen klar definierten <strong>Funktionsumfang</strong> mit transparenten <strong>Tarifen</strong>.
+                        </p>
+                        <p>
+                            Als professionelle <strong>{{ $uniqueKeywords['main_keyword'] }}</strong> bei <strong>{{ $brandName }}</strong> 
+                            garantiert {{ $tool->name }} höchste Qualitätsstandards. Die <strong>Tarife</strong> sind fair kalkuliert 
+                            und beinhalten bereits alle wesentlichen Funktionen wie regelmäßige Updates, technischen Support und 
+                            Zugang zu allen Compliance-Ressourcen.
+                        </p>
+                        <p>
+                            Die verschiedenen <strong>Lizenzmodelle</strong> umfassen:
+                        </p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Basis-Lizenz:</strong> Idealer Einstieg mit allen wichtigen <strong>Produktdetails</strong> und Grundfunktionen</li>
+                            <li><strong>Professional-Lizenz:</strong> Erweiterter <strong>Funktionsumfang</strong> mit API-Zugriff und Priority-Support</li>
+                            <li><strong>Enterprise-Lizenz:</strong> <strong>Vollständige</strong> Integration mit individuellen Anpassungen und dedizierten Account-Manager</li>
+                        </ul>
+                        <p>
+                            Alle <strong>Tarife</strong> verstehen sich zzgl. der gesetzlichen Mehrwertsteuer und können 
+                            monatlich oder jährlich abgerechnet werden. Bei <strong>{{ $brandName }}</strong> gibt es 
+                            keine versteckten Kosten – die angegebenen <strong>Tarife</strong> sind transparent und final.
+                        </p>
                     </div>
                 </article>
             </div>
 
-            {{-- Funktionsbereich --}}
+            {{-- FAQ mit allen Keywords --}}
+            <div class="bg-white rounded-[2.5rem] p-10 md:p-16 border border-slate-100 shadow-sm mb-16">
+                <h3 class="text-3xl font-black text-gray-900 mb-8 text-center">
+                    Häufig gestellte Fragen zu {{ $tool->name }}
+                </h3>
+                <div class="space-y-4 max-w-4xl mx-auto">
+                    <details class="group border-b border-slate-100 pb-4">
+                        <summary class="list-none font-bold text-gray-800 cursor-pointer flex justify-between items-center hover:text-blue-600 transition">
+                            Welche Produktdetails umfasst {{ $tool->name }}?
+                            <span class="text-blue-600 group-open:rotate-180 transition-transform text-2xl">+</span>
+                        </summary>
+                        <div class="text-gray-600 text-sm mt-4 leading-relaxed space-y-2">
+                            <p>
+                                Die <strong>Produktdetails</strong> von {{ $tool->name }} umfassen eine <strong>vollständige</strong> 
+                                Dokumentation aller Funktionen, technischen Spezifikationen und Integrationsmöglichkeiten. 
+                                Als <strong>{{ $uniqueKeywords['main_keyword'] }}</strong> von <strong>{{ $brandName }}</strong> 
+                                bietet die Plattform einen umfassenden <strong>Funktionsumfang</strong> für die Verwaltung 
+                                rechtlicher Compliance-Anforderungen.
+                            </p>
+                            <p>
+                                Zu den detaillierten <strong>Produktdetails</strong> gehören: Systemanforderungen, 
+                                Datenbankstrukturen, API-Dokumentation, Sicherheitszertifikate und Compliance-Standards. 
+                                Der <strong>Funktionsumfang</strong> wird regelmäßig erweitert und alle Änderungen werden 
+                                in den <strong>Produktdetails</strong> dokumentiert.
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="group border-b border-slate-100 pb-4">
+                        <summary class="list-none font-bold text-gray-800 cursor-pointer flex justify-between items-center hover:text-blue-600 transition">
+                            Wie sind die Lizenzmodelle und Tarife strukturiert?
+                            <span class="text-blue-600 group-open:rotate-180 transition-transform text-2xl">+</span>
+                        </summary>
+                        <div class="text-gray-600 text-sm mt-4 leading-relaxed space-y-2">
+                            <p>
+                                Die <strong>Lizenzmodelle</strong> von {{ $tool->name }} sind transparent und fair kalkuliert. 
+                                Die <strong>Tarife</strong> richten sich nach dem gewählten <strong>Funktionsumfang</strong> 
+                                und der Anzahl der Nutzer. Bei <strong>{{ $brandName }}</strong> erhalten Sie für jeden 
+                                <strong>Tarif</strong> eine <strong>vollständige</strong> Aufstellung aller inkludierten Leistungen.
+                            </p>
+                            <p>
+                                Die verschiedenen <strong>Lizenzmodelle</strong> unterscheiden sich hauptsächlich im 
+                                <strong>Funktionsumfang</strong>, Support-Level und in den Integrationsmöglichkeiten. 
+                                Alle <strong>Tarife</strong> beinhalten jedoch Basis-Features wie Updates, Dokumentation 
+                                und E-Mail-Support. Die <strong>Produktdetails</strong> zu jedem <strong>Lizenzmodell</strong> 
+                                finden Sie weiter unten auf dieser Seite.
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="group border-b border-slate-100 pb-4">
+                        <summary class="list-none font-bold text-gray-800 cursor-pointer flex justify-between items-center hover:text-blue-600 transition">
+                            Welchen Funktionsumfang bietet die Compliance-Lösung?
+                            <span class="text-blue-600 group-open:rotate-180 transition-transform text-2xl">+</span>
+                        </summary>
+                        <div class="text-gray-600 text-sm mt-4 leading-relaxed space-y-2">
+                            <p>
+                                Der <strong>Funktionsumfang</strong> dieser <strong>{{ $uniqueKeywords['main_keyword'] }}</strong> 
+                                ist umfassend und deckt alle wichtigen Bereiche ab: Begriffsdatenbank, Suchfunktionen, 
+                                Exportmöglichkeiten, Team-Collaboration, API-Zugriff und vieles mehr. Die <strong>vollständige</strong> 
+                                Liste aller Features finden Sie in den <strong>Produktdetails</strong> der jeweiligen 
+                                <strong>Lizenzmodelle</strong>.
+                            </p>
+                            <p>
+                                Je nach gewähltem <strong>Lizenzmodell</strong> variiert der <strong>Funktionsumfang</strong>. 
+                                Die Premium-<strong>Tarife</strong> bieten erweiterte Features wie Priority-Support, 
+                                API-Zugriff und dedizierte Account-Manager. <strong>{{ $brandName }}</strong> stellt 
+                                sicher, dass der <strong>Funktionsumfang</strong> kontinuierlich erweitert wird.
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="group">
+                        <summary class="list-none font-bold text-gray-800 cursor-pointer flex justify-between items-center hover:text-blue-600 transition">
+                            Sind die Tarife bei Digital Packt transparent?
+                            <span class="text-blue-600 group-open:rotate-180 transition-transform text-2xl">+</span>
+                        </summary>
+                        <div class="text-gray-600 text-sm mt-4 leading-relaxed space-y-2">
+                            <p>
+                                Ja, <strong>{{ $brandName }}</strong> legt großen Wert auf Transparenz. Alle <strong>Tarife</strong> 
+                                sind klar strukturiert und enthalten keine versteckten Kosten. Die <strong>Produktdetails</strong> 
+                                zu jedem <strong>Lizenzmodell</strong> zeigen genau, welche Leistungen im jeweiligen 
+                                <strong>Tarif</strong> enthalten sind.
+                            </p>
+                            <p>
+                                Die <strong>Tarife</strong> verstehen sich zzgl. der gesetzlichen Mehrwertsteuer und 
+                                können monatlich oder jährlich abgerechnet werden. Der <strong>vollständige</strong> 
+                                <strong>Funktionsumfang</strong> jedes <strong>Lizenzmodells</strong> ist in den 
+                                <strong>Produktdetails</strong> dokumentiert. Bei Fragen zu den <strong>Tarifen</strong> 
+                                steht Ihnen das Support-Team von <strong>{{ $brandName }}</strong> jederzeit zur Verfügung.
+                            </p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            {{-- Funktionsbereich mit Keywords --}}
             <section class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-[3rem] p-10 md:p-16 mb-16 border border-blue-100">
                 <div class="text-center mb-12">
                     <h3 class="text-3xl font-black text-gray-900 mb-4">
-                        Kernfunktionen von {{ $tool->name }}
+                        Vollständiger Funktionsumfang der Compliance-Lösung
                     </h3>
                     <p class="text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                        Entdecken Sie die umfassenden Funktionen, die {{ $tool->name }} zur führenden Compliance-Plattform 
-                        für den deutschen Markt machen. Jede Funktion wurde sorgfältig entwickelt, um Ihre tägliche Arbeit zu erleichtern.
+                        Entdecken Sie den umfassenden <strong>Funktionsumfang</strong>, der {{ $tool->name }} zur führenden 
+                        <strong>{{ $uniqueKeywords['main_keyword'] }}</strong> bei <strong>{{ $brandName }}</strong> macht. 
+                        Jede Funktion wurde sorgfältig entwickelt und ist in den <strong>Produktdetails</strong> der jeweiligen 
+                        <strong>Lizenzmodelle</strong> beschrieben.
                     </p>
                 </div>
 
@@ -274,10 +331,11 @@ $schemaJson = json_encode([
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                         </div>
-                        <h4 class="text-xl font-black text-gray-900 mb-3">Umfassende Dokumentation</h4>
+                        <h4 class="text-xl font-black text-gray-900 mb-3">Vollständige Dokumentation</h4>
                         <p class="text-gray-600 leading-relaxed text-sm">
-                            Zugriff auf über 5.000 rechtliche Begriffe und Definitionen mit Praxisbeispielen, 
-                            Querverweisen und aktuellen Rechtsprechungen aus Deutschland.
+                            Zugriff auf über 5.000 rechtliche Begriffe und Definitionen mit Praxisbeispielen. 
+                            Die <strong>Produktdetails</strong> umfassen Querverweise und aktuelle Rechtsprechungen 
+                            aus Deutschland – Teil des umfassenden <strong>Funktionsumfangs</strong>.
                         </p>
                     </div>
 
@@ -289,8 +347,9 @@ $schemaJson = json_encode([
                         </div>
                         <h4 class="text-xl font-black text-gray-900 mb-3">Intelligente Suchfunktion</h4>
                         <p class="text-gray-600 leading-relaxed text-sm">
-                            Finden Sie binnen Sekunden relevante Informationen dank KI-gestützter Suche mit 
-                            Synonymerkennung, Filteroptionen und thematischer Kategorisierung.
+                            Finden Sie binnen Sekunden relevante Informationen dank KI-gestützter Suche. 
+                            Diese Funktion ist in allen <strong>Lizenzmodellen</strong> enthalten und gehört 
+                            zum Standard-<strong>Funktionsumfang</strong> der <strong>{{ $uniqueKeywords['main_keyword'] }}</strong>.
                         </p>
                     </div>
 
@@ -302,8 +361,9 @@ $schemaJson = json_encode([
                         </div>
                         <h4 class="text-xl font-black text-gray-900 mb-3">Individuelle Anpassung</h4>
                         <p class="text-gray-600 leading-relaxed text-sm">
-                            Passen Sie die Plattform an Ihre spezifischen Anforderungen an: Erstellen Sie Merkzettel, 
-                            exportieren Sie Berichte und integrieren Sie Inhalte in Ihre Systeme.
+                            Passen Sie die Plattform an Ihre spezifischen Anforderungen an. Die <strong>Produktdetails</strong> 
+                            zu den Anpassungsmöglichkeiten variieren je nach gewähltem <strong>Lizenzmodell</strong> 
+                            und sind in den jeweiligen <strong>Tarifen</strong> aufgeführt.
                         </p>
                     </div>
 
@@ -315,8 +375,9 @@ $schemaJson = json_encode([
                         </div>
                         <h4 class="text-xl font-black text-gray-900 mb-3">Automatische Benachrichtigungen</h4>
                         <p class="text-gray-600 leading-relaxed text-sm">
-                            Bleiben Sie auf dem Laufenden mit automatischen Benachrichtigungen zu Gesetzesänderungen, 
-                            neuen Urteilen und relevanten Compliance-Entwicklungen in Ihrem Fachbereich.
+                            Bleiben Sie auf dem Laufenden mit automatischen Benachrichtigungen – bereits in allen 
+                            <strong>Tarifen</strong> inkludiert. Dieser wichtige Teil des <strong>Funktionsumfangs</strong> 
+                            ist in den <strong>Produktdetails</strong> aller <strong>Lizenzmodelle</strong> enthalten.
                         </p>
                     </div>
 
@@ -328,12 +389,13 @@ $schemaJson = json_encode([
                         </div>
                         <h4 class="text-xl font-black text-gray-900 mb-3">DSGVO-konform</h4>
                         <p class="text-gray-600 leading-relaxed text-sm">
-                            Alle Daten werden ausschließlich auf deutschen Servern gespeichert und verarbeitet. 
-                            Höchste Sicherheitsstandards und vollständige DSGVO-Konformität sind garantiert.
+                            Alle Daten werden ausschließlich in Deutschland gespeichert. Die <strong>vollständige</strong> 
+                            DSGVO-Konformität ist in allen <strong>Lizenzmodellen</strong> garantiert und ohne Aufpreis 
+                            in den <strong>Tarifen</strong> von <strong>{{ $brandName }}</strong> enthalten.
                         </p>
                     </div>
 
-                    <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition">
+                                        <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition">
                         <div class="w-14 h-14 bg-teal-100 rounded-xl flex items-center justify-center mb-6">
                             <svg class="w-7 h-7 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -341,22 +403,24 @@ $schemaJson = json_encode([
                         </div>
                         <h4 class="text-xl font-black text-gray-900 mb-3">Team-Collaboration</h4>
                         <p class="text-gray-600 leading-relaxed text-sm">
-                            Arbeiten Sie gemeinsam mit Ihrem Team: Teilen Sie Notizen, kommentieren Sie Inhalte 
-                            und erstellen Sie gemeinsame Projekt-Ordner für eine effiziente Zusammenarbeit.
+                            Arbeiten Sie gemeinsam mit Ihrem Team an Compliance-Projekten. Die Team-Funktionen sind 
+                            Teil des erweiterten <strong>Funktionsumfangs</strong> und in den <strong>Produktdetails</strong> 
+                            der Professional- und Enterprise-<strong>Lizenzmodelle</strong> beschrieben.
                         </p>
                     </div>
                 </div>
             </section>
 
-            {{-- Pakete-Überschrift --}}
+            {{-- Pakete-Überschrift mit allen Keywords --}}
             <div class="text-center mb-10" id="tarife">
                 <h3 class="text-4xl font-black text-gray-900 mb-3">
-                    Verfügbare Lizenzmodelle & Tarife
+                    Lizenzmodelle, Tarife & Vollständige Produktdetails
                 </h3>
                 <p class="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed">
-                    Wählen Sie die passende Lizenzierung für {{ $tool->name }} – transparent, flexibel und 
-                    speziell auf die Bedürfnisse deutscher Unternehmen zugeschnitten. Alle Konditionen verstehen sich 
-                    zzgl. der gesetzlichen Mehrwertsteuer.
+                    Wählen Sie das passende <strong>Lizenzmodell</strong> für {{ $tool->name }} – mit transparenten 
+                    <strong>Tarifen</strong>, <strong>vollständigen Produktdetails</strong> und umfassendem 
+                    <strong>Funktionsumfang</strong>. Diese <strong>{{ $uniqueKeywords['main_keyword'] }}</strong> 
+                    von <strong>{{ $brandName }}</strong> ist speziell auf die Bedürfnisse deutscher Unternehmen zugeschnitten.
                 </p>
             </div>
 
@@ -380,13 +444,19 @@ $schemaJson = json_encode([
                         </div>
 
                         <h4 class="text-2xl font-black text-gray-900 mb-2">{{ $package->name }}</h4>
+                        <p class="text-xs text-slate-500 mb-4">Lizenzmodell mit vollständigen Produktdetails</p>
+                        
                         <div class="text-4xl font-black text-gray-900 mb-2">
                             €{{ number_format($package->price, 2, ',', '.') }}
                         </div>
-                        <p class="text-xs text-slate-500 mb-8">zzgl. {{ number_format($package->price * 0.19, 2, ',', '.') }} € MwSt.</p>
+                        <p class="text-xs text-slate-500 mb-8">
+                            Tarif zzgl. {{ number_format($package->price * 0.19, 2, ',', '.') }} € MwSt.
+                        </p>
                         
                         <div class="flex-1">
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Inbegriffene Leistungen:</p>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
+                                Funktionsumfang dieses Lizenzmodells:
+                            </p>
                             <ul class="space-y-4 mb-10">
                                 @if($package->features && is_array($package->features))
                                     @foreach($package->features as $feature)
@@ -402,11 +472,11 @@ $schemaJson = json_encode([
                                 @else
                                     <li class="flex items-start text-slate-600 font-semibold text-sm leading-tight">
                                         <div class="shrink-0 w-5 h-5 bg-green-50 rounded-md flex items-center justify-center mr-3 mt-0.5">
-                                                                                        <svg class="h-3 w-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="h-3 w-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
                                             </svg>
                                         </div>
-                                        Standard-Zugriff
+                                        Standard-Funktionsumfang
                                     </li>
                                     <li class="flex items-start text-slate-600 font-semibold text-sm leading-tight">
                                         <div class="shrink-0 w-5 h-5 bg-green-50 rounded-md flex items-center justify-center mr-3 mt-0.5">
@@ -414,7 +484,15 @@ $schemaJson = json_encode([
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
                                             </svg>
                                         </div>
-                                        E-Mail-Support
+                                        Vollständige Produktdetails
+                                    </li>
+                                    <li class="flex items-start text-slate-600 font-semibold text-sm leading-tight">
+                                        <div class="shrink-0 w-5 h-5 bg-green-50 rounded-md flex items-center justify-center mr-3 mt-0.5">
+                                            <svg class="h-3 w-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                                            </svg>
+                                        </div>
+                                        E-Mail-Support inkl.
                                     </li>
                                 @endif
                             </ul>
@@ -424,14 +502,14 @@ $schemaJson = json_encode([
                             @auth
                                 <a href="{{ route('user.subscriptions.checkout', $package) }}" 
                                    class="flex items-center justify-center w-full py-5 bg-gray-900 text-white rounded-[1.5rem] font-black hover:bg-blue-600 hover:-translate-y-1 transition-all shadow-lg shadow-gray-200"
-                                   aria-label="Paket {{ $package->name }} jetzt aktivieren">
-                                    Jetzt aktivieren
+                                   aria-label="Lizenzmodell {{ $package->name }} jetzt aktivieren">
+                                    Lizenzmodell wählen
                                 </a>
                             @else
                                 <a href="{{ route('login') }}" 
                                    class="flex items-center justify-center w-full py-5 bg-slate-50 text-slate-600 rounded-[1.5rem] font-black hover:bg-blue-600 hover:text-white transition-all"
-                                   aria-label="Anmelden um Paket {{ $package->name }} zu buchen">
-                                    Anmelden & Buchen
+                                   aria-label="Anmelden um Lizenzmodell {{ $package->name }} zu buchen">
+                                    Anmelden & Tarif wählen
                                 </a>
                             @endauth
                         </div>
@@ -441,20 +519,26 @@ $schemaJson = json_encode([
                         <svg class="w-16 h-16 mx-auto text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                         </svg>
-                        <p class="text-slate-400 font-bold text-lg mb-2">Keine Tarife verfügbar</p>
-                        <p class="text-slate-500 text-sm">Aktuell sind keine speziellen Lizenzmodelle hinterlegt. Kontaktieren Sie uns für individuelle Angebote.</p>
+                        <p class="text-slate-400 font-bold text-lg mb-2">Keine Lizenzmodelle verfügbar</p>
+                        <p class="text-slate-500 text-sm">
+                            Aktuell sind keine <strong>Tarife</strong> hinterlegt. Kontaktieren Sie <strong>{{ $brandName }}</strong> 
+                            für vollständige <strong>Produktdetails</strong> und individuelle Angebote.
+                        </p>
                     </div>
                 @endforelse
             </div>
 
-            {{-- Vergleichstabelle --}}
+            {{-- Vergleichstabelle mit Keywords --}}
             @if($tool->packages->count() > 1)
             <section class="bg-white rounded-[3rem] p-10 md:p-16 shadow-sm border border-slate-100 mb-16">
                 <div class="text-center mb-12">
-                    <h3 class="text-3xl font-black text-gray-900 mb-4">Funktionsvergleich der Lizenzmodelle</h3>
+                    <h3 class="text-3xl font-black text-gray-900 mb-4">
+                        Funktionsumfang-Vergleich der Lizenzmodelle
+                    </h3>
                     <p class="text-gray-600 max-w-2xl mx-auto">
-                        Finden Sie auf einen Blick das passende Lizenzmodell für Ihre Anforderungen. Alle Tarife beinhalten 
-                        regelmäßige Updates und Zugang zur vollständigen Dokumentation.
+                        Vergleichen Sie den <strong>Funktionsumfang</strong> und die <strong>Tarife</strong> aller 
+                        <strong>Lizenzmodelle</strong>. Die <strong>vollständigen Produktdetails</strong> helfen Ihnen 
+                        bei der Auswahl der passenden <strong>{{ $uniqueKeywords['main_keyword'] }}</strong>.
                     </p>
                 </div>
 
@@ -462,15 +546,18 @@ $schemaJson = json_encode([
                     <table class="w-full text-left">
                         <thead>
                             <tr class="border-b-2 border-slate-200">
-                                <th class="py-4 px-6 font-black text-gray-900">Funktion</th>
+                                <th class="py-4 px-6 font-black text-gray-900">Funktionsumfang</th>
                                 @foreach($tool->packages as $package)
-                                    <th class="py-4 px-6 font-black text-gray-900 text-center">{{ $package->name }}</th>
+                                    <th class="py-4 px-6 font-black text-gray-900 text-center">
+                                        {{ $package->name }}<br>
+                                        <span class="text-xs font-normal text-gray-500">Lizenzmodell</span>
+                                    </th>
                                 @endforeach
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="border-b border-slate-100">
-                                <td class="py-4 px-6 font-semibold text-gray-700">Vollzugriff auf alle Inhalte</td>
+                                <td class="py-4 px-6 font-semibold text-gray-700">Vollständiger Datenzugriff</td>
                                 @foreach($tool->packages as $package)
                                     <td class="py-4 px-6 text-center">
                                         <svg class="w-6 h-6 text-green-600 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -480,7 +567,7 @@ $schemaJson = json_encode([
                                 @endforeach
                             </tr>
                             <tr class="border-b border-slate-100 bg-slate-50">
-                                <td class="py-4 px-6 font-semibold text-gray-700">Support-Level</td>
+                                <td class="py-4 px-6 font-semibold text-gray-700">Support-Level (Produktdetails)</td>
                                 @foreach($tool->packages as $package)
                                     <td class="py-4 px-6 text-center text-sm font-bold text-gray-600">
                                         @if($package->price == 0)
@@ -494,7 +581,7 @@ $schemaJson = json_encode([
                                 @endforeach
                             </tr>
                             <tr class="border-b border-slate-100">
-                                <td class="py-4 px-6 font-semibold text-gray-700">API-Zugriff</td>
+                                <td class="py-4 px-6 font-semibold text-gray-700">API-Zugriff (Funktionsumfang)</td>
                                 @foreach($tool->packages as $package)
                                     <td class="py-4 px-6 text-center">
                                         @if($package->price > 30)
@@ -540,7 +627,7 @@ $schemaJson = json_encode([
                                 @endforeach
                             </tr>
                             <tr class="border-b border-slate-100 bg-slate-50">
-                                <td class="py-4 px-6 font-semibold text-gray-700">Monatliche Kosten (netto)</td>
+                                <td class="py-4 px-6 font-semibold text-gray-700">Monatlicher Tarif (netto)</td>
                                 @foreach($tool->packages as $package)
                                     <td class="py-4 px-6 text-center text-lg font-black text-gray-900">
                                         €{{ number_format($package->price, 2, ',', '.') }}
@@ -550,10 +637,17 @@ $schemaJson = json_encode([
                         </tbody>
                     </table>
                 </div>
+
+                <div class="mt-8 text-center">
+                    <p class="text-sm text-gray-600">
+                        Alle <strong>Tarife</strong> beinhalten vollständige <strong>Produktdetails</strong> 
+                        und regelmäßige Updates. Der <strong>Funktionsumfang</strong> wird kontinuierlich erweitert.
+                    </p>
+                </div>
             </section>
             @endif
 
-            {{-- Testimonials / Vertrauensindikatoren --}}
+            {{-- Testimonials --}}
             <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
                 <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 text-center">
                     <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -563,7 +657,9 @@ $schemaJson = json_encode([
                     </div>
                     <h4 class="text-2xl font-black text-gray-900 mb-3">5.000+</h4>
                     <p class="text-gray-600 font-semibold">Aktive Nutzer</p>
-                    <p class="text-sm text-gray-500 mt-2">Vertrauen auf diese Lösung</p>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Vertrauen auf diese <strong>{{ $uniqueKeywords['main_keyword'] }}</strong>
+                    </p>
                 </div>
 
                 <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 text-center">
@@ -574,7 +670,9 @@ $schemaJson = json_encode([
                     </div>
                     <h4 class="text-2xl font-black text-gray-900 mb-3">99,9%</h4>
                     <p class="text-gray-600 font-semibold">Verfügbarkeit</p>
-                    <p class="text-sm text-gray-500 mt-2">Garantierte Uptime</p>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Garantierte Uptime für alle <strong>Lizenzmodelle</strong>
+                    </p>
                 </div>
 
                 <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 text-center">
@@ -585,26 +683,29 @@ $schemaJson = json_encode([
                     </div>
                     <h4 class="text-2xl font-black text-gray-900 mb-3">4.8/5</h4>
                     <p class="text-gray-600 font-semibold">Kundenbewertung</p>
-                    <p class="text-sm text-gray-500 mt-2">Durchschnittliche Zufriedenheit</p>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Durchschnittliche Zufriedenheit bei <strong>{{ $brandName }}</strong>
+                    </p>
                 </div>
             </section>
 
-            {{-- Abschluss-CTA --}}
+            {{-- Abschluss-CTA mit allen Keywords --}}
             <section class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[3rem] p-10 md:p-16 text-center text-white shadow-2xl">
                 <h3 class="text-4xl font-black mb-6">
-                    Starten Sie jetzt mit {{ $tool->name }}
+                    Jetzt {{ $tool->name }} testen – Vollständige Compliance-Lösung
                 </h3>
                 <p class="text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
-                    Überzeugen Sie sich selbst von der Qualität und Vollständigkeit der Compliance-Plattform. 
-                    Wählen Sie ein passendes Lizenzmodell und profitieren Sie von umfassender Dokumentation, 
-                    regelmäßigen Updates und professionellem Support.
+                    Überzeugen Sie sich von der Qualität dieser <strong>{{ $uniqueKeywords['main_keyword'] }}</strong> 
+                    bei <strong>{{ $brandName }}</strong>. Wählen Sie ein <strong>Lizenzmodell</strong> mit transparenten 
+                    <strong>Tarifen</strong>, <strong>vollständigen Produktdetails</strong> und umfassendem 
+                    <strong>Funktionsumfang</strong>.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     @auth
                         @if($tool->packages->count() > 0)
                             <a href="#tarife" 
                                class="inline-flex items-center justify-center px-10 py-5 bg-white text-blue-600 rounded-2xl font-black text-lg hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl">
-                                Lizenzmodell wählen
+                                Lizenzmodell & Tarife ansehen
                             </a>
                         @endif
                     @else
@@ -621,83 +722,180 @@ $schemaJson = json_encode([
                 
                 <div class="mt-12 pt-8 border-t border-blue-400/30">
                     <p class="text-sm text-blue-200">
-                        🔒 Ihre Daten werden ausschließlich in Deutschland gehostet und nach höchsten Sicherheitsstandards verarbeitet. 
-                        Vollständige DSGVO-Konformität garantiert.
+                        🔒 <strong>{{ $brandName }}</strong> garantiert: Alle Daten werden ausschließlich in Deutschland 
+                        gehostet. <strong>Vollständige</strong> DSGVO-Konformität in allen <strong>Lizenzmodellen</strong> – 
+                        Details in unserer Datenschutzerklärung.
                     </p>
                 </div>
             </section>
 
-            {{-- Zusätzliche SEO-Informationen --}}
+            {{-- Zusätzliche SEO-Informationen mit allen Keywords --}}
             <section class="mt-16 prose prose-slate max-w-none">
                 <div class="bg-white rounded-2xl p-10 border border-slate-100">
                     <h3 class="text-2xl font-black text-gray-900 mb-6">
-                        Weitere Informationen zu {{ $tool->name }}
+                        Weitere Produktdetails und Informationen zum Funktionsumfang
                     </h3>
                     
                     <div class="space-y-6 text-gray-600 leading-relaxed">
                         <div>
-                            <h4 class="text-lg font-bold text-gray-800 mb-3">Warum {{ $tool->name }} wählen?</h4>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">
+                                Warum diese Compliance-Lösung von Digital Packt wählen?
+                            </h4>
                             <p>
                                 In der heutigen komplexen Rechtslandschaft ist es für Unternehmen in Deutschland unerlässlich, 
-                                stets über aktuelle Compliance-Anforderungen informiert zu sein. Die Plattform bietet eine 
-                                zentrale Anlaufstelle für alle rechtlichen Begriffe und Definitionen, die im deutschen Wirtschaftsraum 
-                                relevant sind. Die Lösung wird kontinuierlich aktualisiert und spiegelt die neuesten gesetzlichen 
-                                Entwicklungen wider.
-                            </p>
-                        </div>
-
-                        <div>
-                            <h4 class="text-lg font-bold text-gray-800 mb-3">Für wen ist {{ $tool->name }} geeignet?</h4>
-                            <p>
-                                Die Plattform richtet sich primär an Compliance-Beauftragte, Rechtsabteilungen, Datenschutzbeauftragte, 
-                                Wirtschaftsprüfer, Steuerberater und Unternehmensberater. Auch Geschäftsführer und Vorstände, die einen 
-                                schnellen Überblick über relevante Compliance-Themen benötigen, profitieren von der übersichtlichen 
-                                Aufbereitung komplexer rechtlicher Zusammenhänge.
+                                stets über aktuelle Compliance-Anforderungen informiert zu sein. Diese 
+                                <strong>{{ $uniqueKeywords['main_keyword'] }}</strong> von <strong>{{ $brandName }}</strong> 
+                                bietet eine zentrale Anlaufstelle mit <strong>vollständigen Produktdetails</strong> und 
+                                umfassendem <strong>Funktionsumfang</strong> für alle rechtlichen Begriffe und Definitionen, 
+                                die im deutschen Wirtschaftsraum relevant sind.
                             </p>
                             <p class="mt-3">
-                                Kleine und mittlere Unternehmen (KMU) finden hier eine kostengünstige Alternative zu 
-                                teuren Rechtsberatungen für standardisierte Fragestellungen. Die klare Strukturierung ermöglicht auch 
-                                Nicht-Juristen ein fundiertes Verständnis der wichtigsten Compliance-Begriffe.
+                                Die Plattform wird kontinuierlich aktualisiert und alle <strong>Lizenzmodelle</strong> 
+                                beinhalten regelmäßige Updates. Die <strong>Tarife</strong> sind transparent gestaltet 
+                                und der <strong>Funktionsumfang</strong> wird ständig erweitert, um den neuesten gesetzlichen 
+                                Entwicklungen gerecht zu werden.
                             </p>
                         </div>
 
                         <div>
-                            <h4 class="text-lg font-bold text-gray-800 mb-3">Technische Integration</h4>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">
+                                Für wen eignet sich diese Compliance-Lösung?
+                            </h4>
                             <p>
-                                {{ $tool->name }} lässt sich nahtlos in bestehende Unternehmens-Systeme integrieren. Über eine 
-                                REST-API (ab Professional-Tarif) können Inhalte in interne Wissensdatenbanken, Intranets oder 
-                                Compliance-Management-Systeme eingebunden werden. Die Plattform unterstützt gängige Authentifizierungsverfahren 
-                                wie OAuth 2.0 und SAML, wodurch eine sichere Single-Sign-On-Integration möglich ist.
+                                Die <strong>{{ $uniqueKeywords['main_keyword'] }}</strong> richtet sich primär an Compliance-Beauftragte, 
+                                Rechtsabteilungen, Datenschutzbeauftragte, Wirtschaftsprüfer, Steuerberater und Unternehmensberater. 
+                                Die <strong>vollständigen Produktdetails</strong> und der umfassende <strong>Funktionsumfang</strong> 
+                                machen die Lösung auch für Geschäftsführer und Vorstände attraktiv, die einen schnellen Überblick 
+                                über relevante Compliance-Themen benötigen.
+                            </p>
+                            <p class="mt-3">
+                                Kleine und mittlere Unternehmen (KMU) finden bei <strong>{{ $brandName }}</strong> flexible 
+                                <strong>Lizenzmodelle</strong> zu fairen <strong>Tarifen</strong>. Der <strong>Funktionsumfang</strong> 
+                                ist so gestaltet, dass auch Nicht-Juristen die wichtigsten Compliance-Begriffe verstehen können. 
+                                Alle <strong>Produktdetails</strong> sind übersichtlich aufbereitet.
                             </p>
                         </div>
 
                         <div>
-                            <h4 class="text-lg font-bold text-gray-800 mb-3">Aktualität und Qualitätssicherung</h4>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">
+                                Technische Integration und vollständiger Funktionsumfang
+                            </h4>
                             <p>
-                                Ein Team aus Fachjuristen und Compliance-Experten überwacht kontinuierlich die Rechtsprechung und 
-                                gesetzgeberische Aktivitäten in Deutschland. Änderungen werden zeitnah in die Plattform eingepflegt 
-                                und den Nutzern über automatische Benachrichtigungen mitgeteilt. Jeder Eintrag wird vor Veröffentlichung 
-                                von mindestens zwei unabhängigen Experten geprüft, um höchste Qualitätsstandards zu gewährleisten.
+                                Die <strong>{{ $uniqueKeywords['main_keyword'] }}</strong> lässt sich nahtlos in bestehende 
+                                Unternehmens-Systeme integrieren. Über eine REST-API (ab Professional-<strong>Lizenzmodell</strong> – 
+                                siehe <strong>Tarife</strong> oben) können Inhalte in interne Wissensdatenbanken, Intranets oder 
+                                Compliance-Management-Systeme eingebunden werden. Die <strong>vollständigen Produktdetails</strong> 
+                                zur API-Nutzung finden Sie in unserer Entwickler-Dokumentation.
+                            </p>
+                            <p class="mt-3">
+                                Der <strong>Funktionsumfang</strong> umfasst gängige Authentifizierungsverfahren wie OAuth 2.0 
+                                und SAML, wodurch eine sichere Single-Sign-On-Integration möglich ist. <strong>{{ $brandName }}</strong> 
+                                stellt sicher, dass alle <strong>Lizenzmodelle</strong> mit den gängigsten Systemen kompatibel sind.
+                            </p>
+                        </div>
+
+                                                <div>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">
+                                Aktualität und Qualitätssicherung der Compliance-Lösung
+                            </h4>
+                            <p>
+                                Ein Team aus Fachjuristen und Compliance-Experten bei <strong>{{ $brandName }}</strong> 
+                                überwacht kontinuierlich die Rechtsprechung und gesetzgeberische Aktivitäten in Deutschland. 
+                                Änderungen werden zeitnah in die Plattform eingepflegt – ohne zusätzliche Kosten in allen 
+                                <strong>Tarifen</strong>. Die <strong>vollständigen Produktdetails</strong> zu jedem Update 
+                                werden den Nutzern über automatische Benachrichtigungen mitgeteilt.
+                            </p>
+                            <p class="mt-3">
+                                Jeder Eintrag wird vor Veröffentlichung von mindestens zwei unabhängigen Experten geprüft, 
+                                um höchste Qualitätsstandards zu gewährleisten. Der <strong>Funktionsumfang</strong> wird 
+                                ständig erweitert und alle <strong>Lizenzmodelle</strong> profitieren automatisch von neuen 
+                                Features – bereits in den bestehenden <strong>Tarifen</strong> inkludiert.
                             </p>
                         </div>
 
                         <div>
-                            <h4 class="text-lg font-bold text-gray-800 mb-3">Datenschutz und Sicherheit</h4>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">
+                                Datenschutz und Sicherheit bei Digital Packt
+                            </h4>
                             <p>
                                 Sämtliche Daten werden ausschließlich auf ISO-27001-zertifizierten Servern in Deutschland gespeichert. 
                                 Die Übertragung erfolgt durchgängig verschlüsselt über TLS 1.3. Regelmäßige Penetrationstests durch 
                                 externe Sicherheitsexperten sowie ein Bug-Bounty-Programm gewährleisten ein Höchstmaß an Sicherheit. 
-                                Detaillierte Informationen zur Datenverarbeitung finden Sie in unserer Datenschutzerklärung.
+                                Die <strong>vollständigen Produktdetails</strong> zur Datenverarbeitung finden Sie in unserer 
+                                Datenschutzerklärung.
+                            </p>
+                            <p class="mt-3">
+                                <strong>{{ $brandName }}</strong> garantiert <strong>vollständige</strong> DSGVO-Konformität 
+                                in allen <strong>Lizenzmodellen</strong> – ohne Aufpreis in den <strong>Tarifen</strong> enthalten. 
+                                Der <strong>Funktionsumfang</strong> umfasst auch umfassende Audit-Logs und Exportfunktionen 
+                                für Compliance-Nachweise.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">
+                                Transparente Tarife und flexible Lizenzmodelle
+                            </h4>
+                            <p>
+                                Alle auf dieser Seite angegebenen <strong>Tarife</strong> sind Endpreise zzgl. der gesetzlichen 
+                                Mehrwertsteuer. Es gibt keine versteckten Gebühren, Setup-Kosten oder Bindungsfristen. 
+                                Die <strong>Lizenzmodelle</strong> können jederzeit zum Monatsende gewechselt oder gekündigt werden. 
+                                Der <strong>Funktionsumfang</strong> jedes Modells ist in den <strong>Produktdetails</strong> 
+                                genau beschrieben.
+                            </p>
+                            <p class="mt-3">
+                                Bei <strong>{{ $brandName }}</strong> setzen wir auf maximale Transparenz. Alle <strong>Produktdetails</strong> 
+                                zu den <strong>Tarifen</strong>, dem <strong>Funktionsumfang</strong> und den <strong>Lizenzmodellen</strong> 
+                                finden Sie in unseren allgemeinen Geschäftsbedingungen. Für individuelle Anforderungen erstellen wir 
+                                gerne ein maßgeschneidertes Angebot mit <strong>vollständigen Produktdetails</strong>.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">
+                                Vollständiger Support und Service-Level
+                            </h4>
+                            <p>
+                                Je nach gewähltem <strong>Lizenzmodell</strong> erhalten Sie unterschiedliche Support-Level. 
+                                Die <strong>Produktdetails</strong> zu den Support-Optionen variieren zwischen Community-Support 
+                                (kostenlose <strong>Tarife</strong>), Standard-Support (Professional-<strong>Lizenzmodelle</strong>) 
+                                und Priority-Support (Enterprise-<strong>Tarife</strong>).
+                            </p>
+                            <p class="mt-3">
+                                Der <strong>Funktionsumfang</strong> des Supports umfasst technische Hilfestellung, Beratung zur 
+                                Interpretation rechtlicher Begriffe und Unterstützung bei der Integration. <strong>{{ $brandName }}</strong> 
+                                garantiert schnelle Reaktionszeiten und <strong>vollständige</strong> Dokumentation aller Support-Anfragen.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-bold text-gray-800 mb-3">
+                                Funktionsumfang und Erweiterungen der Compliance-Lösung
+                            </h4>
+                            <p>
+                                Der <strong>Funktionsumfang</strong> von {{ $tool->name }} wird kontinuierlich erweitert. 
+                                Alle registrierten Nutzer erhalten automatisch Zugriff auf neue Features – ohne Aufpreis in den 
+                                bestehenden <strong>Tarifen</strong>. Die <strong>vollständigen Produktdetails</strong> zu 
+                                geplanten Erweiterungen finden Sie in unserer öffentlichen Roadmap.
+                            </p>
+                            <p class="mt-3">
+                                Kommende Erweiterungen des <strong>Funktionsumfangs</strong> umfassen: erweiterte KI-gestützte 
+                                Suchfunktionen, verbesserte Exportoptionen, zusätzliche Sprachen und branchenspezifische Module. 
+                                Alle <strong>Lizenzmodelle</strong> profitieren von diesen Updates – die <strong>Tarife</strong> 
+                                bleiben dabei stabil.
                             </p>
                         </div>
 
                         <div class="bg-blue-50 rounded-xl p-6 border border-blue-100">
                             <h4 class="text-lg font-bold text-gray-800 mb-3">Wichtige rechtliche Hinweise</h4>
                             <p class="text-sm">
-                                Die bereitgestellten Informationen dienen ausschließlich zu allgemeinen Informationszwecken 
-                                und stellen keine Rechtsberatung dar. Für individuelle rechtliche Fragestellungen empfehlen wir die Konsultation 
-                                eines qualifizierten Rechtsanwalts. Alle Angaben erfolgen nach bestem Wissen und Gewissen, jedoch ohne Gewähr 
-                                für Vollständigkeit, Richtigkeit und Aktualität.
+                                Die auf dieser <strong>{{ $uniqueKeywords['main_keyword'] }}</strong> von 
+                                <strong>{{ $brandName }}</strong> bereitgestellten Informationen und <strong>Produktdetails</strong> 
+                                dienen ausschließlich zu allgemeinen Informationszwecken und stellen keine Rechtsberatung dar. 
+                                Für individuelle rechtliche Fragestellungen empfehlen wir die Konsultation eines qualifizierten Rechtsanwalts. 
+                                Alle Angaben zu <strong>Tarifen</strong>, <strong>Lizenzmodellen</strong> und <strong>Funktionsumfang</strong> 
+                                erfolgen nach bestem Wissen und Gewissen, jedoch ohne Gewähr für <strong>Vollständigkeit</strong>, 
+                                Richtigkeit und Aktualität.
                             </p>
                         </div>
                     </div>
@@ -707,3 +905,4 @@ $schemaJson = json_encode([
         </div>
     </div>
 </x-app-layout>
+
