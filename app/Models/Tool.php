@@ -42,6 +42,9 @@ class Tool extends Model
                 $tool->api_token = Str::random(64);
             }
         });
+        static::creating(function ($tool) {
+            $tool->slug = Str::slug($tool->name);
+        });
     }
 
     public function packages(): HasMany
