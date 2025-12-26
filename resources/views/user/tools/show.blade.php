@@ -3,20 +3,20 @@ use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
-| SEO-Optimierung & Variablen-Definition
+| SEO-Optimierung (Vollständig korrigiert für alle Meta-Tags)
 |--------------------------------------------------------------------------
 */
 $currentPage = request()->get('page');
 $pageSuffix = ($currentPage && $currentPage > 1) ? " (S.$currentPage)" : "";
 
-// 1. Titel generieren (für @yield('title') im Layout)
+// Titel für @yield('title')
 $seoTitle = Str::limit($tool->name, 25) . " – Tool" . $pageSuffix;
 
-// 2. Beschreibung generieren (für @yield('meta_description') im Layout)
+// Beschreibung für @yield('meta_description') und og:description
 $rawDescription = $tool->description ?? 'Professionelles SaaS Tool für Entwickler.';
 $seoDescription = Str::limit(strip_tags($rawDescription), 145) . $pageSuffix;
 
-// 3. Schema.org JSON generieren (Behebt den "Undefined variable $schemaJson" Fehler)
+// Schema.org JSON
 $schemaJson = json_encode([
     "@context" => "https://schema.org",
     "@type" => "SoftwareApplication",
@@ -37,23 +37,28 @@ $schemaJson = json_encode([
 ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 @endphp
 
-{{-- ✅ Diese Sections füllen die Lücken in deinem Layout --}}
+{{-- ✅ Diese Sections füllen die Platzhalter im Head deines Layouts --}}
 @section('title', $seoTitle)
 @section('meta_description', $seoDescription)
 
 <x-app-layout>
-    {{-- ✅ Pusht zusätzliche Meta-Tags in den Head --}}
+    {{-- ✅ Wir pushen die restlichen Tags in den @stack('meta') deines Layouts --}}
     @push('meta')
         <link rel="canonical" href="{{ url()->current() }}">
-        <script type="application/ld+json">{!! $schemaJson !!}</script>
         
-        {{-- Social Media Description --}}
+        {{-- Erzwingt die Änderung für Open Graph (Facebook/LinkedIn) --}}
         <meta property="og:title" content="{{ $seoTitle }}">
         <meta property="og:description" content="{{ $seoDescription }}">
         <meta property="og:url" content="{{ url()->current() }}">
+        
+        {{-- Erzwingt die Änderung für Twitter --}}
+        <meta name="twitter:title" content="{{ $seoTitle }}">
+        <meta name="twitter:description" content="{{ $seoDescription }}">
+        
+        <script type="application/ld+json">{!! $schemaJson !!}</script>
     @endpush
 
-    {{-- SEO H1 --}}
+    {{-- Sichtbares SEO H1 --}}
     <h1 class="sr-only">{{ $tool->name }} Spezifikationen {{ $pageSuffix }}</h1>
 
     <x-slot name="header">
@@ -65,7 +70,7 @@ $schemaJson = json_encode([
                     </svg>
                 </a>
                 <div>
-                    <h2 class="font-extrabold text-2xl text-gray-900 tracking-tight leading-none">{{ $tool->name }}</h2>
+                    <h2 class="font-extrabold text-2xl text-gray-900 leading-none">{{ $tool->name }}</h2>
                     <p class="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mt-1.5">Spezifikationen & Lizenzierung</p>
                 </div>
             </div>
@@ -105,24 +110,12 @@ $schemaJson = json_encode([
                 </div>
             </div>
 
-            {{-- Lizenz-Pakete --}}
+            {{-- Packages --}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 @forelse($tool->packages as $package)
                     <div class="bg-white rounded-[3rem] p-12 border-2 border-transparent hover:border-blue-100 transition-all flex flex-col">
                         <h3 class="text-3xl font-black text-gray-900 mb-2">{{ $package->name }}</h3>
                         <div class="text-5xl font-black text-gray-900 mb-10">€{{ number_format($package->price, 2) }}</div>
-                        
-                        @if($package->features)
-                            <ul class="space-y-4 mb-10">
-                                @foreach($package->features as $feature)
-                                    <li class="flex items-center text-slate-600 font-bold text-sm">
-                                        <svg class="h-4 w-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
-                                        {{ $feature }}
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @endif
-
                         <div class="mt-auto">
                             @auth
                                 <a href="{{ route('user.subscriptions.checkout', $package) }}" class="flex items-center justify-center w-full py-5 bg-gray-900 text-white rounded-[1.5rem] font-black hover:bg-blue-600 transition-all">Freischalten</a>
