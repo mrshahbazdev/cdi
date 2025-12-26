@@ -35,7 +35,7 @@ $schemaJson = json_encode(
     [
         "@context" => "https://schema.org",
         "@type" => "ItemList",
-        "name" => "Entwickler-Tools & Utilities",
+        "name" => "Developer Ecosystem – Premium Development Tools & Utilities",
         "itemListElement" => $schemaItems
     ],
     JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
@@ -44,28 +44,22 @@ $schemaJson = json_encode(
 
 
 <x-app-layout
-    title="Digital Packt – Professional SaaS Platform | Entwickler-Tools & Utilities"
-    metaDescription="Digital Packt ist eine professionelle SaaS-Plattform für Entwickler. Entdecken Sie Premium Development Tools, Utilities und skalierbare Softwarelösungen.">
+    title="Digital Packt – Professional SaaS Platform"
+    metaDescription="Digital Packt ist eine professionelle SaaS Platform für Entwickler. Entdecken Sie ein modernes Developer Ecosystem mit Premium Development Tools und Utilities.">
 
-    {{-- ===================== --}}
-    {{-- SEO H1 --}}
-    {{-- ===================== --}}
+    {{-- ✅ H1 (SEO) --}}
     <h1 class="sr-only">
         Explore the Developer Ecosystem – Premium Development Tools & Utilities
     </h1>
 
-    {{-- ===================== --}}
-    {{-- Schema.org --}}
-    {{-- ===================== --}}
+    {{-- Schema --}}
     @push('meta')
         <script type="application/ld+json">
 {!! $schemaJson !!}
         </script>
     @endpush
 
-    {{-- ===================== --}}
     {{-- HEADER --}}
-    {{-- ===================== --}}
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
@@ -78,7 +72,7 @@ $schemaJson = json_encode(
 
                 <div>
                     <h2 class="font-extrabold text-2xl text-gray-900 tracking-tight">
-                        Entwickler-Ökosystem entdecken
+                        Developer Ecosystem
                     </h2>
                     <p class="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mt-1">
                         Premium Development Tools & Utilities
@@ -88,28 +82,25 @@ $schemaJson = json_encode(
         </div>
     </x-slot>
 
-    {{-- ===================== --}}
     {{-- CONTENT --}}
-    {{-- ===================== --}}
     <div class="py-16 bg-slate-50/50 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            {{-- ✅ TEXT BLOCK 1 (CRITICAL SEO FIX) --}}
-            <section class="mb-12 max-w-4xl">
+            {{-- ✅ SEO TEXT BLOCK (CRITICAL FIX) --}}
+            <section class="max-w-4xl mb-14">
                 <p class="text-lg text-gray-700 leading-relaxed">
-                    <strong>Digital Packt</strong> ist eine <strong>professionelle SaaS-Plattform</strong>,
-                    die ein modernes <strong>Developer Ecosystem</strong> bereitstellt.
-                    Hier finden Entwickler, Startups und Unternehmen leistungsstarke
-                    <strong>Development Tools und Utilities</strong>, um digitale Produkte
+                    <strong>Digital Packt</strong> ist eine <strong>Professional SaaS Platform</strong>,
+                    die ein leistungsstarkes <strong>Developer Ecosystem</strong> bereitstellt.
+                    Auf dieser Plattform finden Entwickler und Unternehmen
+                    <strong>Premium Development Tools & Utilities</strong>, um Softwareprodukte
                     effizient zu planen, zu entwickeln und zu skalieren.
                 </p>
             </section>
 
-            {{-- ✅ H2 – Search --}}
+            {{-- SEARCH --}}
             <h2 class="sr-only">Development Tools durchsuchen</h2>
 
-            {{-- SEARCH --}}
-            <div class="mb-12">
+            <div class="mb-14">
                 <div class="bg-white rounded-[2.5rem] shadow p-10 border">
                     <form method="GET" action="{{ route('tools.index') }}"
                           class="flex flex-col lg:flex-row gap-6">
@@ -127,31 +118,63 @@ $schemaJson = json_encode(
                 </div>
             </div>
 
-            {{-- ✅ TEXT BLOCK 2 --}}
-            <section class="mb-16 max-w-4xl">
+            {{-- SECOND SEO TEXT BLOCK --}}
+            <section class="max-w-4xl mb-16">
                 <p class="text-gray-600 leading-relaxed">
-                    Alle Tools auf Digital Packt sind als professionelle SaaS-Lösungen konzipiert.
-                    Sie unterstützen Teams bei Innovation, Produktentwicklung, Compliance,
-                    Ideenmanagement und weiteren geschäftskritischen Prozessen innerhalb
-                    eines modernen Software-Ökosystems.
+                    Das Developer Ecosystem von Digital Packt umfasst professionelle
+                    SaaS Tools, Development Utilities und modulare Softwarelösungen,
+                    die speziell für moderne Entwicklungsprozesse konzipiert wurden.
                 </p>
             </section>
 
-            {{-- ✅ H2 – Tools Listing --}}
-            <h2 class="sr-only">Verfügbare Entwickler Tools & Utilities</h2>
+            {{-- TOOLS --}}
+            <h2 class="sr-only">Verfügbare Development Tools & Utilities</h2>
 
-            {{-- TOOLS GRID --}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                @foreach($tools as $tool)
-                    <article class="bg-white rounded-[3rem] shadow transition p-10">
+                @forelse($tools as $tool)
+                    <article class="group bg-white rounded-[3rem] shadow transition p-10">
+
                         <h3 class="text-2xl font-black text-gray-900 mb-2">
                             {{ $tool->name }}
                         </h3>
+
                         <p class="text-gray-500 mb-6">
                             {{ $tool->description }}
                         </p>
+
+                        {{-- PRICE (RESTORED) --}}
+                        <div class="mb-8 p-6 bg-slate-50 rounded-[1.5rem] border">
+                            <span class="text-[10px] font-black text-slate-400 uppercase">
+                                Ab Preis
+                            </span>
+                            <div class="text-3xl font-black text-gray-900">
+                                @if($tool->packages->count())
+                                    €{{ number_format($tool->packages->min('price'), 2) }}
+                                @else
+                                    Preis auf Anfrage
+                                @endif
+                            </div>
+                        </div>
+
+                        {{-- BUTTON (COMMENTED – AS REQUESTED) --}}
+                        {{--
+                        <a href="{{ route('tools.show', $tool) }}"
+                           class="block text-center py-4 bg-gray-900 text-white rounded-xl font-black hover:bg-blue-600 transition">
+                            Launch Utility
+                        </a>
+                        --}}
+
                     </article>
-                @endforeach
+                @empty
+                    <div class="col-span-3 text-center py-20 bg-white rounded-3xl border border-dashed">
+                        <h2 class="text-2xl font-black text-gray-900 mb-4">
+                            Keine Tools gefunden
+                        </h2>
+                        <p class="text-gray-500">
+                            Bitte versuchen Sie einen anderen Suchbegriff.
+                        </p>
+                    </div>
+                @endforelse
             </div>
 
         </div>
