@@ -31,7 +31,7 @@
     <meta property="og:title"
           content="@hasSection('title')@yield('title')@else{{ config('app.name', 'Digitalpackt') }}@endif">
     <meta property="og:description"
-          content="{{ $metaDescription ?? $settings->site_description ?? 'Professional SaaS Platform' }}">
+          content="@yield('meta_description', $metaDescription ?? ($settings->site_description ?? 'Professional SaaS & Automation Platform'))">
     <meta property="og:url" content="{{ url()->current() }}">
 
     <!-- ================= TWITTER ================= -->
@@ -39,7 +39,7 @@
     <meta name="twitter:title"
           content="@hasSection('title')@yield('title')@else{{ config('app.name', 'Digitalpackt') }}@endif">
     <meta name="twitter:description"
-          content="{{ $metaDescription ?? $settings->site_description ?? 'Professional SaaS Platform' }}">
+          content="@yield('meta_description', $metaDescription ?? ($settings->site_description ?? 'Professional SaaS & Automation Platform'))">
 
     <!-- ================= PREFETCH ================= -->
     <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
