@@ -36,7 +36,6 @@ $schemaJson = json_encode(
         "@context" => "https://schema.org",
         "@type" => "ItemList",
         "name" => "Developer Ecosystem – Premium Development Tools & Utilities",
-        "description" => "Professional SaaS Platform mit Premium Development Tools & Utilities für das moderne Developer Ecosystem.",
         "itemListElement" => $schemaItems
     ],
     JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
@@ -86,19 +85,20 @@ $schemaJson = json_encode(
     <div class="py-16 bg-slate-50/50 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            {{-- ✅ SEO TEXT BLOCK (CRITICAL FIX) --}}
+            {{-- ✅ SEO FIX: Weniger Strong-Tags & mehr Text (Wortanzahl-Boost) --}}
             <section class="max-w-4xl mb-14">
-                <p class="text-lg text-gray-700 leading-relaxed">
-                    <strong>Digital Packt</strong> ist eine <strong>Professional SaaS Platform</strong>,
-                    die ein leistungsstarkes <strong>Developer Ecosystem</strong> bereitstellt.
-                    Auf dieser Plattform finden Entwickler und Unternehmen
-                    <strong>Premium Development Tools & Utilities</strong>, um Softwareprodukte
-                    effizient zu planen, zu entwickeln und zu skalieren.
+                <h2 class="text-3xl font-black text-gray-900 mb-6">Explore our Developer Ecosystem</h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    Willkommen bei Digital Packt, Ihrer Professional SaaS Platform für moderne Softwareentwicklung. 
+                    In unserem umfassenden <strong>Developer Ecosystem</strong> finden Sie alles, was Sie für die 
+                    effiziente Erstellung digitaler Produkte benötigen. Wir haben es uns zur Aufgabe gemacht, 
+                    Entwicklern den Zugang zu erstklassigen Ressourcen zu erleichtern.
                 </p>
-                <p class="text-lg text-gray-700 leading-relaxed mt-4">
-                    <strong>Explore the Developer Ecosystem</strong> von Digital Packt, wo Sie
-                    <strong>Premium Development Tools & Utilities</strong> entdecken können,
-                    die speziell für moderne Entwicklungsprozesse optimiert wurden.
+                <p class="text-gray-600 leading-relaxed">
+                    Das Ziel unserer Plattform ist es, hochwertige Premium Development Tools & Utilities bereitzustellen, 
+                    die komplexe Prozesse vereinfachen. Jede Utility in unserem Katalog wird sorgfältig geprüft, 
+                    um höchste Performance und Zuverlässigkeit in Ihrer Entwicklungsumgebung zu garantieren. 
+                    Explore the possibilities und optimieren Sie Ihren Workflow noch heute mit unseren Lösungen.
                 </p>
             </section>
 
@@ -123,17 +123,28 @@ $schemaJson = json_encode(
                 </div>
             </div>
 
-            {{-- SECOND SEO TEXT BLOCK --}}
+            {{-- ✅ SEO FIX: Textblock zur Erhöhung der Wortanzahl ohne Keyword-Stuffing --}}
             <section class="max-w-4xl mb-16">
-                <p class="text-gray-600 leading-relaxed">
-                    Das Developer Ecosystem von Digital Packt umfasst professionelle
-                    SaaS Tools, Development Utilities und modulare Softwarelösungen,
-                    die speziell für moderne Entwicklungsprozesse konzipiert wurden.
-                </p>
-                <p class="text-gray-600 leading-relaxed mt-4">
-                    Explore our comprehensive collection of Premium Development Tools & Utilities
-                    designed to enhance your Developer Ecosystem experience.
-                </p>
+                <div class="grid md:grid-cols-2 gap-8 text-sm text-gray-600 leading-relaxed">
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-2">Qualität im Fokus</h3>
+                        <p>
+                            Unsere Auswahl an Tools umfasst spezialisierte Lösungen für unterschiedliche Fachbereiche. 
+                            Wir bieten Unterstützung bei der Automatisierung von Standardaufgaben, damit Sie mehr Zeit 
+                            für die eigentliche Programmierung haben. Die Architektur unserer Plattform erlaubt eine 
+                            schnelle Integration in bestehende Systeme, ohne große Hürden.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-2">Zukunftssichere Entwicklung</h3>
+                        <p>
+                            Die digitale Welt verändert sich schnell. Deshalb aktualisieren wir unser Ecosystem ständig 
+                            um neue Utilities und Funktionen. Mit Digital Packt setzen Sie auf eine skalierbare 
+                            Infrastruktur, die mit Ihren Projekten mitwächst. Vertrauen Sie auf Professional SaaS 
+                            Standards für Ihren Erfolg.
+                        </p>
+                    </div>
+                </div>
             </section>
 
             {{-- TOOLS --}}
@@ -151,7 +162,6 @@ $schemaJson = json_encode(
                             {{ $tool->description }}
                         </p>
 
-                        {{-- PRICE (RESTORED) --}}
                         <div class="mb-8 p-6 bg-slate-50 rounded-[1.5rem] border">
                             <span class="text-[10px] font-black text-slate-400 uppercase">
                                 Ab Preis
@@ -165,14 +175,6 @@ $schemaJson = json_encode(
                             </div>
                         </div>
 
-                        {{-- BUTTON (COMMENTED – AS REQUESTED) --}}
-                        {{--
-                        <a href="{{ route('tools.show', $tool) }}"
-                           class="block text-center py-4 bg-gray-900 text-white rounded-xl font-black hover:bg-blue-600 transition">
-                            Launch Utility
-                        </a>
-                        --}}
-
                     </article>
                 @empty
                     <div class="col-span-3 text-center py-20 bg-white rounded-3xl border border-dashed">
@@ -180,7 +182,7 @@ $schemaJson = json_encode(
                             Keine Tools gefunden
                         </h2>
                         <p class="text-gray-500">
-                            Bitte versuchen Sie einen anderen Suchbegriff.
+                            Bitte versuchen Sie einen anderen Suchbegriff im Developer Ecosystem.
                         </p>
                     </div>
                 @endforelse
