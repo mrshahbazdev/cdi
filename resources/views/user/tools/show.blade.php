@@ -53,7 +53,7 @@ $schemaJson = json_encode([
     @endpush
 
     {{-- SEO H1 mit allen Title-Keywords --}}
-    <h1 class="sr-only">{{ $tool->name }} – Funktionen und Anwendungsübersicht {{ $pageSuffix }}</h1>
+    <h1 class="sr-only">{{ $tool->name }} – Funktionen und Einsatzbereiche {{ $pageSuffix }}</h1>
 
     <x-slot name="header">
         <div class="flex items-center justify-between">
