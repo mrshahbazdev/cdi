@@ -10,7 +10,8 @@ $currentPage = request()->get('page');
 $pageSuffix = ($currentPage && $currentPage > 1) ? " (S.$currentPage)" : "";
 
 // Titel kürzen, um unter 580px/60 Zeichen zu bleiben
-$seoTitle = $tool->name . " – Details & Preise" . $pageSuffix;
+$seoTitle = $tool->name . " – Funktionen & Überblick" . $pageSuffix;
+
 
 $rawDescription = $tool->description ?? "Technische Spezifikationen und Pakete für $tool->name.";
 $seoDescription = Str::limit(strip_tags($rawDescription), 140) . $pageSuffix;
@@ -52,7 +53,7 @@ $schemaJson = json_encode([
     @endpush
 
     {{-- SEO H1 mit allen Title-Keywords --}}
-    <h1 class="sr-only">{{ $tool->name }} – Vollständige Details, Preise und Spezifikationen bei {{ $brandName }} {{ $pageSuffix }}</h1>
+    <h1 class="sr-only">{{ $tool->name }} – Funktionen und Anwendungsübersicht {{ $pageSuffix }}</h1>
 
     <x-slot name="header">
         <div class="flex items-center justify-between">
@@ -66,7 +67,7 @@ $schemaJson = json_encode([
                 </a>
                 <div>
                     <h2 class="font-extrabold text-2xl text-gray-900 leading-none">{{ $tool->name }}</h2>
-                    <p class="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mt-1.5">Details, Spezifikationen & Preise</p>
+                    <p class="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mt-1.5">Funktionen, Einsatzbereiche & Vorteile</p>
                 </div>
             </div>
         </div>
@@ -105,8 +106,9 @@ $schemaJson = json_encode([
                         {{-- Einleitungstext mit Title-Keywords --}}
                         <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100">
                             <p class="text-gray-700 leading-relaxed">
-                                Auf dieser Seite finden Sie alle <strong>Details</strong> und transparente <strong>Preise</strong> 
-                                für {{ $tool->name }}. Die Plattform von <strong>{{ $brandName }}</strong> wurde speziell für 
+                                Auf dieser Seite erhalten Sie einen umfassenden Überblick über die Funktionen
+                                und Einsatzmöglichkeiten von {{ $tool->name }}.
+                                 Die Plattform von <strong>{{ $brandName }}</strong> wurde speziell für 
                                 Unternehmen entwickelt, die im deutschen Rechtsraum tätig sind. Mit umfassender Dokumentation, 
                                 regelmäßigen Updates und professionellem Support erhalten Sie eine verlässliche Compliance-Lösung 
                                 zu fairen Konditionen.
