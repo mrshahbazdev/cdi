@@ -6,15 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Tool;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 class ToolController extends Controller
 {
-    /**
-     * Display listing of all active tools with search
-     */
     public function index(Request $request): View
     {
         $search = $request->get('search');
+        $page = $request->get('page', 1);
 
         $tools = Tool::with(['packages' => function ($query) {
             $query->where('status', true)->orderBy('price');
@@ -30,23 +29,24 @@ class ToolController extends Controller
             ->latest()
             ->paginate(12);
 
-        return view('user.tools.index', compact('tools'));
+        // Dynamische SEO-Daten für die Index-Seite
+        $pageSuffix = $page > 1 ? " – Seite $page" : "";
+        $seoTitle = "Digital Packt – Professional SaaS Platform" . $pageSuffix;
+        $seoDescription = "Entdecken Sie unsere Hochleistungs-Entwickler-Tools und Automatisierungslösungen" . $pageSuffix;
+
+        return view('user.tools.index', compact('tools', 'seoTitle', 'seoDescription'));
     }
 
-    /**
-     * Display specific tool with all packages
-     */
     public function show(Tool $tool): View
     {
         if (!$tool->status) {
-            abort(404, 'Tool not found');
+            abort(404);
         }
 
         $tool->load(['packages' => function ($query) {
             $query->where('status', true)->orderBy('price');
         }]);
 
-        // Check if user has active subscription for this tool
         $hasActiveSubscription = false;
         if (auth()->check()) {
             $hasActiveSubscription = auth()->user()
@@ -57,6 +57,10 @@ class ToolController extends Controller
                 ->exists();
         }
 
-        return view('user.tools.show', compact('tool', 'hasActiveSubscription'));
+        // SEO für die Detailseite
+        $seoTitle = $tool->name . " – Professionelles Entwickler-Tool | Digital Packt";
+        $seoDescription = Str::limit(strip_tags($tool->description), 150);
+
+        return view('user.tools.show', compact('tool', 'hasActiveSubscription', 'seoTitle', 'seoDescription'));
     }
 }
