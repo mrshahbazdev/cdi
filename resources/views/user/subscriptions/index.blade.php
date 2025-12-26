@@ -1,156 +1,185 @@
 <x-app-layout>
+    {{-- ================= HEADER ================= --}}
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center shadow-lg">
                     <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                     </svg>
                 </div>
+
                 <div>
-                    <h2 class="font-extrabold text-2xl text-gray-900 tracking-tight leading-none">
-                        {{ __('Active Portfolio') }}
+                    <h2 class="text-2xl font-extrabold text-gray-900">
+                        Active Portfolio
                     </h2>
-                    <p class="text-[10px] font-bold text-blue-600 uppercase tracking-[0.2em] mt-1">Managed Assets & Tool Licenses</p>
+                    <p class="text-xs font-semibold text-indigo-600 tracking-widest uppercase">
+                        Managed Tools & Licenses
+                    </p>
                 </div>
             </div>
-            <div class="hidden sm:flex items-center px-4 py-2 bg-indigo-50 border border-indigo-100 rounded-xl">
+
+            <div class="hidden sm:flex px-5 py-2 rounded-xl bg-indigo-50 border border-indigo-100">
                 <span class="text-sm font-black text-indigo-700">
-                    {{ $subscriptions->total() }} Licensed {{ Str::plural('Utility', $subscriptions->total()) }}
+                    {{ $subscriptions->total() }}
+                    {{ Str::plural('Active License', $subscriptions->total()) }}
                 </span>
             </div>
         </div>
     </x-slot>
 
-    <div class="py-12 relative overflow-hidden">
-        <!-- Background Decor -->
-        <div class="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse pointer-events-none"></div>
-        <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-96 h-96 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse pointer-events-none"></div>
+    {{-- ================= CONTENT ================= --}}
+    <div class="py-14 bg-gradient-to-br from-slate-50 to-white min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             @forelse($subscriptions as $subscription)
-                <div class="bg-white/70 backdrop-blur-xl rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all duration-500 border border-white mb-8 group overflow-hidden">
-                    <div class="p-8 md:p-10">
-                        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
-                            <!-- Tool Logo & Primary Info -->
+                <div
+                    class="group bg-white/80 backdrop-blur-xl border border-slate-200 rounded-[2rem]
+                           shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden">
+
+                    <div class="p-8 lg:p-10">
+                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+
+                            {{-- ===== LEFT ===== --}}
                             <div class="flex items-center gap-6 flex-1">
-                                <div class="shrink-0 relative">
-                                    <div class="w-20 h-20 bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100/50 rounded-3xl flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform duration-500">
+                                <div class="relative">
+                                    <div
+                                        class="w-20 h-20 rounded-3xl bg-gradient-to-br from-indigo-50 to-blue-50
+                                               border border-indigo-100 flex items-center justify-center
+                                               group-hover:scale-110 transition">
                                         @if($subscription->package->tool->logo)
-                                            <img src="{{ Storage::url($subscription->package->tool->logo) }}" 
-                                                 alt="{{ $subscription->package->tool->name }}" 
-                                                 class="h-12 w-12 object-contain group-hover:rotate-3 transition-transform">
+                                            <img src="{{ Storage::url($subscription->package->tool->logo) }}"
+                                                 class="w-12 h-12 object-contain"
+                                                 alt="{{ $subscription->package->tool->name }}">
                                         @else
-                                            <svg class="h-10 w-10 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                                            </svg>
+                                            <i class="fas fa-cube text-indigo-600 text-3xl"></i>
                                         @endif
                                     </div>
-                                    <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-white rounded-lg shadow-md flex items-center justify-center border border-blue-50">
-                                        <i class="fas fa-certificate text-blue-600 text-[8px]"></i>
-                                    </div>
+
+                                    <span
+                                        class="absolute -bottom-1 -right-1 w-6 h-6 rounded-lg bg-white
+                                               border border-indigo-100 flex items-center justify-center shadow">
+                                        <i class="fas fa-certificate text-indigo-600 text-[10px]"></i>
+                                    </span>
                                 </div>
 
-                                <div class="flex-1">
-                                    <div class="flex items-center gap-3 mb-1">
-                                        <h3 class="text-2xl font-black text-gray-900 group-hover:text-blue-600 transition-colors tracking-tight">
-                                            {{ $subscription->package->tool->name }}
-                                        </h3>
-                                        <span class="px-2 py-0.5 bg-gray-100 text-gray-500 text-[9px] font-black rounded-md uppercase tracking-widest">
+                                <div>
+                                    <h3 class="text-2xl font-black text-gray-900 group-hover:text-indigo-600 transition">
+                                        {{ $subscription->package->tool->name }}
+                                    </h3>
+
+                                    <div class="flex flex-wrap items-center gap-4 mt-2">
+                                        <span
+                                            class="px-3 py-1 text-[10px] font-black uppercase tracking-widest
+                                                   rounded-md bg-slate-100 text-slate-500">
                                             {{ $subscription->package->name }}
+                                        </span>
+
+                                        <span class="text-xs font-semibold text-slate-400">
+                                            Started {{ $subscription->created_at->format('M d, Y') }}
                                         </span>
                                     </div>
 
-                                    <div class="flex flex-wrap items-center gap-y-2 gap-x-6">
-                                        @if($subscription->subdomain)
-                                            <a href="https://{{ $subscription->subdomain }}.{{ $subscription->package->tool->domain }}" target="_blank" class="flex items-center text-sm font-bold text-blue-600 hover:text-indigo-700 transition-colors bg-blue-50/50 px-3 py-1.5 rounded-xl border border-blue-100">
-                                                <i class="fas fa-external-link-alt mr-2 text-[10px] opacity-70"></i>
-                                                <span class="font-mono">{{ $subscription->subdomain }}.{{ $subscription->package->tool->domain }}</span>
-                                            </a>
-                                        @endif
-
-                                        <div class="flex items-center text-xs font-bold text-gray-400 uppercase tracking-wider">
-                                            <i class="far fa-calendar-alt mr-2 text-blue-500"></i>
-                                            Started {{ $subscription->created_at->format('M d, Y') }}
-                                        </div>
-                                    </div>
+                                    @if($subscription->subdomain)
+                                        <a href="https://{{ $subscription->subdomain }}.{{ $subscription->package->tool->domain }}"
+                                           target="_blank"
+                                           class="inline-flex items-center mt-3 text-sm font-bold text-indigo-600 hover:underline">
+                                            <i class="fas fa-external-link-alt mr-2 text-xs"></i>
+                                            {{ $subscription->subdomain }}.{{ $subscription->package->tool->domain }}
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
 
-                            <!-- Right Side: Status & Conversion -->
-                            <div class="flex flex-row lg:flex-col items-center lg:items-end justify-between lg:justify-center w-full lg:w-auto gap-4">
-                                <div class="flex flex-col items-end">
-                                    @php
-                                        $statusClasses = [
-                                            'active' => 'bg-green-50 text-green-700 border-green-100',
-                                            'expired' => 'bg-red-50 text-red-700 border-red-100',
-                                            'cancelled' => 'bg-gray-50 text-gray-500 border-gray-100',
-                                            'pending' => 'bg-orange-50 text-orange-700 border-orange-100',
-                                            'upgraded' => 'bg-indigo-50 text-indigo-700 border-indigo-100',
-                                        ][$subscription->status] ?? 'bg-gray-50 text-gray-500 border-gray-100';
-                                    @endphp
+                            {{-- ===== RIGHT ===== --}}
+                            <div class="flex flex-col items-start lg:items-end gap-4">
 
-                                    <span class="inline-flex items-center px-4 py-2 rounded-2xl text-xs font-black uppercase tracking-[0.15em] border shadow-sm {{ $statusClasses }}">
-                                        @if($subscription->status === 'active')
-                                            <span class="flex h-2 w-2 rounded-full bg-green-500 mr-2.5 animate-pulse"></span>
-                                        @endif
-                                        {{ $subscription->status }}
-                                    </span>
+                                @php
+                                    $statusMap = [
+                                        'active' => 'bg-green-100 text-green-700',
+                                        'expired' => 'bg-red-100 text-red-700',
+                                        'cancelled' => 'bg-gray-100 text-gray-600',
+                                        'pending' => 'bg-orange-100 text-orange-700',
+                                        'upgraded' => 'bg-indigo-100 text-indigo-700',
+                                    ];
+                                @endphp
 
-                                    @if($subscription->status === 'active' && $subscription->expires_at)
-                                        <p class="mt-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                                            Ends in <span class="text-blue-600">{{ $subscription->expires_at->diffForHumans(['parts' => 1]) }}</span>
-                                        </p>
-                                    @endif
-                                </div>
+                                <span
+                                    class="px-5 py-2 rounded-2xl text-xs font-black uppercase tracking-widest
+                                           {{ $statusMap[$subscription->status] ?? 'bg-gray-100 text-gray-600' }}">
+                                    {{ $subscription->status }}
+                                </span>
 
-                                <div class="flex flex-wrap justify-end gap-2">
+                                @if($subscription->status === 'active' && $subscription->expires_at)
+                                    <p class="text-xs font-semibold text-slate-400">
+                                        Expires {{ $subscription->expires_at->diffForHumans() }}
+                                    </p>
+                                @endif
+
+                                <div class="flex flex-wrap gap-3 mt-2">
                                     @if($subscription->status === 'active')
-                                        <!-- Upgrade Option -->
-                                        <a href="{{ route('user.subscriptions.upgrade', $subscription) }}" class="px-6 py-3 bg-indigo-600 text-white text-xs font-black rounded-xl hover:bg-indigo-700 transition shadow-lg hover:shadow-indigo-500/20 flex items-center">
-                                            <i class="fas fa-arrow-circle-up mr-2"></i> Upgrade Plan
+                                        <a href="{{ route('user.subscriptions.upgrade', $subscription) }}"
+                                           class="px-6 py-3 rounded-xl bg-indigo-600 text-white
+                                                  text-xs font-black hover:bg-indigo-700 transition shadow">
+                                            <i class="fas fa-arrow-up mr-2"></i> Upgrade
                                         </a>
 
-                                        <a href="#" class="px-6 py-3 bg-gray-900 text-white text-xs font-black rounded-xl hover:bg-blue-600 transition shadow-lg hover:shadow-blue-500/20">
-                                            Manage Access
+                                        <a href="#"
+                                           class="px-6 py-3 rounded-xl bg-slate-900 text-white
+                                                  text-xs font-black hover:bg-indigo-600 transition shadow">
+                                            Manage
                                         </a>
                                     @else
-                                        <a href="{{ route('tools.show', $subscription->package->tool) }}" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs font-black rounded-xl hover:shadow-xl transition transform hover:-translate-y-0.5">
+                                        <a href="{{ route('tools.show', $subscription->package->tool) }}"
+                                           class="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600
+                                                  text-white text-xs font-black shadow hover:shadow-xl transition">
                                             Renew License
                                         </a>
                                     @endif
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             @empty
-                <div class="py-20 text-center">
-                    <div class="bg-white/70 backdrop-blur-xl rounded-[3rem] p-16 border-2 border-dashed border-blue-100 max-w-2xl mx-auto shadow-2xl shadow-blue-500/5">
-                        <div class="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-8">
-                            <svg class="h-12 w-12 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                            </svg>
+                {{-- EMPTY STATE --}}
+                <div class="text-center py-24">
+                    <div class="max-w-xl mx-auto bg-white/80 backdrop-blur-xl rounded-[3rem]
+                                border-2 border-dashed border-indigo-200 p-16 shadow-xl">
+                        <div
+                            class="w-24 h-24 mx-auto rounded-full bg-indigo-50 flex items-center justify-center mb-8">
+                            <i class="fas fa-box-open text-indigo-400 text-4xl"></i>
                         </div>
-                        <h3 class="text-3xl font-black text-gray-900 mb-4 tracking-tight">Portfolio Empty</h3>
-                        <p class="text-lg text-gray-500 font-medium leading-relaxed mb-10">
-                            You haven't initialized any tool licenses yet. Discover world-class utilities ready for instant deployment.
+
+                        <h3 class="text-3xl font-black text-gray-900 mb-4">
+                            No Active Licenses
+                        </h3>
+
+                        <p class="text-lg text-slate-500 mb-10">
+                            Start by activating powerful tools designed to scale your workflow.
                         </p>
-                        <a href="{{ route('tools.index') }}" 
-                           class="inline-flex items-center px-10 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black rounded-2xl hover:shadow-2xl hover:shadow-blue-500/30 transform hover:-translate-y-1 transition duration-300">
-                            <i class="fas fa-rocket mr-3"></i>Discover Tools
+
+                        <a href="{{ route('tools.index') }}"
+                           class="inline-flex items-center px-10 py-4 rounded-2xl
+                                  bg-gradient-to-r from-indigo-600 to-blue-600
+                                  text-white font-black shadow-xl hover:shadow-2xl transition">
+                            <i class="fas fa-rocket mr-3"></i> Browse Tools
                         </a>
                     </div>
                 </div>
             @endforelse
 
+            {{-- PAGINATION --}}
             @if($subscriptions->hasPages())
-                <div class="mt-16 flex justify-center">
-                    <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-4 border border-blue-50">
+                <div class="flex justify-center pt-10">
+                    <div class="bg-white rounded-2xl shadow-lg p-4 border">
                         {{ $subscriptions->links() }}
                     </div>
                 </div>
             @endif
+
         </div>
     </div>
 </x-app-layout>
