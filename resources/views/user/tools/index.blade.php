@@ -123,13 +123,13 @@
                                 </div>
                             </div>
 
-                            <a href="{{ route('tools.show', $tool) }}" 
+                            <!-- <a href="{{ route('tools.show', $tool) }}" 
                                class="flex items-center justify-center w-full py-5 bg-gray-900 text-white rounded-[1.5rem] font-black text-lg group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-indigo-600 transition-all duration-300 shadow-xl hover:shadow-blue-500/30">
                                 Launch Utility 
                                 <svg class="w-5 h-5 ml-3 transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                 </svg>
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                 @empty
