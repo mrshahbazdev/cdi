@@ -187,6 +187,9 @@ $schemaJson = json_encode(
                             <span class="text-sm font-medium text-gray-500">
                                 {{ $tool->packages->count() ? 'Ab €' . number_format($tool->packages->min('price'), 2) . '/Monat' : 'Individuelle Preise' }}
                             </span>
+                            <a href="{{ route('tools.show', $tool) }}" class="text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors">
+                                Mehr Informationen
+                            </a>
                         </div>
                     </article>
                 @empty
