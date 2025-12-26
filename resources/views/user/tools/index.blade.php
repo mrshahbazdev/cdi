@@ -190,13 +190,13 @@ $schemaJson = json_encode(
                             <span class="text-sm font-medium text-gray-500">
                                 {{ $tool->packages->count() ? 'Starting at €' . number_format($tool->packages->min('price'), 2) . '/mo' : 'Custom Pricing' }}
                             </span>
-                            <a href="{{ route('tools.show', $tool) }}" 
+                            <!-- <a href="{{ route('tools.show', $tool) }}" 
                                class="text-blue-600 hover:text-blue-800 font-semibold text-sm flex items-center gap-2 group-hover:gap-3 transition-all">
                                 Explore Tool
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                                 </svg>
-                            </a>
+                            </a> -->
                         </div>
                     </article>
                 @empty
