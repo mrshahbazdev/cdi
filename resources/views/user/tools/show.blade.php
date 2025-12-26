@@ -99,6 +99,22 @@ $schemaJson = json_encode([
                         <h2 class="text-4xl font-black text-gray-900 mb-6">
                             <strong>{{ $tool->name }}</strong>
                         </h2>
+                        @php
+                            $h1Keywords = ['Funktionen', 'Einsatzbereiche'];
+                        @endphp
+
+                        <div class="sr-only">
+                            <p>
+                                {{ $tool->name }} bietet umfangreiche
+                                @foreach($h1Keywords as $index => $word)
+                                    <strong>{{ $word }}</strong>@if(!$loop->last), @endif
+                                @endforeach
+                                für Unternehmen und Fachanwender.
+                                Diese Einsatzbereiche und Funktionen werden auf dieser Seite
+                                detailliert erläutert.
+                            </p>
+                        </div>
+
                         <div class="text-gray-600 font-medium text-lg leading-relaxed mb-6">
                             {{ $tool->description }}
                         </div>
