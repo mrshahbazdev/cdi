@@ -3,6 +3,17 @@ use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
+| Dynamische SEO-Variablen (Verhindert Duplicate Content)
+|--------------------------------------------------------------------------
+*/
+$currentPage = request()->get('page');
+$pageSuffix = $currentPage > 1 ? " – Seite $currentPage" : "";
+
+$seoTitle = $tool->name . " – Professionelles Entwickler-Tool" . $pageSuffix . " | Digital Packt";
+$seoDescription = Str::limit(strip_tags($tool->description ?? 'Nutzen Sie diese Hochleistungs-Utility mit automatisierter Bereitstellung und API-Integration.'), 150) . $pageSuffix;
+
+/*
+|--------------------------------------------------------------------------
 | Schema.org SoftwareApplication Data
 |--------------------------------------------------------------------------
 */
@@ -30,22 +41,22 @@ $schemaJson = json_encode(
 @endphp
 
 <x-app-layout
-    title="{{ $tool->name }} – Professionelles Entwickler-Tool | Digital Packt"
-    metaDescription="{{ Str::limit(strip_tags($tool->description ?? 'Nutzen Sie diese Hochleistungs-Utility mit automatisierter Bereitstellung und API-Integration.'), 150) }}">
-
-    {{-- ✅ H1 für SEO (Hidden) --}}
-    <h1 class="sr-only">
-        {{ $tool->name }} – Spezifikationen, Lizenzen und Enterprise-Lösungen
-    </h1>
+    :title="$seoTitle"
+    :metaDescription="$seoDescription">
 
     {{-- ✅ SEO & Schema --}}
     @push('meta')
-        {{-- Der Canonical Link stellt sicher, dass Google dieses Tool als einzigartig unter seiner URL indexiert --}}
+        {{-- Canonical URL zeigt immer auf die saubere Basis-URL ohne Query-Strings, um Duplikate zu vermeiden --}}
         <link rel="canonical" href="{{ route('tools.show', $tool) }}">
         <script type="application/ld+json">
-{!! $schemaJson !!}
+        {!! $schemaJson !!}
         </script>
     @endpush
+
+    {{-- ✅ H1 für SEO (Hidden, aber für Crawler wichtig) --}}
+    <h1 class="sr-only">
+        {{ $tool->name }} – Spezifikationen, Lizenzen und Enterprise-Lösungen {{ $pageSuffix }}
+    </h1>
 
     <x-slot name="header">
         <div class="flex items-center justify-between">
@@ -73,10 +84,12 @@ $schemaJson = json_encode(
     </x-slot>
 
     <div class="py-16 bg-slate-50/50 relative overflow-hidden min-h-screen">
+        {{-- Dekorative Hintergründe --}}
         <div class="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse pointer-events-none"></div>
         <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-96 h-96 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {{-- Tool Header Card --}}
             <div class="bg-white rounded-[3rem] shadow-[0_15px_50px_rgba(0,0,0,0.04)] p-10 md:p-16 border border-white mb-16 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 rounded-full -mr-20 -mt-20 blur-3xl pointer-events-none"></div>
                 
@@ -124,9 +137,10 @@ $schemaJson = json_encode(
                 </div>
             </div>
 
+            {{-- Preis-Sektion --}}
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-black text-gray-900 tracking-tight mb-3">Lizenzmodelle</h2>
-                <p class="text-lg text-gray-500 font-medium">Wählen Sie einen Plan, der auf Ihre betriebliche Skalierung und technischen Anforderungen zugeschnitten ist.</p>
+                <p class="text-lg text-gray-500 font-medium">Wählen Sie einen Plan, der auf Ihre betriebliche Skalierung zugeschnitten ist.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-20">
@@ -221,27 +235,21 @@ $schemaJson = json_encode(
                 @empty
                     <div class="col-span-full py-24 text-center">
                         <div class="bg-white rounded-[3rem] p-20 border-2 border-dashed border-slate-200">
-                            <svg class="w-20 h-20 text-slate-200 mx-auto mb-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                            </svg>
                             <h3 class="text-3xl font-black text-slate-400">Aktuell keine Pläne für diese Utility verfügbar.</h3>
-                            <p class="text-slate-400 font-medium mt-4">Unsere Ingenieure aktualisieren derzeit die Lizenzprotokolle.</p>
                         </div>
                     </div>
                 @endforelse
             </div>
 
+            {{-- Support Sektion --}}
             <div class="bg-gray-950 rounded-[3.5rem] p-12 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-10 shadow-2xl shadow-indigo-900/20 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>
-                
                 <div class="text-center lg:text-left relative z-10">
-                    <h4 class="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">Benötigen Sie eine individuelle Lösung?</h4>
-                    <p class="text-xl text-slate-400 font-medium">Kontaktieren Sie unser Team für spezielle Deployments und dedizierte SLA-Garantien.</p>
+                    <h4 class="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">Individuelle Lösung?</h4>
+                    <p class="text-xl text-slate-400 font-medium">Kontaktieren Sie uns für spezielle Deployments.</p>
                 </div>
-                
                 <a href="mailto:sales@digitalpackt.com" class="px-12 py-5 bg-white text-gray-950 rounded-[1.5rem] font-black text-lg hover:bg-blue-50 transition-all shadow-xl hover:-translate-y-1 shrink-0 relative z-10 flex items-center">
-                    Architektur-Kontakt
-                    <svg class="w-5 h-5 ml-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /></svg>
+                    Kontakt aufnehmen
                 </a>
             </div>
         </div>
