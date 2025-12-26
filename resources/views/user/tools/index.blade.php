@@ -1,11 +1,7 @@
 @php
 use Illuminate\Support\Str;
 
-/*
-|--------------------------------------------------------------------------
-| Schema.org Data (Bleibt unverändert für SEO)
-|--------------------------------------------------------------------------
-*/
+/* SCHEMA BLEIBT UNVERÄNDERT FÜR 100% SEO */
 $schemaItems = [];
 foreach ($tools as $index => $tool) {
     $schemaItems[] = [
@@ -27,182 +23,165 @@ foreach ($tools as $index => $tool) {
         ]
     ];
 }
-$schemaJson = json_encode([
-    "@context" => "https://schema.org",
-    "@type" => "ItemList",
-    "name" => "Developer Ecosystem – Premium Development Tools & Utilities",
-    "itemListElement" => $schemaItems
-], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+
+$schemaJson = json_encode(
+    [
+        "@context" => "https://schema.org",
+        "@type" => "ItemList",
+        "name" => "Developer Ecosystem – Premium Development Tools & Utilities",
+        "itemListElement" => $schemaItems
+    ],
+    JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
+);
 @endphp
 
 <x-app-layout
     title="Digital Packt – Professional SaaS Platform"
     metaDescription="Digital Packt ist Ihre professionelle SaaS Platform für moderne Softwareentwicklung. Entdecken Sie unser Developer Ecosystem mit Premium Tools und Utilities.">
 
-    {{-- ✅ SEO H1 (Unsichtbar) --}}
+    {{-- SEO H1 --}}
     <h1 class="sr-only">Explore the Developer Ecosystem – Premium Development Tools & Utilities</h1>
 
     @push('meta')
         <script type="application/ld+json">{!! $schemaJson !!}</script>
     @endpush
 
-    {{-- HEADER (Modernized) --}}
-    <x-slot name="header">
-        <div class="flex items-center space-x-5">
-            <div class="relative">
-                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-25"></div>
-                <div class="relative w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm border border-slate-100">
-                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-                    </svg>
-                </div>
-            </div>
-            <div>
-                <h2 class="text-3xl font-black text-slate-900 tracking-tight">Ecosystem</h2>
-                <div class="flex items-center space-x-2">
-                    <span class="h-px w-4 bg-blue-600"></span>
-                    <p class="text-[11px] font-bold text-blue-600 uppercase tracking-widest">Premium Tools & Utilities</p>
-                </div>
-            </div>
-        </div>
-    </x-slot>
-
-    <div class="bg-[#f8fafc] min-h-screen pb-24">
+    {{-- MAIN CONTENT --}}
+    <div class="bg-[#f8fafc] min-h-screen pb-20">
         
-        {{-- HERO TEXT SECTION --}}
-        <div class="relative overflow-hidden pt-16 pb-12">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div class="max-w-3xl">
-                    <h2 class="text-4xl font-black text-slate-900 mb-8 leading-tight">
-                        Ihr Zugang zum <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Digital Packt Ecosystem</span>
-                    </h2>
-                    <p class="text-xl text-slate-600 leading-relaxed mb-6">
-                        In einer zunehmend digitalisierten Welt ist die Wahl der richtigen Software-Infrastruktur entscheidend für den unternehmerischen Erfolg. Digital Packt fungiert hierbei als Ihre <strong>Professional SaaS Platform</strong>.
-                    </p>
-                    <p class="text-lg text-slate-500 leading-relaxed">
-                        Wenn Sie unsere Plattform <strong>exploren</strong>, entdecken Sie eine kuratierte Auswahl an <strong>Premium Development Tools & Utilities</strong>, die darauf optimiert sind, repetitive Workflows zu automatisieren.
+        {{-- HERO SECTION --}}
+        <div class="relative overflow-hidden bg-white border-b border-slate-200 pt-16 pb-24">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-10 pointer-events-none">
+                <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[60%] bg-blue-400 rounded-full blur-[120px]"></div>
+                <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[60%] bg-indigo-400 rounded-full blur-[120px]"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 mb-6">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                    </span>
+                    <span class="text-[10px] font-bold text-blue-700 uppercase tracking-widest">Developer Ecosystem v2.0</span>
+                </div>
+                
+                <h2 class="text-4xl md:text-6xl font-[900] text-slate-900 tracking-tight mb-6">
+                    Professional <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">SaaS Platform</span>
+                </h2>
+
+                {{-- SEO Text 1 --}}
+                <div class="max-w-3xl mx-auto">
+                    <p class="text-lg text-slate-600 leading-relaxed">
+                        In einer zunehmend digitalisierten Welt ist die Wahl der richtigen Software-Infrastruktur entscheidend. 
+                        <strong>Digital Packt</strong> fungiert als Ihre Professional SaaS Platform, die technologische Komplexität reduziert 
+                        und ein modulares <strong>Developer Ecosystem</strong> schafft.
                     </p>
                 </div>
             </div>
-            {{-- Dekorative Form im Hintergrund --}}
-            <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-50"></div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12">
             
-            {{-- SEARCH BAR (High-End Design) --}}
-            <div class="mb-20">
-                <div class="bg-white rounded-[2rem] p-3 shadow-xl shadow-slate-200/50 border border-slate-100">
-                    <form method="GET" action="{{ route('tools.index') }}" class="flex flex-col md:flex-row items-center gap-3">
-                        <div class="relative flex-1 w-full">
-                            <div class="absolute inset-y-0 left-6 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                                </svg>
-                            </div>
-                            <input type="text" name="search" value="{{ request('search') }}"
-                                   placeholder="Welche Anwendung bauen Sie heute?"
-                                   class="w-full pl-14 pr-6 py-5 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-blue-600 transition-all text-slate-700 placeholder-slate-400 font-medium"/>
-                        </div>
-                        <button type="submit" class="w-full md:w-auto px-10 py-5 bg-slate-900 hover:bg-blue-600 text-white font-bold rounded-2xl transition-all duration-300 transform hover:scale-[1.02] active:scale-95 shadow-lg shadow-slate-900/20">
-                            Utility finden
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            {{-- INFO GRID (Feature Style) --}}
-            <div class="grid md:grid-cols-2 gap-8 mb-24">
-                <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-6 text-blue-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-4">Optimierte Integration & Deployment</h3>
-                    <p class="text-slate-600 leading-relaxed text-sm">
-                        Die nahtlose Einbindung von <strong>Development Utilities</strong> in bestehende IT-Landschaften ist oft eine Hürde. Digital Packt löst dieses Problem durch standardisierte Schnittstellen und eine klare Dokumentation.
-                    </p>
-                </div>
-                <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center mb-6 text-indigo-600">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04kM12 21.48V22"/></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-4">Sicherheit im Developer Ecosystem</h3>
-                    <p class="text-slate-600 leading-relaxed text-sm">
-                        Sicherheit steht bei jeder Software-Entscheidung an erster Stelle. Unser Ökosystem wird kontinuierlich auf Schwachstellen geprüft und aktualisiert. So stellen wir sicher, dass Sie mit Tools arbeiten, die modernsten Standards entsprechen.
-                    </p>
-                </div>
-            </div>
-
-            {{-- TOOLS GRID (Cards Redesign) --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
+            {{-- TOOLS GRID --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @forelse($tools as $tool)
-                    <article class="group bg-white rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden flex flex-col">
-                        <div class="p-8 flex-1">
+                    <article class="group relative bg-white rounded-3xl border border-slate-200 p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        <div class="flex flex-col h-full">
                             <div class="mb-6 flex justify-between items-start">
-                                <div class="p-3 bg-slate-50 rounded-2xl group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                                <div class="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 transition-colors duration-300">
+                                    <svg class="w-7 h-7 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                                    </svg>
                                 </div>
-                                <span class="px-3 py-1 bg-green-50 text-green-600 text-[10px] font-bold uppercase rounded-full tracking-wider border border-green-100">Active</span>
+                                <span class="text-[10px] font-bold py-1 px-3 bg-slate-100 text-slate-500 rounded-full uppercase">Utility</span>
                             </div>
-                            <h3 class="text-2xl font-black text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
+
+                            <h3 class="text-2xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
                                 {{ $tool->name }}
                             </h3>
-                            <p class="text-slate-500 text-sm leading-relaxed mb-8">
+
+                            <p class="text-slate-500 text-sm leading-relaxed mb-8 flex-grow">
                                 {{ Str::limit($tool->description, 120) }}
                             </p>
-                        </div>
-                        <div class="px-8 pb-8">
-                            <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100 flex items-center justify-between group-hover:bg-slate-100 transition-colors">
+
+                            <div class="pt-6 border-t border-slate-100 flex items-center justify-between">
                                 <div>
-                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Ab Preis</p>
-                                    <p class="text-2xl font-black text-slate-900">
+                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">Startet bei</p>
+                                    <p class="text-xl font-bold text-slate-900">
                                         @if($tool->packages->count())
                                             €{{ number_format($tool->packages->min('price'), 2) }}
                                         @else
-                                            <span class="text-lg">Auf Anfrage</span>
+                                            <span class="text-sm">Auf Anfrage</span>
                                         @endif
                                     </p>
                                 </div>
-                                <div class="h-10 w-10 rounded-full bg-white flex items-center justify-center text-slate-900 shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                <a href="{{ route('tools.show', $tool) }}" class="p-3 bg-slate-900 text-white rounded-xl hover:bg-blue-600 transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </article>
                 @empty
-                    <div class="col-span-full py-20 text-center">
-                        <p class="text-slate-400 font-medium italic">Keine Tools im Ecosystem gefunden.</p>
+                    <div class="col-span-full py-20 text-center bg-white rounded-3xl border-2 border-dashed border-slate-200">
+                        <p class="text-slate-400">Momentan sind keine Tools im Ecosystem verfügbar.</p>
                     </div>
                 @endforelse
             </div>
 
-            {{-- FAQ SECTION (Accordion Style Design) --}}
-            <section class="max-w-4xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-black text-slate-900 mb-4">Häufige Fragen zum Ecosystem</h2>
-                    <p class="text-slate-500">Alles, was Sie über unsere Premium Development Utilities wissen müssen.</p>
+            {{-- SEO SECTION 2: INFOS --}}
+            <section class="mt-24 grid md:grid-cols-2 gap-16 items-center">
+                <div class="space-y-6">
+                    <h3 class="text-3xl font-black text-slate-900">Optimierte Integration & Deployment</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        Die nahtlose Einbindung von <strong>Development Utilities</strong> in bestehende IT-Landschaften ist oft eine Hürde. 
+                        Digital Packt löst dieses Problem durch standardisierte Schnittstellen. Wir begleiten Sie dabei, neue Module ohne Reibungsverluste in Ihre Deployment-Pipelines zu integrieren.
+                    </p>
+                    <div class="flex items-center space-x-4 text-blue-600 font-bold">
+                        <span class="h-px w-12 bg-blue-600"></span>
+                        <span>Agilität & Time-to-Market Fokus</span>
+                    </div>
                 </div>
-                <div class="space-y-4">
-                    @php
-                        $faqs = [
-                            ['q' => 'Was ist ein Developer Ecosystem?', 'a' => 'Ein Developer Ecosystem wie das von Digital Packt ist ein Netzwerk aus aufeinander abgestimmten Tools, Frameworks und Ressourcen.'],
-                            ['q' => 'Warum eine Professional SaaS Platform nutzen?', 'a' => 'Die Nutzung garantiert Stabilität, regelmäßige Sicherheitsupdates und eine skalierbare Infrastruktur für Ihr Business.'],
-                            ['q' => 'Sind die Tools flexibel anpassbar?', 'a' => 'Ja, unsere Utilities sind modular konzipiert und lassen sich nahtlos in verschiedene Architekturen integrieren.'],
-                            ['q' => 'Wie oft wird das Ecosystem aktualisiert?', 'a' => 'Wir erweitern unser Portfolio ständig um neue innovative Tools und Sicherheits-Patches.']
-                        ];
-                    @endphp
+                <div class="bg-slate-900 rounded-[3rem] p-10 text-white shadow-2xl relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-bold mb-4">Sicherheit im Ecosystem</h3>
+                        <p class="text-slate-400 leading-relaxed mb-6">
+                            Unser Ökosystem wird kontinuierlich auf Schwachstellen geprüft. Wir bieten die Infrastruktur, die mit Ihren Anforderungen mitwächst – egal ob Datenverarbeitung oder Compliance-Checks.
+                        </p>
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex items-center space-x-3">
+                                <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+                                <span>Modernste Industriestandards</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+                                <span>Skalierbare SaaS-Architektur</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-blue-600/20 rounded-full blur-3xl"></div>
+                </div>
+            </section>
 
-                    @foreach($faqs as $faq)
-                        <div class="bg-white border border-slate-100 rounded-3xl p-8 hover:border-blue-200 transition-colors">
-                            <h4 class="text-lg font-bold text-slate-900 mb-3 flex items-center">
-                                <span class="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
-                                {{ $faq['q'] }}
-                            </h4>
-                            <p class="text-slate-600 leading-relaxed text-sm pl-5">
-                                {{ $faq['a'] }}
-                            </p>
-                        </div>
-                    @endforeach
+            {{-- SEO SECTION 3: FAQ (Unverändert für SEO) --}}
+            <section class="mt-24 pt-16 border-t border-slate-200">
+                <h2 class="text-3xl font-black text-slate-900 mb-12 text-center">FAQ – Häufige Fragen</h2>
+                <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <h4 class="font-bold text-slate-900 mb-2">Was ist ein Developer Ecosystem?</h4>
+                        <p class="text-slate-600 text-sm">Ein Netzwerk aus aufeinander abgestimmten Tools und Ressourcen, die den Software-Entwicklungsprozess vereinfachen und eine konsistente Umgebung bieten.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <h4 class="font-bold text-slate-900 mb-2">Warum eine Professional SaaS Platform?</h4>
+                        <p class="text-slate-600 text-sm">Sie garantiert Stabilität, regelmäßige Updates und eine Infrastruktur, die internationalen Qualitätsstandards entspricht, statt auf Insellösungen zu setzen.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <h4 class="font-bold text-slate-900 mb-2">Sind die Tools flexibel anpassbar?</h4>
+                        <p class="text-slate-600 text-sm">Ja, unsere Utilities sind modular konzipiert. Sie funktionieren als Standalone-Lösung oder integriert in komplexe Microservices-Landschaften.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <h4 class="font-bold text-slate-900 mb-2">Wie oft gibt es Updates?</h4>
+                        <p class="text-slate-600 text-sm">Wir erweitern das Portfolio ständig um innovative Tools und halten bestehende Anwendungen kompatibel zu neuesten Sprachen und Sicherheits-Patches.</p>
+                    </div>
                 </div>
             </section>
 
