@@ -1,52 +1,52 @@
+@php
+$schemaItems = [];
+
+foreach ($tools as $index => $tool) {
+    $schemaItems[] = [
+        "@type" => "ListItem",
+        "position" => $index + 1,
+        "item" => [
+            "@type" => "SoftwareApplication",
+            "name" => $tool->name,
+            "applicationCategory" => "DeveloperApplication",
+            "operatingSystem" => "All",
+            "description" => \Illuminate\Support\Str::limit(strip_tags($tool->description), 160),
+            "url" => route('tools.show', $tool),
+            "offers" => [
+                "@type" => "Offer",
+                "priceCurrency" => "EUR",
+                "price" => $tool->packages->count()
+                    ? number_format($tool->packages->min('price'), 2, '.', '')
+                    : "0.00",
+                "availability" => "https://schema.org/InStock"
+            ]
+        ]
+    ];
+}
+@endphp
+
 <x-app-layout
     title="Entwickler-Tools & Utilities | DigitalPackt"
     metaDescription="Entdecken Sie Premium Entwickler-Tools, skalierbare Utilities und professionelle Softwarelösungen für moderne digitale Projekte.">
 
-    {{-- ========================= --}}
-    {{-- ✅ SEO H1 (Only once) --}}
-    {{-- ========================= --}}
+    {{-- ✅ SEO H1 --}}
     <h1 class="sr-only">
         Entwickler-Ökosystem entdecken – Premium Entwicklungs-Tools & Utilities
     </h1>
 
-    {{-- ========================= --}}
-    {{-- ✅ Schema.org JSON-LD --}}
-    {{-- ========================= --}}
+    {{-- ✅ Schema.org --}}
     @push('meta')
         <script type="application/ld+json">
-        {
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          "name": "Entwickler-Tools & Utilities",
-          "itemListElement": [
-            @foreach($tools as $index => $tool)
-            {
-              "@type": "ListItem",
-              "position": {{ $index + 1 }},
-              "item": {
-                "@type": "SoftwareApplication",
-                "name": "{{ $tool->name }}",
-                "applicationCategory": "DeveloperApplication",
-                "operatingSystem": "All",
-                "description": "{{ Str::limit(strip_tags($tool->description), 160) }}",
-                "url": "{{ route('tools.show', $tool) }}",
-                "offers": {
-                  "@type": "Offer",
-                  "priceCurrency": "EUR",
-                  "price": "{{ $tool->packages->count() ? number_format($tool->packages->min('price'), 2, '.', '') : '0.00' }}",
-                  "availability": "https://schema.org/InStock"
-                }
-              }
-            }@if(!$loop->last),@endif
-            @endforeach
-          ]
-        }
+            {!! json_encode([
+                "@context" => "https://schema.org",
+                "@type" => "ItemList",
+                "name" => "Entwickler-Tools & Utilities",
+                "itemListElement" => $schemaItems
+            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
         </script>
     @endpush
 
-    {{-- ========================= --}}
     {{-- HEADER --}}
-    {{-- ========================= --}}
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
@@ -73,9 +73,7 @@
         </div>
     </x-slot>
 
-    {{-- ========================= --}}
     {{-- CONTENT --}}
-    {{-- ========================= --}}
     <div class="py-16 bg-slate-50/50 min-h-screen">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -97,29 +95,21 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 @foreach($tools as $tool)
                     <article class="group bg-white rounded-[3rem] shadow hover:shadow-xl transition">
-
                         <div class="p-10">
-
                             <h3 class="text-2xl font-black text-gray-900 mb-2">
                                 {{ $tool->name }}
                             </h3>
-
                             <p class="text-xs text-gray-400 mb-4">
                                 {{ $tool->domain }}
                             </p>
-
                             <p class="text-gray-500 mb-8">
                                 {{ $tool->description }}
                             </p>
 
-                            {{-- PRICE (NO HEADING) --}}
-                            <div class="p-6 bg-slate-50 rounded-[1.5rem] border"
-                                 aria-label="Preis des Entwickler-Tools">
-
+                            <div class="p-6 bg-slate-50 rounded-[1.5rem] border">
                                 <span class="text-[10px] font-black text-slate-400 uppercase">
                                     Ab Preis
                                 </span>
-
                                 <div class="text-3xl font-black text-gray-900">
                                     @if($tool->packages->count())
                                         €{{ number_format($tool->packages->min('price'), 2) }}
@@ -127,12 +117,7 @@
                                         Preis auf Anfrage
                                     @endif
                                 </div>
-
-                                <span class="text-[10px] font-black text-blue-600 uppercase">
-                                    {{ $tool->packages->count() }} Tarife
-                                </span>
                             </div>
-
                         </div>
                     </article>
                 @endforeach
