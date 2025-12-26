@@ -3,65 +3,58 @@ use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
-| Dynamische SEO-Variablen (Verhindert Duplicate Titles/Descriptions)
+| SEO-Optimierung (Verhindert "Too Long" & "Duplicate Meta")
 |--------------------------------------------------------------------------
 */
 $currentPage = request()->get('page');
-$pageSuffix = ($currentPage && $currentPage > 1) ? " – Seite $currentPage" : "";
+$pageSuffix = ($currentPage && $currentPage > 1) ? " (S.$currentPage)" : "";
 
-// Der Titel, der in deinem Layout an @yield('title') übergeben wird
-$seoTitle = $tool->name . " – Professionelles Entwickler-Tool" . $pageSuffix;
+// Wir halten den Titel extrem kurz, da dein Layout "| Digital Packt" anhängt.
+// Ziel: Unter 60 Zeichen bleiben.
+$seoTitle = Str::limit($tool->name, 20) . " – Tool" . $pageSuffix;
 
-// Die Beschreibung für Google Meta-Tags
-$seoDescription = Str::limit(strip_tags($tool->description ?? 'Nutzen Sie diese Hochleistungs-Utility mit automatisierter Bereitstellung und API-Integration.'), 150) . $pageSuffix;
+// Einzigartige Meta-Beschreibung durch Suffix
+$baseDesc = $tool->description ?? 'Professionelles SaaS & Automation Tool.';
+$seoDescription = Str::limit(strip_tags($baseDesc), 135) . $pageSuffix;
 
 /*
 |--------------------------------------------------------------------------
-| Schema.org SoftwareApplication JSON
+| Schema.org Daten
 |--------------------------------------------------------------------------
 */
-$schemaJson = json_encode(
-    [
-        "@context" => "https://schema.org",
-        "@type" => "SoftwareApplication",
-        "name" => $tool->name,
-        "description" => Str::limit(strip_tags($tool->description), 160),
-        "applicationCategory" => "DeveloperApplication",
-        "operatingSystem" => "All",
-        "url" => route('tools.show', $tool),
-        "offers" => $tool->packages->map(function($package) {
-            return [
-                "@type" => "Offer",
-                "name" => $package->name,
-                "price" => number_format($package->price, 2, '.', ''),
-                "priceCurrency" => "EUR",
-                "availability" => "https://schema.org/InStock"
-            ];
-        })->toArray()
-    ],
-    JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
-);
+$schemaJson = json_encode([
+    "@context" => "https://schema.org",
+    "@type" => "SoftwareApplication",
+    "name" => $tool->name,
+    "description" => Str::limit(strip_tags($tool->description), 160),
+    "applicationCategory" => "DeveloperApplication",
+    "operatingSystem" => "All",
+    "url" => route('tools.show', $tool),
+    "offers" => $tool->packages->map(function($package) {
+        return [
+            "@type" => "Offer",
+            "name" => $package->name,
+            "price" => number_format($package->price, 2, '.', ''),
+            "priceCurrency" => "EUR",
+            "availability" => "https://schema.org/InStock"
+        ];
+    })->toArray()
+], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
 @endphp
 
-{{-- ✅ WICHTIG: Überschreibt den Layout-Standardtitel --}}
+{{-- ✅ Überschreibt @yield('title') in deinem Layout --}}
 @section('title', $seoTitle)
 
 <x-app-layout :metaDescription="$seoDescription">
 
-    {{-- ✅ SEO & Schema STEUERUNG --}}
+    {{-- ✅ SEO-Header-Steuerung --}}
     @push('meta')
-        {{-- Canonical Link: Verhindert, dass paginierte Seiten als Dubletten bestraft werden --}}
         <link rel="canonical" href="{{ url()->current() }}">
-        
-        <script type="application/ld+json">
-        {!! $schemaJson !!}
-        </script>
+        <script type="application/ld+json">{!! $schemaJson !!}</script>
     @endpush
 
-    {{-- ✅ Sichtbares H1 für Google SEO --}}
-    <h1 class="sr-only">
-        {{ $tool->name }} – Spezifikationen, Lizenzen und Enterprise-Lösungen {{ $pageSuffix }}
-    </h1>
+    {{-- ✅ Sichtbares H1 für Google --}}
+    <h1 class="sr-only">{{ $tool->name }} – Spezifikationen {{ $pageSuffix }}</h1>
 
     <x-slot name="header">
         <div class="flex items-center justify-between">
@@ -72,9 +65,7 @@ $schemaJson = json_encode(
                     </svg>
                 </a>
                 <div>
-                    <h2 class="font-extrabold text-2xl text-gray-900 tracking-tight leading-none">
-                        {{ $tool->name }}
-                    </h2>
+                    <h2 class="font-extrabold text-2xl text-gray-900 tracking-tight leading-none">{{ $tool->name }}</h2>
                     <p class="text-[10px] font-black text-blue-600 uppercase tracking-[0.2em] mt-1.5">Spezifikationen & Lizenzierung</p>
                 </div>
             </div>
@@ -89,7 +80,7 @@ $schemaJson = json_encode(
     </x-slot>
 
     <div class="py-16 bg-slate-50/50 relative overflow-hidden min-h-screen">
-        {{-- Dekorative Hintergründe --}}
+        {{-- Hintergrund-Deko --}}
         <div class="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse pointer-events-none"></div>
         <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-96 h-96 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse pointer-events-none"></div>
 
@@ -106,11 +97,6 @@ $schemaJson = json_encode(
                             @else
                                 <span class="text-6xl font-black text-blue-600">{{ strtoupper(substr($tool->name, 0, 1)) }}</span>
                             @endif
-                            <div class="absolute -bottom-4 -right-4 w-14 h-14 bg-white rounded-2xl shadow-xl flex items-center justify-center border border-blue-50">
-                                <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                                </svg>
-                            </div>
                         </div>
                     </div>
 
@@ -124,63 +110,41 @@ $schemaJson = json_encode(
                             {{ $tool->description ?? 'Nutzen Sie diese Hochleistungs-Utility auf Ihrer eigenen Subdomain.' }}
                         </p>
 
-                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-6">
+                        <div class="flex items-center justify-center lg:justify-start">
                             <div class="flex items-center text-sm font-bold text-gray-700 bg-slate-50 px-6 py-3 rounded-2xl border border-slate-100 shadow-inner">
-                                <svg class="h-5 w-5 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                                </svg>
+                                <svg class="h-5 w-5 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
                                 <span class="font-mono tracking-tight">{{ $tool->domain }}</span>
-                            </div>
-                            <div class="flex items-center text-sm font-bold text-gray-700 bg-slate-50 px-6 py-3 rounded-2xl border border-slate-100 shadow-inner">
-                                <svg class="h-5 w-5 mr-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                                </svg>
-                                <span>API v2.8 Bereit</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {{-- Preis-Sektion --}}
+            {{-- Lizenzmodelle --}}
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-black text-gray-900 tracking-tight mb-3">Lizenzmodelle</h2>
-                <p class="text-lg text-gray-500 font-medium">Wählen Sie einen Plan, der auf Ihre betriebliche Skalierung zugeschnitten ist.</p>
+                <p class="text-lg text-gray-500 font-medium">Wählen Sie einen Plan für Ihre Anforderungen.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-20">
                 @forelse($tool->packages as $package)
                     @php
                         $isLifetime = $package->duration_type === 'lifetime';
-                        $isTrial = $package->duration_type === 'trial';
-                        $durationTypeMap = [
-                            'lifetime' => 'Lebenslang',
-                            'trial' => 'Testphase',
-                            'month' => 'Monat',
-                            'year' => 'Jahr',
-                            'day' => 'Tag'
-                        ];
+                        $durationTypeMap = ['lifetime' => 'Lebenslang', 'trial' => 'Testphase', 'month' => 'Monat', 'year' => 'Jahr', 'day' => 'Tag'];
                         $displayDuration = $durationTypeMap[$package->duration_type] ?? $package->duration_type;
                     @endphp
                     
-                    <div class="group relative bg-white rounded-[3rem] shadow-[0_10px_40px_rgba(0,0,0,0.03)] hover:shadow-[0_25px_70px_rgba(37,99,235,0.15)] transition-all duration-500 border-2 flex flex-col 
-                        {{ $isLifetime ? 'border-indigo-600 ring-8 ring-indigo-500/5' : 'border-transparent hover:border-blue-100' }}">
-                        
+                    <div class="group relative bg-white rounded-[3rem] shadow-[0_10px_40px_rgba(0,0,0,0.03)] transition-all duration-500 border-2 flex flex-col {{ $isLifetime ? 'border-indigo-600 ring-8 ring-indigo-500/5' : 'border-transparent hover:border-blue-100' }}">
                         <div class="p-12 flex-1">
                             <h3 class="text-3xl font-black text-gray-900 mb-2">{{ $package->name }}</h3>
-                            <div class="mb-10">
-                                <span class="text-5xl font-black text-gray-900 tracking-tighter">€{{ number_format($package->price, 2) }}</span>
-                                <span class="text-slate-400 font-bold">/ {{ $displayDuration }}</span>
-                            </div>
-
+                            <div class="mb-10 text-5xl font-black text-gray-900 tracking-tighter">€{{ number_format($package->price, 2) }}</div>
+                            
                             @if($package->features)
                                 <ul class="space-y-5 mb-10">
                                     @foreach($package->features as $feature)
                                         <li class="flex items-start">
-                                            <div class="shrink-0 w-6 h-6 rounded-full bg-green-50 flex items-center justify-center mr-4 mt-0.5">
-                                                <svg class="h-3.5 w-3.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7" /></svg>
-                                            </div>
-                                            <span class="text-sm font-bold text-slate-600">{{ $feature }}</span>
+                                            <div class="shrink-0 w-6 h-6 rounded-full bg-green-50 flex items-center justify-center mr-4 mt-0.5"><svg class="h-3.5 w-3.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7" /></svg></div>
+                                            <span class="text-sm font-bold text-slate-600 leading-tight">{{ $feature }}</span>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -189,33 +153,24 @@ $schemaJson = json_encode(
 
                         <div class="px-12 pb-12 mt-auto">
                             @auth
-                                <a href="{{ route('user.subscriptions.checkout', $package) }}" 
-                                   class="flex items-center justify-center w-full py-5 rounded-[1.5rem] font-black text-lg transition-all shadow-xl
-                                   {{ $isLifetime ? 'bg-gradient-to-r from-blue-600 to-indigo-700 text-white' : 'bg-gray-900 text-white' }}">
-                                    Zugang freischalten 
-                                </a>
+                                <a href="{{ route('user.subscriptions.checkout', $package) }}" class="flex items-center justify-center w-full py-5 rounded-[1.5rem] font-black text-lg transition-all {{ $isLifetime ? 'bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-xl' : 'bg-gray-900 text-white hover:bg-blue-600' }}">Zugang freischalten</a>
                             @else
-                                <a href="{{ route('login') }}" class="flex items-center justify-center w-full py-5 bg-slate-100 text-slate-600 rounded-[1.5rem] font-black text-lg hover:bg-blue-600 hover:text-white transition-all shadow-sm">
-                                    Anmelden zum Lizenzieren
-                                </a>
+                                <a href="{{ route('login') }}" class="flex items-center justify-center w-full py-5 bg-slate-100 text-slate-600 rounded-[1.5rem] font-black text-lg hover:bg-blue-600 hover:text-white transition-all">Anmelden</a>
                             @endauth
                         </div>
                     </div>
                 @empty
-                    <div class="col-span-full py-12 text-center text-slate-400 font-bold">Aktuell keine Pläne für diese Utility verfügbar.</div>
+                    <div class="col-span-full py-12 text-center text-slate-400 font-bold">Aktuell keine Pläne verfügbar.</div>
                 @endforelse
             </div>
 
             {{-- Support Sektion --}}
             <div class="bg-gray-950 rounded-[3.5rem] p-12 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-10 shadow-2xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>
                 <div class="text-center lg:text-left relative z-10">
                     <h4 class="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">Individuelle Lösung?</h4>
                     <p class="text-xl text-slate-400 font-medium">Kontaktieren Sie uns für spezielle Deployments.</p>
                 </div>
-                <a href="mailto:sales@digitalpackt.com" class="px-12 py-5 bg-white text-gray-950 rounded-[1.5rem] font-black text-lg hover:bg-blue-50 transition-all shadow-xl hover:-translate-y-1 shrink-0 relative z-10 flex items-center">
-                    Kontakt aufnehmen
-                </a>
+                <a href="mailto:sales@digitalpackt.com" class="px-12 py-5 bg-white text-gray-950 rounded-[1.5rem] font-black text-lg shadow-xl shrink-0">Kontakt aufnehmen</a>
             </div>
         </div>
     </div>
