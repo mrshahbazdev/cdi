@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <meta name="description"
-          content="{{ $metaDescription ?? $settings->site_description ?? 'Professional SaaS & Automation Platform' }}">
+    <meta name="description" content="{{ $metaDescription ?? ($settings->site_description ?? 'Professional SaaS & Automation Platform') }}">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#2563eb">
 
