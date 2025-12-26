@@ -43,7 +43,7 @@ $schemaJson = json_encode(
 @endphp
 
 <x-app-layout
-    :title="$seoTitle"
+    :title="theoTitle"
     :metaDescription="$seoDescription">
 
     {{-- ✅ SEO & Schema STEUERUNG --}}
