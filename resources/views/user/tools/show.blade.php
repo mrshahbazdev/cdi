@@ -31,15 +31,17 @@ $schemaJson = json_encode(
 
 <x-app-layout
     title="{{ $tool->name }} – Professionelles Entwickler-Tool | Digital Packt"
-    metaDescription="{{ Str::limit(strip_tags($tool->description), 150) }}">
+    metaDescription="{{ Str::limit(strip_tags($tool->description ?? 'Nutzen Sie diese Hochleistungs-Utility mit automatisierter Bereitstellung und API-Integration.'), 150) }}">
 
     {{-- ✅ H1 für SEO (Hidden) --}}
     <h1 class="sr-only">
         {{ $tool->name }} – Spezifikationen, Lizenzen und Enterprise-Lösungen
     </h1>
 
-    {{-- Schema --}}
+    {{-- ✅ SEO & Schema --}}
     @push('meta')
+        {{-- Der Canonical Link stellt sicher, dass Google dieses Tool als einzigartig unter seiner URL indexiert --}}
+        <link rel="canonical" href="{{ route('tools.show', $tool) }}">
         <script type="application/ld+json">
 {!! $schemaJson !!}
         </script>
@@ -78,11 +80,11 @@ $schemaJson = json_encode(
             <div class="bg-white rounded-[3rem] shadow-[0_15px_50px_rgba(0,0,0,0.04)] p-10 md:p-16 border border-white mb-16 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-64 h-64 bg-blue-50/50 rounded-full -mr-20 -mt-20 blur-3xl pointer-events-none"></div>
                 
-                <div class="flex flex-col lg:row gap-12 items-center lg:items-start relative z-10">
+                <div class="flex flex-col lg:flex-row gap-12 items-center lg:items-start relative z-10">
                     <div class="shrink-0">
                         <div class="w-48 h-48 bg-gradient-to-br from-slate-50 to-blue-50 border-4 border-white rounded-[2.5rem] flex items-center justify-center shadow-2xl shadow-blue-500/10 relative">
                             @if($tool->logo)
-                                <img src="{{ Storage::url($tool->logo) }}" alt="{{ $tool->name }} Logo" class="h-28 w-28 object-contain">
+                                <img src="{{ Storage::url($tool->logo) }}" alt="{{ $tool->name }}" class="h-28 w-28 object-contain">
                             @else
                                 <span class="text-6xl font-black text-blue-600">{{ strtoupper(substr($tool->name, 0, 1)) }}</span>
                             @endif
@@ -233,8 +235,8 @@ $schemaJson = json_encode(
                 <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>
                 
                 <div class="text-center lg:text-left relative z-10">
-                    <h4 class="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">Benötigen Sie eine maßgeschneiderte Enterprise-Lösung?</h4>
-                    <p class="text-xl text-slate-400 font-medium">Kontaktieren Sie unser Architektur-Team für Multi-Tenant-Deployments und dedizierte SLA-Garantien.</p>
+                    <h4 class="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">Benötigen Sie eine individuelle Lösung?</h4>
+                    <p class="text-xl text-slate-400 font-medium">Kontaktieren Sie unser Team für spezielle Deployments und dedizierte SLA-Garantien.</p>
                 </div>
                 
                 <a href="mailto:sales@digitalpackt.com" class="px-12 py-5 bg-white text-gray-950 rounded-[1.5rem] font-black text-lg hover:bg-blue-50 transition-all shadow-xl hover:-translate-y-1 shrink-0 relative z-10 flex items-center">
