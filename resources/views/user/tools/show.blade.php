@@ -86,16 +86,18 @@ $schemaJson = json_encode([
                 </div>
             </div>
 
-            {{-- Ergänzter Textblock für SEO Relevanz --}}
+            {{-- Ergänzter Textblock für SEO Relevanz (Löst das "Wenig Text" Problem) --}}
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
                 <div class="bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm">
                     <h3 class="text-2xl font-black text-gray-900 mb-6">Detaillierte Analyse & Spezifikationen</h3>
                     <div class="text-gray-600 leading-relaxed space-y-4">
                         <p>
-                            Die Nutzung von <strong>{{ $tool->name }}</strong> bietet Unternehmen, Experten und Fachanwendern eine professionelle und strukturierte Grundlage für die Optimierung interner Prozesse. Durch die präzise Bereitstellung technischer Details, Systemanforderungen und spezifischer Lizenzmodelle ermöglicht diese Übersicht eine fundierte und sichere Entscheidungshilfe für Ihre digitale Infrastruktur.
+                            Die Nutzung von <strong>{{ $tool->name }}</strong> bietet Unternehmen und Fachanwendern eine strukturierte Grundlage für effiziente Prozesse. 
+                            Durch die Bereitstellung technischer Details und spezifischer Lizenzmodelle ermöglicht diese Übersicht eine fundierte Entscheidungshilfe.
                         </p>
                         <p>
-                            Besonders im Bereich der <strong>Compliance, Rechtssicherheit und Datenschutz-Standards</strong> setzt {{ $tool->name }} neue Maßstäbe. Die hier aufgeführten Tarife und Leistungspakete sind exakt darauf ausgelegt, sowohl für spezialisierte Einzelprojekte als auch für großflächig skalierende Unternehmen in Deutschland eine maximale Transparenz und Planungssicherheit zu gewährleisten.
+                            Besonders im Bereich der <strong>Compliance und Rechtssicherheit</strong> setzt {{ $tool->name }} Maßstäbe. Die hier aufgeführten Tarife sind darauf ausgelegt, 
+                            sowohl für Einzelprojekte als auch für skalierende Unternehmen in Deutschland maximale Transparenz zu gewährleisten.
                         </p>
                     </div>
                 </div>
@@ -105,20 +107,20 @@ $schemaJson = json_encode([
                     <div class="space-y-4">
                         <details class="group border-b border-slate-100 pb-4">
                             <summary class="list-none font-bold text-gray-800 cursor-pointer flex justify-between items-center">
-                                Was ist der primäre Vorteil von {{ $tool->name }} für Profis?
+                                Was ist der Hauptvorteil von {{ $tool->name }}?
                                 <span class="text-blue-600 group-open:rotate-180 transition-transform">+</span>
                             </summary>
                             <p class="text-gray-600 text-sm mt-2 leading-relaxed">
-                                {{ $tool->name }} bietet eine hochspezialisierte Lösung zur effizienten Aufbereitung komplexer Datensätze und rechtlicher Compliance-Begriffe. Die Plattform ist explizit für den deutschen Markt optimiert und garantiert eine verständliche Darstellung aller relevanten regulatorischen Anforderungen.
+                                {{ $tool->name }} bietet eine spezialisierte Lösung zur Aufbereitung komplexer Daten und rechtlicher Compliance-Begriffe, optimiert für den deutschen Markt.
                             </p>
                         </details>
                         <details class="group">
                             <summary class="list-none font-bold text-gray-800 cursor-pointer flex justify-between items-center">
-                                Sind die Preismodelle für {{ $tool->name }} inklusive technischem Support?
+                                Sind die Preise für {{ $tool->name }} inkl. Support?
                                 <span class="text-blue-600 group-open:rotate-180 transition-transform">+</span>
                             </summary>
                             <p class="text-gray-600 text-sm mt-2 leading-relaxed">
-                                Ja, absolute Sicherheit steht an erster Stelle. Je nach gewähltem Lizenzmodell (siehe Preisübersicht unten) ist entweder ein zuverlässiger Standard-Support oder ein dedizierter Priority-Support enthalten, um eine reibungslose und unterbrechungsfreie Anwendung in Ihrem Betrieb zu garantieren.
+                                Ja, je nach gewähltem Tarif (siehe unten) ist ein Standard- oder Priority-Support enthalten, um eine reibungslose Anwendung zu garantieren.
                             </p>
                         </details>
                     </div>
@@ -128,7 +130,7 @@ $schemaJson = json_encode([
             {{-- Pakete --}}
             <div class="text-center mb-10">
                 <h3 class="text-3xl font-black text-gray-900">Verfügbare Tarife & Pakete</h3>
-                <p class="text-gray-500 mt-2 font-medium">Wählen Sie die passende Lizenzierung für {{ $tool->name }} basierend auf Ihren individuellen Anforderungen.</p>
+                <p class="text-gray-500 mt-2 font-medium">Wählen Sie die passende Lizenzierung für {{ $tool->name }}</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -137,7 +139,7 @@ $schemaJson = json_encode([
                         
                         <div class="mb-6">
                             <span class="bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-lg border border-blue-100">
-                                {{ $package->duration_value }} {{ $package->duration_type }} Laufzeit-Paket
+                                {{ $package->duration_value }} {{ $package->duration_type }} Laufzeit
                             </span>
                         </div>
 
@@ -145,7 +147,7 @@ $schemaJson = json_encode([
                         <div class="text-4xl font-black text-gray-900 mb-8">€{{ number_format($package->price, 2) }}</div>
                         
                         <div class="flex-1">
-                            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Inbegriffene Leistungen im Detail:</p>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Inbegriffene Leistungen:</p>
                             <ul class="space-y-4 mb-10">
                                 @if($package->features && is_array($package->features))
                                     @foreach($package->features as $feature)
@@ -159,7 +161,7 @@ $schemaJson = json_encode([
                                         </li>
                                     @endforeach
                                 @else
-                                    <li class="text-slate-400 text-sm italic">Vollständiger Standard-Zugriff auf alle Funktionen von {{ $tool->name }}</li>
+                                    <li class="text-slate-400 text-sm italic">Standard-Zugriff auf {{ $tool->name }}</li>
                                 @endif
                             </ul>
                         </div>
@@ -168,19 +170,19 @@ $schemaJson = json_encode([
                             @auth
                                 <a href="{{ route('user.subscriptions.checkout', $package) }}" 
                                 class="flex items-center justify-center w-full py-5 bg-gray-900 text-white rounded-[1.5rem] font-black hover:bg-blue-600 hover:-translate-y-1 transition-all shadow-lg shadow-gray-200">
-                                    Jetzt Tarif aktivieren
+                                    Jetzt aktivieren
                                 </a>
                             @else
                                 <a href="{{ route('login') }}" 
                                 class="flex items-center justify-center w-full py-5 bg-slate-50 text-slate-600 rounded-[1.5rem] font-black hover:bg-blue-600 hover:text-white transition-all">
-                                    Anmelden & Tarif buchen
+                                    Anmelden & Buchen
                                 </a>
                             @endauth
                         </div>
                     </div>
                 @empty
                     <div class="col-span-full py-12 text-center bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
-                        <p class="text-slate-400 font-bold">Aktuell sind keine speziellen Tarife für die Anwendung {{ $tool->name }} in unserer Datenbank hinterlegt.</p>
+                        <p class="text-slate-400 font-bold">Aktuell sind keine speziellen Tarife für {{ $tool->name }} hinterlegt.</p>
                     </div>
                 @endforelse
             </div>
