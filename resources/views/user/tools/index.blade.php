@@ -115,9 +115,9 @@ $schemaJson = json_encode(
                                         @endif
                                     </p>
                                 </div>
-                                <a href="{{ route('tools.show', $tool) }}" class="p-3 bg-slate-900 text-white rounded-xl hover:bg-blue-600 transition-colors">
+                                <!-- <a href="{{ route('tools.show', $tool) }}" class="p-3 bg-slate-900 text-white rounded-xl hover:bg-blue-600 transition-colors">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                                </a>
+                                </a> -->
                             </div>
                         </div>
                     </article>
