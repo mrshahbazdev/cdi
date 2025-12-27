@@ -16,7 +16,8 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Schemas\Components\Utilities\Set;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Spatie\ImageOptimizer\OptimizerChainFactory;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class PostForm
 {
@@ -84,31 +85,22 @@ class PostForm
                         ->image()
                         ->disk('public')
                         ->directory('blog/covers')
-                        ->imageEditor()
-                        ->imageResizeMode('cover')
-                        ->imageResizeTargetWidth(1200)
-                        ->imageResizeTargetHeight(630)
                         ->maxSize(5120) // 5MB upload allow
                         ->saveUploadedFileUsing(function ($file) {
 
-                            // ✅ unique safe filename
-                            $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
+                            $manager = new ImageManager(new Driver());
 
-                            // ✅ store file FIRST (important)
-                            $path = $file->storeAs(
-                                'blog/covers',
-                                $filename,
-                                'public'
+                            $filename = Str::random(40) . '.jpg';
+                            $path = 'blog/covers/' . $filename;
+
+                            $image = $manager
+                                ->read($file->getRealPath())
+                                ->cover(1200, 630) // resize + crop
+                                ->toJpeg(70);      // 🔥 EXACT 70% quality
+
+                            $image->save(
+                                storage_path('app/public/' . $path)
                             );
-
-                            // ✅ absolute real path
-                            $absolutePath = storage_path('app/public/' . $path);
-
-                            // ✅ optimize ONLY if file exists
-                            if (file_exists($absolutePath)) {
-                                $optimizerChain = OptimizerChainFactory::create();
-                                $optimizerChain->optimize($absolutePath);
-                            }
 
                             return $path;
                         }),
