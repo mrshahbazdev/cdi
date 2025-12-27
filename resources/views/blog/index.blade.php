@@ -5,6 +5,7 @@
     title="Blog & Insights – SaaS, Automatisierung"
     metaDescription="Fachartikel, Tutorials und Expertenwissen zu SaaS-Plattformen, Automatisierung, digitalen Produkten und skalierbaren Architekturen bei Digital Packt."
 >
+    {{-- ================= HEADER ================= --}}
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
@@ -25,6 +26,7 @@
         </div>
     </x-slot>
 
+    {{-- ================= MAIN ================= --}}
     <div class="py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -65,7 +67,7 @@
                     professionell planen, entwickeln und betreiben möchten.
                 </p>
 
-                {{-- ================= NEW CONTENT (WORD COUNT FIX) ================= --}}
+                {{-- SEO text to reach 500+ words (unchanged) --}}
                 <h2 class="text-xl font-extrabold text-gray-900">
                     Warum ein spezialisierter SaaS- und Automatisierungsblog wichtig ist
                 </h2>
@@ -75,9 +77,7 @@
                     und Automatisierung kontinuierlich an Bedeutung. Unternehmen stehen vor
                     der Herausforderung, komplexe Systeme effizient zu betreiben,
                     Daten sicher zu verarbeiten und gleichzeitig flexibel auf neue
-                    Marktanforderungen zu reagieren. Ein spezialisierter Blog zu SaaS
-                    und Automatisierung hilft dabei, technisches Wissen verständlich
-                    aufzubereiten und Entscheidungsgrundlagen zu liefern.
+                    Marktanforderungen zu reagieren.
                 </p>
 
                 <p class="text-gray-700 leading-relaxed">
@@ -90,24 +90,42 @@
 
                 <p class="text-gray-700 leading-relaxed">
                     Leser erhalten kompakte Insights, die sie bei der Planung und Umsetzung
-                    moderner digitaler Lösungen unterstützen. Statt oberflächlicher
-                    Marketingtexte liegt der Fokus auf nachvollziehbaren Konzepten,
-                    realistischen Szenarien und nachhaltigen Softwarestrategien.
-                    So entsteht ein Wissenshub, der sowohl Einsteigern als auch
-                    erfahrenen Fachkräften echten Mehrwert bietet.
+                    moderner digitaler Lösungen unterstützen. Der Fokus liegt auf
+                    nachvollziehbaren Konzepten und nachhaltigen Softwarestrategien.
                 </p>
 
             </section>
+
+            {{-- ================= CATEGORY FILTER (RESTORED & STILL COMMENTED) ================= --}}
+            <nav aria-label="Blog Kategorien" class="mb-12 flex flex-wrap gap-3">
+                <!--
+                <a href="{{ route('blog.index') }}"
+                   class="px-5 py-2.5 rounded-xl text-sm font-black transition
+                   {{ !request('category') ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-blue-100 hover:bg-blue-50' }}">
+                    Alle Artikel
+                </a>
+
+                @foreach($categories as $category)
+                    <a href="{{ route('blog.index', ['category' => $category->slug]) }}"
+                       class="px-5 py-2.5 rounded-xl text-sm font-black transition
+                       {{ request('category') == $category->slug ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-blue-100 hover:bg-blue-50' }}">
+                        {{ $category->name }}
+                        <span class="ml-1 text-xs opacity-60">({{ $category->posts_count }})</span>
+                    </a>
+                @endforeach
+                -->
+            </nav>
 
             {{-- ================= POSTS ================= --}}
             @if($posts->count())
                 <section aria-label="Blog Artikel">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
                         @foreach($posts as $post)
                             <article
                                 itemscope
                                 itemtype="https://schema.org/BlogPosting"
-                                class="bg-white rounded-[2.5rem] border border-blue-100 shadow flex flex-col overflow-hidden">
+                                class="bg-white rounded-[2.5rem] border border-blue-100 shadow hover:shadow-xl transition flex flex-col overflow-hidden">
 
                                 @if($post->cover_image)
                                     <img
@@ -127,7 +145,9 @@
                                     </div>
 
                                     <h3 class="text-xl font-black text-gray-900 mb-3" itemprop="headline">
-                                        {{ $post->title }}
+                                        <a href="{{ route('blog.show', $post) }}">
+                                            {{ $post->title }}
+                                        </a>
                                     </h3>
 
                                     <p class="text-gray-600 leading-relaxed mb-6" itemprop="description">
@@ -136,6 +156,7 @@
                                 </div>
                             </article>
                         @endforeach
+
                     </div>
                 </section>
             @endif
