@@ -69,6 +69,57 @@
             }
         }
     </style>
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Digitalisierung für Compliance Berater",
+    "provider": {
+      "@type": "Organization",
+      "name": "Digital Packt",
+      "url": "https://digitalpackt.de/",
+      "logo": "https://digitalpackt.de/logo.png" 
+    },
+    "areaServed": "DE",
+    "description": "Digitale Tools und Strategien speziell für Compliance-Berater und kleine Beratungsunternehmen. Wir machen Digitalisierung einfach und bezahlbar.",
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/InStock",
+      "description": "Kostenloses Vorgespräch für Digitalisierungsstrategien"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://digitalpackt.de/"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Digitalisierungs-Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Website-Entwicklung für Berater"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Automatisierung von Dokumentationsprozessen"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Digitale Tools für Compliance"
+          }
+        }
+      ]
+    }
+  }
+  </script>
 </head>
 
 <body class="bg-white text-slate-900 antialiased">
