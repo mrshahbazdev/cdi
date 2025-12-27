@@ -25,7 +25,7 @@ Route::get('/tool-logo/{filename}', function ($filename) {
     return response()->file($path);
 });
 Route::get('/blog-logo/{filename}', function ($filename) {
-    $path = storage_path('app/private/blog/' . $filename);
+    $path = storage_path('app/private/blog/cover/' . $filename);
 
     abort_unless(file_exists($path), 404);
 
