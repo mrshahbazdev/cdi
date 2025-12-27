@@ -86,7 +86,7 @@ class PostForm
                         ->imageResizeMode('cover')
                         ->imageResizeTargetWidth(1200)
                         ->imageResizeTargetHeight(630)
-                        ->maxSize(2048) // 2MB
+                        ->maxSize(5120) // 5MB
                         ->saveUploadedFileUsing(function ($file) {
 
                             $path = $file->store('blog/covers');
