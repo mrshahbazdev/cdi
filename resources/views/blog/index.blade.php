@@ -34,13 +34,7 @@
                     Digital Packt – Professional SaaS Platform Blog
                 </h1>
 
-                {{-- SEO IMAGE --}}
-                <img
-                    src="/images/blog-saas-automatisierung.webp"
-                    alt="SaaS Plattformen, Automatisierung und digitale Produkte"
-                    loading="lazy"
-                    class="rounded-2xl shadow-md border border-blue-100"
-                >
+                
 
                 <p class="text-gray-700 leading-relaxed">
                     Der <strong>Digital Packt – Professional SaaS Platform Blog</strong> bietet
@@ -78,20 +72,20 @@
 
             {{-- ================= CATEGORY FILTER ================= --}}
             <nav aria-label="Blog Kategorien" class="mb-12 flex flex-wrap gap-3">
-                <a href="{{ route('blog.index') }}"
+                <!-- <a href="{{ route('blog.index') }}"
                    class="px-5 py-2.5 rounded-xl text-sm font-black transition
                    {{ !request('category') ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-blue-100 hover:bg-blue-50' }}">
                     Alle Artikel
-                </a>
+                </a> -->
 
-                @foreach($categories as $category)
+                <!-- @foreach($categories as $category)
                     <a href="{{ route('blog.index', ['category' => $category->slug]) }}"
                        class="px-5 py-2.5 rounded-xl text-sm font-black transition
                        {{ request('category') == $category->slug ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-blue-100 hover:bg-blue-50' }}">
                         {{ $category->name }}
                         <span class="ml-1 text-xs opacity-60">({{ $category->posts_count }})</span>
                     </a>
-                @endforeach
+                @endforeach -->
             </nav>
 
             {{-- ================= POSTS ================= --}}
@@ -125,19 +119,19 @@
                                     </div>
 
                                     <h3 class="text-xl font-black text-gray-900 mb-3" itemprop="headline">
-                                        <a href="{{ route('blog.show', $post) }}">
+                                        <!-- <a href="{{ route('blog.show', $post) }}"> -->
                                             {{ $post->title }}
-                                        </a>
+                                        <!-- </a> -->
                                     </h3>
 
                                     <p class="text-gray-600 leading-relaxed mb-6" itemprop="description">
                                         {{ $post->excerpt ?? Str::limit(strip_tags($post->content), 150) }}
                                     </p>
 
-                                    <a href="{{ route('blog.show', $post) }}"
+                                    <!-- <a href="{{ route('blog.show', $post) }}"
                                        class="mt-auto font-black text-sm text-blue-600">
                                         Artikel lesen →
-                                    </a>
+                                    </a> -->
                                 </div>
                             </article>
                         @endforeach
