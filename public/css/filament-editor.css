@@ -16,7 +16,7 @@
 .fi-body,
 .fi-section,
 .fi-fo-rich-editor {
-    overflow-x: visible !important;
+    overflow-x: scroll !important;
     overflow-y: visible !important;
 }
 
@@ -36,7 +36,7 @@
         justify-content: flex-start;
         align-items: center;
         gap: 6px;
-
+        overflow-x: scroll;
         /* ❌ Disable auto-hide behavior */
         position: static !important;
         max-height: none !important;
