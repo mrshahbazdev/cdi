@@ -1,0 +1,70 @@
+/* ===============================
+   RichEditor – Mobile First
+================================ */
+
+/* Toolbar wrap fix */
+.fi-fo-rich-editor-toolbar {
+    display: flex;
+    flex-wrap: wrap !important;
+    gap: 4px;
+    padding-bottom: 6px;
+}
+
+/* General button sizing (mobile) */
+.fi-fo-rich-editor-toolbar button {
+    flex: 0 0 auto;
+    min-width: 36px;
+}
+
+/* -------- GROUPS -------- */
+
+/* Text formatting group */
+.fi-fo-rich-editor-toolbar button:nth-child(1),
+.fi-fo-rich-editor-toolbar button:nth-child(2),
+.fi-fo-rich-editor-toolbar button:nth-child(3),
+.fi-fo-rich-editor-toolbar button:nth-child(4) {
+    border-right: 1px solid rgba(0,0,0,0.08);
+    padding-right: 6px;
+}
+
+/* Headings group */
+.fi-fo-rich-editor-toolbar button:nth-child(5),
+.fi-fo-rich-editor-toolbar button:nth-child(6) {
+    border-right: 1px solid rgba(0,0,0,0.08);
+    padding-right: 6px;
+}
+
+/* Lists group */
+.fi-fo-rich-editor-toolbar button:nth-child(7),
+.fi-fo-rich-editor-toolbar button:nth-child(8) {
+    border-right: 1px solid rgba(0,0,0,0.08);
+    padding-right: 6px;
+}
+
+/* Utility group spacing */
+.fi-fo-rich-editor-toolbar button:nth-child(9),
+.fi-fo-rich-editor-toolbar button:nth-child(10),
+.fi-fo-rich-editor-toolbar button:nth-child(11),
+.fi-fo-rich-editor-toolbar button:nth-child(12),
+.fi-fo-rich-editor-toolbar button:nth-child(13),
+.fi-fo-rich-editor-toolbar button:nth-child(14) {
+    margin-left: 2px;
+}
+
+/* Editor content overflow fix */
+.fi-fo-rich-editor {
+    overflow-x: hidden;
+}
+@media (max-width: 640px) {
+
+    /* Toolbar centered & stacked */
+    .fi-fo-rich-editor-toolbar {
+        justify-content: flex-start;
+    }
+
+    /* Make buttons touch-friendly */
+    .fi-fo-rich-editor-toolbar button {
+        min-width: 40px;
+        min-height: 36px;
+    }
+}

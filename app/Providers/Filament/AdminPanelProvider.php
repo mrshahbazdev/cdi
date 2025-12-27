@@ -34,6 +34,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('2rem')
             ->favicon(asset('images/favicon.png'))
+            ->viteTheme('resources/css/filament.css')
 
             /* Colors */
             ->colors([
@@ -46,9 +47,9 @@ class AdminPanelProvider extends PanelProvider
             ])
 
             /* ✅ CUSTOM CSS (Filament v4 correct way) */
-            ->assets([
-                Css::make('filament-custom', asset('css/filament.css')),
-            ])
+            // ->assets([
+            //     Css::make('filament-custom', asset('css/filament.css')),
+            // ])
 
             /* Resources */
             ->discoverResources(
