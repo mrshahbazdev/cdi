@@ -62,7 +62,7 @@
         <p class="text-lg text-slate-700 leading-relaxed">
             Als selbständiger Berater stehen Sie im Wettbewerb mit großen Playern wie TÜV oder DEKRA.
             Ihre Website bringt kaum neue Kunden, digitale Werkzeuge fehlen – und die Konkurrenz schläft nicht.
-            Viele <strong>compliance consultants and small businesses</strong> denken, dass professionelle Software-Lösungen unbezahlbar sind.
+            Viele compliance consultants and small businesses denken, dass professionelle Software-Lösungen unbezahlbar sind.
         </p>
         <p class="mt-6 text-lg text-slate-700 leading-relaxed">
             Die Folge: Unsicherheit, wie Sie Digitalisierung für sich und Ihre Kunden umsetzen können.
@@ -76,10 +76,10 @@
     <div class="max-w-4xl mx-auto px-6 text-slate-700">
         <h2 class="text-3xl font-bold mb-6 text-slate-900">Warum Digitalisierung für kleine Unternehmen entscheidend ist</h2>
         <p class="mb-6">
-            In der heutigen Geschäftswelt ist die digitale Transformation kein Luxus mehr, sondern eine Notwendigkeit. Besonders für <strong>compliance consultants</strong>, die komplexe regulatorische Anforderungen verwalten, können digitale Tools den Unterschied zwischen Erfolg und Überlastung ausmachen. Wir haben festgestellt, dass viele <strong>small businesses</strong> davor zurückscheuen, in neue Technologien zu investieren, weil sie versteckte Kosten fürchten.
+            In der heutigen Geschäftswelt ist die digitale Transformation kein Luxus mehr, sondern eine Notwendigkeit. Besonders für compliance consultants, die komplexe regulatorische Anforderungen verwalten, können digitale Tools den Unterschied zwischen Erfolg und Überlastung ausmachen. Wir haben festgestellt, dass viele small businesses davor zurückscheuen, in neue Technologien zu investieren, weil sie versteckte Kosten fürchten.
         </p>
         <p class="mb-6">
-            Bei Digital Packt haben wir ein Modell entwickelt, bei dem <strong>digitization is simply affordable</strong> bleibt. Wir nutzen moderne Cloud-Technologien und schlanke Prozesse, um hochwertige Ergebnisse zu liefern, ohne das Budget eines Kleinunternehmens zu sprengen. Das bedeutet für Sie: Mehr Effizienz bei der Berichterstellung, automatisierte Fristenkontrolle und ein professioneller Auftritt gegenüber Ihren Mandanten.
+            Bei Digital Packt haben wir ein Modell entwickelt, bei dem digitization is simply affordable bleibt. Wir nutzen moderne Cloud-Technologien und schlanke Prozesse, um hochwertige Ergebnisse zu liefern, ohne das Budget eines Kleinunternehmens zu sprengen. Das bedeutet für Sie: Mehr Effizienz bei der Berichterstellung, automatisierte Fristenkontrolle und ein professioneller Auftritt gegenüber Ihren Mandanten.
         </p>
         <h3 class="text-2xl font-bold mb-4 text-slate-900">Maßgeschneiderte Lösungen für Berater</h3>
         <p class="mb-6">
@@ -100,7 +100,7 @@
         </p>
         <p class="mt-6 text-lg text-slate-700 leading-relaxed">
             Heute entwickeln wir digitale Lösungen, die Beratern wie Ihnen echtes Wachstum ermöglichen.
-            Unsere Erfahrung: eigene Tools entwickelt, eigene Websites erfolgreich vermarktet. Wir beweisen täglich, dass <strong>digitization is simply affordable</strong> für <strong>small businesses</strong> weltweit möglich ist, wenn man die richtigen Strategien wählt.
+            Unsere Erfahrung: eigene Tools entwickelt, eigene Websites erfolgreich vermarktet. Wir beweisen täglich, dass digitization is simply affordable für small businesses weltweit möglich ist, wenn man die richtigen Strategien wählt.
         </p>
     </div>
 </section>
@@ -113,24 +113,18 @@
             <div class="p-8 rounded-3xl border bg-slate-50 shadow-sm">
                 <div class="text-blue-600 font-extrabold text-3xl mb-4">1</div>
                 <h3 class="font-bold text-xl mb-2">Vorgespräch vereinbaren</h3>
-                <p class="text-slate-700">Analyse Ihrer aktuellen Situation und Identifikation der wichtigsten Hebel für Ihre <strong>digitization</strong>.</p>
+                <p class="text-slate-700">Analyse Ihrer aktuellen Situation und Identifikation der wichtigsten Hebel für Ihre digitization.</p>
             </div>
             <div class="p-8 rounded-3xl border bg-slate-50 shadow-sm">
                 <div class="text-blue-600 font-extrabold text-3xl mb-4">2</div>
                 <h3 class="font-bold text-xl mb-2">Strategie entwickeln</h3>
-                <p class="text-slate-700">Wir erstellen einen Plan, der sicherstellt, dass die Umsetzung <strong>simply affordable</strong> bleibt.</p>
+                <p class="text-slate-700">Wir erstellen einen Plan, der sicherstellt, dass die Umsetzung simply affordable bleibt.</p>
             </div>
             <div class="p-8 rounded-3xl border bg-slate-50 shadow-sm">
                 <div class="text-blue-600 font-extrabold text-3xl mb-4">3</div>
                 <h3 class="font-bold text-xl mb-2">Umsetzung starten</h3>
-                <p class="text-slate-700">Website, Tools und automatisierte Prozesse werden speziell für <strong>compliance consultants</strong> ausgerollt.</p>
+                <p class="text-slate-700">Website, Tools und automatisierte Prozesse werden speziell für compliance consultants ausgerollt.</p>
             </div>
-        </div>
-
-        <div class="mt-12">
-            <a href="#vorgespräch" class="px-10 py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg hover:shadow-xl transition inline-block">
-                Jetzt Vorgespräch buchen
-            </a>
         </div>
     </div>
 </section>
@@ -139,13 +133,13 @@
     <div class="max-w-4xl mx-auto px-6">
         <h2 class="text-3xl md:text-5xl font-extrabold mb-6">Starten Sie jetzt</h2>
         <p class="text-xl mb-10 text-blue-100">
-            Machen Sie Ihr Unternehmen fit für die Zukunft. Weil <strong>digitization is simply affordable</strong> für <strong>small businesses</strong> unsere Mission ist.
+            Machen Sie Ihr Unternehmen fit für die Zukunft. Weil <strong>digitization is simply affordable</strong> für small businesses unsere Mission ist.
         </p>
         <div class="flex flex-wrap gap-4 justify-center">
-            <a href="#vorgespräch" class="px-10 py-4 bg-white text-blue-600 rounded-2xl font-bold text-lg hover:bg-slate-100 transition">
+            <a href="#vorgespräch" class="px-10 py-4 bg-white text-blue-600 rounded-2xl font-bold text-lg">
                 Vorgespräch vereinbaren
             </a>
-            <a href="#tools" class="px-10 py-4 border-2 border-white rounded-2xl font-bold text-lg hover:bg-blue-700 transition">
+            <a href="#tools" class="px-10 py-4 border-2 border-white rounded-2xl font-bold text-lg">
                 Digitale Tools entdecken
             </a>
         </div>
