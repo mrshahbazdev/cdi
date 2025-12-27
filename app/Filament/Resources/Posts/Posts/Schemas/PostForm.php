@@ -16,6 +16,7 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Schemas\Components\Utilities\Set;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class PostForm
 {
@@ -54,24 +55,17 @@ class PostForm
                             'italic',
                             'underline',
                             'strike',
-
                             'h2',
                             'h3',
-
                             'bulletList',
                             'orderedList',
-
                             'link',
-
                             'blockquote',
                             'codeBlock',
-
                             'table',
-
                             'undo',
                             'redo',
                         ])
-
                         ->fileAttachmentsDirectory('blog/attachments'),
 
                     Textarea::make('excerpt')
@@ -88,7 +82,22 @@ class PostForm
                     FileUpload::make('cover_image')
                         ->image()
                         ->directory('blog/covers')
-                        ->imageEditor(),
+                        ->imageEditor()
+                        ->imageResizeMode('cover')
+                        ->imageResizeTargetWidth(1200)
+                        ->imageResizeTargetHeight(630)
+                        ->maxSize(2048) // 2MB
+                        ->saveUploadedFileUsing(function ($file) {
+
+                            $path = $file->store('blog/covers');
+
+                            $optimizerChain = OptimizerChainFactory::create();
+                            $optimizerChain->optimize(
+                                storage_path('app/' . $path)
+                            );
+
+                            return $path;
+                        }),
 
                     Grid::make(2)->schema([
 
