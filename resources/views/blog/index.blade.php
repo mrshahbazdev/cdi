@@ -1,5 +1,6 @@
 @section('title', 'Blog & Insights – SaaS, Automatisierung')
 @section('meta_description', 'Fachartikel, Tutorials und Expertenwissen zu SaaS-Plattformen, Automatisierung, digitalen Produkten und skalierbaren Architekturen bei Digitalpackt.')
+
 <x-app-layout
     title="Blog & Insights – SaaS, Automatisierung"
     metaDescription="Fachartikel, Tutorials und Expertenwissen zu SaaS-Plattformen, Automatisierung, digitalen Produkten und skalierbaren Architekturen bei Digitalpackt."
@@ -36,13 +37,12 @@
                     Digital Packt – Professional SaaS Platform Blog
                 </h1>
 
-                
-
                 <p class="text-gray-700 leading-relaxed">
                     Der <strong>Digital Packt – Professional SaaS Platform Blog</strong> bietet
-                    fundierte Fachartikel zu <strong>SaaS-Plattformen</strong>,
-                    <strong>Automatisierungslösungen</strong> und der Entwicklung
-                    <strong>digitaler Produkte</strong>.
+                    fundierte Fachartikel zu
+                    <span class="font-semibold">SaaS-Plattformen</span>,
+                    <span class="font-semibold">Automatisierungslösungen</span> und der Entwicklung
+                    <span class="font-semibold">digitaler Produkte</span>.
                     Unternehmen, Entwickler und Produktteams finden hier praxisnahe
                     Einblicke, technische Best Practices und strategisches Wissen
                     für skalierbare Software-Architekturen.
@@ -53,9 +53,10 @@
                 </h2>
 
                 <p class="text-gray-700 leading-relaxed">
-                    Unsere Artikel behandeln Themen wie <strong>SaaS Architektur</strong>,
-                    <strong>Cloud-basierte Plattformen</strong>, Prozess-Automatisierung,
-                    DevOps, Produktstrategie und die nachhaltige Skalierung
+                    Unsere Artikel behandeln Themen wie
+                    <strong>SaaS Architektur</strong>,
+                    <span class="font-semibold">Cloud-basierte Plattformen</span>,
+                    Prozess-Automatisierung, DevOps, Produktstrategie und die nachhaltige Skalierung
                     digitaler Geschäftsmodelle.
                 </p>
 
@@ -64,31 +65,15 @@
                 </h2>
 
                 <p class="text-gray-700 leading-relaxed">
-                    Der Blog richtet sich an <strong>Startups</strong>,
-                    <strong>SaaS-Unternehmen</strong>, <strong>Entwickler</strong>,
-                    <strong>CTOs</strong> und Produktverantwortliche, die digitale
+                    Der Blog richtet sich an
+                    <strong>Startups</strong>,
+                    <span class="font-semibold">SaaS-Unternehmen</span>,
+                    <span class="font-semibold">Entwickler</span>,
+                    <span class="font-semibold">CTOs</span> und Produktverantwortliche, die digitale
                     Plattformen professionell planen, entwickeln und betreiben möchten.
                 </p>
 
             </section>
-
-            {{-- ================= CATEGORY FILTER ================= --}}
-            <nav aria-label="Blog Kategorien" class="mb-12 flex flex-wrap gap-3">
-                <!-- <a href="{{ route('blog.index') }}"
-                   class="px-5 py-2.5 rounded-xl text-sm font-black transition
-                   {{ !request('category') ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-blue-100 hover:bg-blue-50' }}">
-                    Alle Artikel
-                </a> -->
-
-                <!-- @foreach($categories as $category)
-                    <a href="{{ route('blog.index', ['category' => $category->slug]) }}"
-                       class="px-5 py-2.5 rounded-xl text-sm font-black transition
-                       {{ request('category') == $category->slug ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-blue-100 hover:bg-blue-50' }}">
-                        {{ $category->name }}
-                        <span class="ml-1 text-xs opacity-60">({{ $category->posts_count }})</span>
-                    </a>
-                @endforeach -->
-            </nav>
 
             {{-- ================= POSTS ================= --}}
             @if($posts->count())
@@ -121,19 +106,12 @@
                                     </div>
 
                                     <h3 class="text-xl font-black text-gray-900 mb-3" itemprop="headline">
-                                        <!-- <a href="{{ route('blog.show', $post) }}"> -->
-                                            {{ $post->title }}
-                                        <!-- </a> -->
+                                        {{ $post->title }}
                                     </h3>
 
                                     <p class="text-gray-600 leading-relaxed mb-6" itemprop="description">
                                         {{ $post->excerpt ?? Str::limit(strip_tags($post->content), 150) }}
                                     </p>
-
-                                    <!-- <a href="{{ route('blog.show', $post) }}"
-                                       class="mt-auto font-black text-sm text-blue-600">
-                                        Artikel lesen →
-                                    </a> -->
                                 </div>
                             </article>
                         @endforeach
@@ -145,16 +123,6 @@
                 <div class="mt-20 flex justify-center">
                     {{ $posts->links() }}
                 </div>
-
-            @else
-                <section class="text-center bg-white p-16 rounded-3xl border border-dashed border-blue-200">
-                    <h2 class="text-3xl font-black text-gray-900 mb-4">
-                        Keine Artikel gefunden
-                    </h2>
-                    <p class="text-gray-600 max-w-md mx-auto">
-                        Aktuell entstehen neue Inhalte zu SaaS, Automatisierung und digitalen Plattformen.
-                    </p>
-                </section>
             @endif
 
             {{-- ================= EXTRA SEO TEXT ================= --}}
