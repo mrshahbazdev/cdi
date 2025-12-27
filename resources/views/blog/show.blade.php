@@ -1,7 +1,7 @@
 {{-- ================= SEO META ================= --}}
 @section(
     'title',
-    $post->title . ' | Digital Packt'
+    $post->title . ''
 )
 
 @section(
@@ -14,7 +14,7 @@
 )
 
 <x-app-layout
-    title="{{ $post->title }} | Digital Packt"
+    title="{{ $post->title }}"
     metaDescription="{{ Str::limit($post->excerpt ?? strip_tags($post->content), 155) }}"
 >
     {{-- ================= HEADER ================= --}}
