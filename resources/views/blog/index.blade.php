@@ -1,8 +1,8 @@
-@section('title', 'Blog & Insights – SaaS, Automatisierung – Digital Packt')
+@section('title', 'Blog & Insights – SaaS, Automatisierung')
 @section('meta_description', 'Fachartikel, Tutorials und Expertenwissen zu SaaS-Plattformen, Automatisierung, digitalen Produkten und skalierbaren Architekturen bei Digital Packt.')
 
 <x-app-layout
-    title="Blog & Insights – SaaS, Automatisierung – Digital Packt"
+    title="Blog & Insights – SaaS, Automatisierung"
     metaDescription="Fachartikel, Tutorials und Expertenwissen zu SaaS-Plattformen, Automatisierung, digitalen Produkten und skalierbaren Architekturen bei Digital Packt."
 >
     <x-slot name="header">
