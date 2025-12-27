@@ -23,9 +23,9 @@ class PostForm
     {
         return $schema->components([
 
-            /* =======================
+            /* =========================
              | Post Content
-             ======================= */
+             ========================= */
             Section::make('Post Composition')
                 ->description('Write your article content and SEO data.')
                 ->schema([
@@ -46,28 +46,24 @@ class PostForm
                         ->dehydrated()
                         ->required()
                         ->maxLength(255)
-                        ->unique(Post::class, 'slug', ignoreRecord: true)
-                        ->helperText('Slug auto-generated from title.'),
+                        ->unique(Post::class, 'slug', ignoreRecord: true),
 
                     RichEditor::make('content')
                         ->required()
                         ->columnSpanFull()
                         ->toolbarButtons([
 
-                            // Files
+                            // Attachments
                             'attachFiles',
 
-                            // Text formatting
+                            // Text
                             'bold',
                             'italic',
                             'underline',
                             'strike',
-                            'subscript',
-                            'superscript',
                             'clearFormatting',
 
-                            // Headings (ONLY supported)
-                            'h1',
+                            // Headings
                             'h2',
                             'h3',
 
@@ -75,23 +71,15 @@ class PostForm
                             'bulletList',
                             'orderedList',
 
-                            // Alignment
-                            'alignLeft',
-                            'alignCenter',
-                            'alignRight',
-                            'alignJustify',
-
                             // Media
                             'link',
                             'image',
-                            'video',
 
                             // Blocks
                             'blockquote',
                             'horizontalRule',
 
                             // Code
-                            'code',
                             'codeBlock',
 
                             // Tables
@@ -109,9 +97,9 @@ class PostForm
                         ->columnSpanFull(),
                 ]),
 
-            /* =======================
+            /* =========================
              | Media & Category
-             ======================= */
+             ========================= */
             Section::make('Media & Classification')
                 ->schema([
 
@@ -142,9 +130,9 @@ class PostForm
                     ]),
                 ]),
 
-            /* =======================
+            /* =========================
              | Publishing
-             ======================= */
+             ========================= */
             Section::make('Publishing Protocols')
                 ->schema([
 
@@ -153,12 +141,12 @@ class PostForm
                         Toggle::make('is_published')
                             ->label('Publish')
                             ->live()
-                            ->afterStateUpdated(fn ($state, Set $set) =>
-                                $state ? $set('published_at', now()) : null
+                            ->afterStateUpdated(
+                                fn ($state, Set $set) =>
+                                    $state ? $set('published_at', now()) : null
                             ),
 
                         DateTimePicker::make('published_at')
-                            ->label('Publish Date')
                             ->native(false),
                     ]),
                 ]),
