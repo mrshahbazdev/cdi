@@ -90,31 +90,17 @@ class PostForm
 
                             $manager = new ImageManager(new Driver());
 
-                            $extension = strtolower(
-                                $file->getClientOriginalExtension()
-                            );
-
-                            $filename = Str::random(40) . '.' . $extension;
+                            $filename = Str::random(40) . '.jpg';
                             $path = 'blog/covers/' . $filename;
 
-                            $image = $manager->read(
-                                $file->getRealPath()
+                            $image = $manager
+                                ->read($file->getRealPath())
+                              //  ->cover(1200, 630) // resize + crop
+                                ->toJpeg(60);      // 🔥 EXACT 70% quality
+
+                            $image->save(
+                                storage_path('app/public/' . $path)
                             );
-
-                            // ❌ NO crop
-                            // ❌ NO force resize
-                            // ✅ ONLY compression
-
-                            if ($extension === 'png') {
-                                $image->toPng()->save(
-                                    storage_path('app/public/' . $path),
-                                    70
-                                );
-                            } else {
-                                $image->toJpeg(70)->save(
-                                    storage_path('app/public/' . $path)
-                                );
-                            }
 
                             return $path;
                         }),
