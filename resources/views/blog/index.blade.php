@@ -108,7 +108,7 @@
                                 {{-- IMAGE --}}
                                 @if($post->cover_image)
                                     <img
-                                        src="{{ Storage::url($post->cover_image) }}"
+                                        src="{{ url('/blog-logo/' . basename($post->cover_image)) }}"
                                         alt="{{ $post->title }}"
                                         itemprop="image"
                                         class="h-48 w-full object-cover"

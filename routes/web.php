@@ -24,6 +24,13 @@ Route::get('/tool-logo/{filename}', function ($filename) {
 
     return response()->file($path);
 });
+Route::get('/blog-logo/{filename}', function ($filename) {
+    $path = storage_path('app/private/blog/' . $filename);
+
+    abort_unless(file_exists($path), 404);
+
+    return response()->file($path);
+});
 Route::view('/impressum', 'pages.legal.imprint')->name('imprint');
 Route::view('/datenschutz', 'pages.legal.privacy')->name('privacy');
 Route::view('/hilfe', 'pages.legal.help')->name('help');
