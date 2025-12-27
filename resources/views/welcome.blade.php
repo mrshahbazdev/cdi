@@ -1,174 +1,174 @@
 <!DOCTYPE html>
-<html lang="de" dir="ltr">
-<head>
+<html lang="de" dir="ltr"> <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- SEO -->
-    <title>Digital Packt – Digitization for Compliance Consultants</title>
-    <meta name="description" content="More visibility, more growth, more time for core business – with tools and strategies from Digitalpackt.de.">
+    <title>Digitization for Compliance Consultants | Digital Packt</title>
+    <meta name="description" content="Affordable digitization for compliance consultants and small businesses. More visibility, automated tools, and growth strategies with Digital Packt.">
     <meta name="robots" content="index, follow">
 
-    <meta property="og:title" content="Digitization for Compliance Consultants – Digitalpackt">
-    <meta property="og:description" content="Digital tools and strategies for compliance consultants and small businesses.">
+    <meta property="og:title" content="Digitization for Compliance Consultants – Digital Packt">
+    <meta property="og:description" content="Empowering small businesses with digital tools and strategies tailored for compliance and safety experts.">
     <meta property="og:type" content="website">
 
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:400,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
         body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        .gradient-text { @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600; }
     </style>
 </head>
 
-<body class="bg-white text-slate-900 antialiased">
+<body class="bg-slate-50 text-slate-900 antialiased selection:bg-blue-100 selection:text-blue-900">
 
-<header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
-    <nav aria-label="Main Navigation">
+<header class="sticky top-0 z-50 bg-white/70 backdrop-blur-md border-b border-slate-200/60">
+    <nav aria-label="Main Navigation" class="max-w-7xl mx-auto">
         <x-dynamic-navbar />
     </nav>
 </header>
 
 <main id="main">
 
-<!-- HERO -->
-<section class="pt-32 pb-24 bg-gradient-to-br from-slate-50 via-white to-blue-50">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
-            Digitalisierung ist endlich bezahlbar<br>
-            <span class="text-blue-600">für Compliance-Berater und kleine Unternehmen</span>
-        </h1>
+    <section class="relative pt-24 pb-20 lg:pt-32 lg:pb-32 overflow-hidden bg-white">
+        <div class="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-20"></div>
+        <div class="relative max-w-6xl mx-auto px-6 text-center">
+            <span class="inline-block py-1 px-3 mb-6 text-xs font-bold tracking-widest text-blue-600 uppercase bg-blue-50 rounded-full">Digital Transformation 2024</span>
+            <h1 class="text-4xl md:text-7xl font-extrabold leading-tight tracking-tight text-slate-900">
+                Digitization is simply <span class="text-blue-600">affordable</span>
+            </h1>
+            <p class="mt-8 text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                Empowering <strong>compliance consultants and small businesses</strong> with high-end digital tools, more visibility, and strategies that save time for your core business.
+            </p>
 
-        <p class="mt-8 text-xl text-slate-600 max-w-3xl mx-auto">
-            Mehr Sichtbarkeit, mehr Wachstum, mehr Zeit fürs Kerngeschäft –<br class="hidden md:block">
-            mit unseren digitalen Tools und bewährten Strategien.
-        </p>
-
-        <div class="mt-12 flex flex-wrap justify-center gap-4">
-            <a href="#vorgespräch" class="px-10 py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg hover:bg-blue-700 transition">
-                Kostenloses Vorgespräch vereinbaren
-            </a>
-            <a href="#tools" class="px-10 py-4 border-2 border-slate-300 rounded-2xl font-bold text-lg hover:bg-white transition">
-                Digitale Tools entdecken
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- IHRE HERAUSFORDERUNG -->
-<section class="py-24 bg-white">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-        <h2 class="text-3xl md:text-4xl font-extrabold mb-8">Die digitale Herausforderung für Compliance-Berater</h2>
-        <p class="text-lg text-slate-700 leading-relaxed">
-            Als selbstständiger Compliance-Berater stehen Sie im direkten Wettbewerb mit großen Playern wie TÜV oder DEKRA. 
-            Oft bleibt Ihre Website hinter ihren Möglichkeiten zurück und generiert kaum neue Kunden. 
-            Gleichzeitig fehlen praktische digitale Werkzeuge, die Ihre tägliche Arbeit erleichtern – während die Konkurrenz kontinuierlich investiert.
-        </p>
-        <p class="mt-6 text-lg text-slate-700 leading-relaxed">
-            Das Ergebnis sind Unsicherheiten, wie Sie die Digitalisierung für sich und Ihre Kunden effektiv umsetzen können. 
-            Wir bei Digital Packt sind überzeugt: Jeder Berater hat das Recht auf eine starke, professionelle Präsenz im Internet 
-            und auf digitale Lösungen, die nicht nur technisch funktionieren, sondern auch wirtschaftlich sinnvoll sind.
-        </p>
-    </div>
-</section>
-
-<!-- WIR SIND IHR GUIDE -->
-<section class="py-24 bg-slate-50">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-        <h2 class="text-3xl md:text-4xl font-extrabold mb-8">Ihr Guide für die digitale Transformation</h2>
-        <p class="text-lg text-slate-700 leading-relaxed">
-            Wir verstehen Ihre Probleme aus erster Hand – weil wir selbst jahrelang als Gefahrgut- und Strahlenschutzbeauftragte 
-            in der Praxis gearbeitet haben. Wir kennen den Druck, die komplexen Regularien und den täglichen Balanceakt zwischen 
-            Beratungsqualität und betriebswirtschaftlichem Erfolg.
-        </p>
-        <p class="mt-6 text-lg text-slate-700 leading-relaxed">
-            Heute nutzen wir diese Erfahrung, um speziell für Compliance-Berater und kleine Unternehmen digitale Lösungen zu entwickeln, 
-            die echtes Wachstum ermöglichen. Unsere Expertise basiert auf eigener Entwicklung erfolgreicher Tools und der Vermarktung 
-            eigener Websites – wir wissen, was funktioniert.
-        </p>
-    </div>
-</section>
-
-<!-- SO FUNKTIONIERT ES -->
-<section class="py-24 bg-white">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-        <h2 class="text-3xl md:text-4xl font-extrabold mb-14">Ihr Weg zur digitalen Stärke in drei Schritten</h2>
-
-        <div class="grid md:grid-cols-3 gap-10">
-            <div class="p-8 rounded-3xl border bg-slate-50">
-                <div class="text-blue-600 font-extrabold text-3xl mb-4">1</div>
-                <h3 class="font-bold text-xl mb-2">Kostenloses Vorgespräch vereinbaren</h3>
-                <p class="text-slate-700">In einem unverbindlichen Erstgespräch analysieren wir gemeinsam Ihre aktuelle Situation, 
-                identifizieren Herausforderungen und definieren klare Ziele für Ihre digitale Transformation.</p>
-            </div>
-            <div class="p-8 rounded-3xl border bg-slate-50">
-                <div class="text-blue-600 font-extrabold text-3xl mb-4">2</div>
-                <h3 class="font-bold text-xl mb-2">Maßgeschneiderte Strategie entwickeln</h3>
-                <p class="text-slate-700">Basierend auf der Analyse erarbeiten wir eine klare, praxisnahe Digitalstrategie, 
-                die auf nachhaltiges Wachstum und effiziente Prozesse ausgerichtet ist – ohne unrealistische Versprechungen.</p>
-            </div>
-            <div class="p-8 rounded-3xl border bg-slate-50">
-                <div class="text-blue-600 font-extrabold text-3xl mb-4">3</div>
-                <h3 class="font-bold text-xl mb-2">Gemeinsame Umsetzung starten</h3>
-                <p class="text-slate-700">Wir setzen Ihre digitale Präsenz – von der professionellen Website bis zu spezialisierten Tools – 
-                effizient und transparent um. Sie behalten stets die Kontrolle, während wir die technische Expertise einbringen.</p>
+            <div class="mt-12 flex flex-col sm:flex-row justify-center gap-5">
+                <a href="#vorgespräch" class="px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-200 transition-all duration-300">
+                    Free Consultation
+                </a>
+                <a href="#tools" class="px-8 py-4 bg-white border border-slate-200 text-slate-700 rounded-2xl font-bold text-lg hover:bg-slate-50 transition-all duration-300">
+                    Explore Our Tools
+                </a>
             </div>
         </div>
+    </section>
 
-        <div class="mt-12">
-            <a href="#vorgespräch" class="px-10 py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg hover:shadow-xl">
-                Jetzt Vorgespräch buchen
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- UNSERE DIGITALEN LÖSUNGEN -->
-<section class="py-24 bg-slate-50" id="tools">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-        <h2 class="text-3xl md:text-4xl font-extrabold mb-14">Digitale Tools, die Ihre Arbeit verändern</h2>
-        
-        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div class="p-8 bg-white rounded-3xl border shadow-sm">
-                <h3 class="font-bold text-xl mb-4 text-blue-600">Websites mit Überzeugungskraft</h3>
-                <p class="text-slate-700">Professionelle, suchmaschinenoptimierte Websites, die nicht nur informieren, 
-                sondern aktiv neue Kunden gewinnen. Klare Struktur, überzeugende Inhalte und technische Zuverlässigkeit.</p>
+    <section class="py-24 bg-white border-y border-slate-100">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-6 tracking-tight">Ihre Herausforderung im digitalen Zeitalter</h2>
+                    <div class="space-y-4 text-slate-600 leading-relaxed">
+                        <p>Als selbständiger Berater stehen Sie oft allein gegen Branchenriesen wie TÜV oder DEKRA. Während Großkonzerne riesige Budgets für IT und Marketing haben, bleiben viele <strong>small businesses</strong> auf der Strecke. Ihre Website generiert keine Leads, und administrative Aufgaben fressen wertvolle Beratungsstunden.</p>
+                        <p>Oft herrscht der Glaube, dass professionelle Software unbezahlbar sei. Dies führt zu Unsicherheit bei der Umsetzung gesetzlicher Anforderungen für Ihre Kunden.</p>
+                        <p class="font-semibold text-slate-900 italic border-l-4 border-blue-600 pl-4">Wir ändern das: Digitization is simply affordable – für jeden Berater zugänglich und effektiv.</p>
+                    </div>
+                </div>
+                <div class="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-200 shadow-sm">
+                    <h3 class="text-xl font-bold mb-4">Warum jetzt handeln?</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-600 font-bold">✓</span>
+                            <span>Steigender Dokumentationsdruck in der Compliance</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-600 font-bold">✓</span>
+                            <span>Mandanten erwarten digitale Schnittstellen</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-600 font-bold">✓</span>
+                            <span>Automatisierung schützt vor Fachkräftemangel</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="p-8 bg-white rounded-3xl border shadow-sm">
-                <h3 class="font-bold text-xl mb-4 text-blue-600">Beraterspezifische Anwendungen</h3>
-                <p class="text-slate-700">Maßgeschneiderte digitale Werkzeuge für Compliance-Dokumentation, 
-                Kundenmanagement und Prozessoptimierung. Entwickelt von Experten für Experten.</p>
+        </div>
+    </section>
+
+    <section class="py-24 bg-slate-50/50">
+        <div class="max-w-4xl mx-auto px-6 text-slate-700">
+            <h2 class="text-3xl font-bold mb-8 text-slate-900 text-center">Strategische Digitalisierung für Compliance Experten</h2>
+            
+            <div class="prose prose-slate max-w-none space-y-8">
+                <p>
+                    In der heutigen Geschäftswelt ist die digitale Transformation kein Luxus mehr, sondern eine Notwendigkeit. Besonders für <strong>compliance consultants</strong>, die komplexe regulatorische Anforderungen verwalten, können digitale Tools den Unterschied zwischen Erfolg und Überlastung ausmachen. Wir haben festgestellt, dass viele kleine Unternehmen davor zurückscheuen, in neue Technologien zu investieren, weil sie versteckte Kosten und komplexe IT-Infrastrukturen fürchten.
+                </p>
+                
+                <h3 class="text-2xl font-bold text-slate-900">Maßgeschneiderte Lösungen ohne Overhead</h3>
+                <p>
+                    Bei Digital Packt haben wir ein Modell entwickelt, bei dem <strong>digitization is simply affordable</strong> bleibt. Wir nutzen moderne Cloud-Technologien und schlanke Prozesse, um hochwertige Ergebnisse zu liefern, ohne das Budget eines Kleinunternehmens zu sprengen. Das bedeutet für Sie: Mehr Effizienz bei der Berichterstellung, automatisierte Fristenkontrolle und ein professioneller Auftritt gegenüber Ihren Mandanten.
+                </p>
+
+                <div class="p-6 bg-blue-50 rounded-2xl border border-blue-100 my-8">
+                    <p class="m-0 font-medium text-blue-900">
+                        Ob Arbeitssicherheit, Datenschutz oder Umweltschutz – Ihre Anforderungen sind spezifisch. Deshalb bieten wir keine starren Pakete an. Wir analysieren Ihren individuellen Workflow und identifizieren Flaschenhälse, die wertvolle Zeit kosten.
+                    </p>
+                </div>
+
+                <p>
+                    Durch die Zusammenarbeit mit uns erhalten Sie nicht nur technische Werkzeuge, sondern einen strategischen Partner. Wir unterstützen <strong>small businesses</strong> dabei, ihre Dienstleistungen digital skalierbar zu machen. So können Sie mehr Kunden betreuen, ohne die Qualität Ihrer Beratung zu mindern. Wenn Digitalisierung richtig umgesetzt wird, amortisiert sich die Investition meist schon nach wenigen Monaten durch immense Zeitersparnis.
+                </p>
             </div>
         </div>
-        
-        <p class="mt-12 text-lg text-slate-700 max-w-3xl mx-auto">
-            Unsere Lösungen sind darauf ausgelegt, Ihre tägliche Arbeit spürbar zu erleichtern, 
-            Ihre Reichweite zu vergrößern und Ihnen mehr Zeit für Ihre Kernkompetenzen zu verschaffen.
-        </p>
-    </div>
-</section>
+    </section>
 
-<!-- STARTEN SIE JETZT -->
-<section class="py-24 bg-blue-600 text-white text-center">
-    <div class="max-w-4xl mx-auto px-6">
-        <h2 class="text-3xl md:text-5xl font-extrabold mb-6">Starten Sie jetzt Ihre digitale Transformation</h2>
-        <p class="text-xl mb-10 text-blue-100">
-            Für mehr Wachstum, mehr Sichtbarkeit und weniger administrativen Stress. 
-            Lassen Sie uns gemeinsam Ihre digitale Präsenz auf das nächste Level heben.
-        </p>
-        <div class="flex flex-wrap gap-4 justify-center">
-            <a href="#vorgespräch" class="px-10 py-4 bg-white text-blue-600 rounded-2xl font-bold text-lg hover:shadow-xl">
-                Kostenloses Vorgespräch vereinbaren
-            </a>
-            <a href="#tools" class="px-10 py-4 border-2 border-white rounded-2xl font-bold text-lg hover:bg-blue-700">
-                Alle digitalen Tools entdecken
-            </a>
+    <section class="py-24 bg-white">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-8 text-slate-900">Von Experten für Experten</h2>
+            <p class="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
+                Wir sind kein theoretisches IT-Haus. Unsere Wurzeln liegen in der Praxis als Gefahrgut- und Strahlenschutzbeauftragte. Wir kennen den Dokumentationsdruck, dem <strong>compliance consultants</strong> täglich ausgesetzt sind.
+            </p>
+            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8 opacity-60 grayscale">
+                <div class="font-bold text-slate-400 uppercase tracking-widest">Compliance</div>
+                <div class="font-bold text-slate-400 uppercase tracking-widest">Safety</div>
+                <div class="font-bold text-slate-400 uppercase tracking-widest">Digital</div>
+                <div class="font-bold text-slate-400 uppercase tracking-widest">Security</div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <section class="py-24 bg-slate-50">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-16 text-slate-900">In 3 Schritten zur digitalen Kanzlei</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="group p-10 rounded-[2.5rem] bg-white border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl font-black mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">1</div>
+                    <h3 class="font-bold text-xl mb-4 text-slate-900">Analyse</h3>
+                    <p class="text-slate-600">Wir identifizieren im Erstgespräch die Hebel, die Ihre tägliche Arbeit sofort erleichtern.</p>
+                </div>
+                <div class="group p-10 rounded-[2.5rem] bg-white border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl font-black mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">2</div>
+                    <h3 class="font-bold text-xl mb-4 text-slate-900">Konzept</h3>
+                    <p class="text-slate-600">Wir erstellen einen Plan, der sicherstellt, dass die Umsetzung <strong>simply affordable</strong> bleibt.</p>
+                </div>
+                <div class="group p-10 rounded-[2.5rem] bg-white border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl font-black mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">3</div>
+                    <h3 class="font-bold text-xl mb-4 text-slate-900">Rollout</h3>
+                    <p class="text-slate-600">Websites und Tools werden schlüsselfertig für Ihr Business ausgerollt.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-slate-900 text-white overflow-hidden relative">
+        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl"></div>
+        <div class="relative max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-5xl font-extrabold mb-6 leading-tight">Bereit für den digitalen Vorsprung?</h2>
+            <p class="text-xl mb-12 text-slate-300">
+                Machen Sie Ihr Unternehmen fit für die Zukunft. Weil professionelle Digitalisierung für <strong>small businesses</strong> unsere Mission ist.
+            </p>
+            <div class="flex flex-wrap gap-5 justify-center">
+                <a href="#vorgespräch" class="px-10 py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg hover:bg-blue-500 transition-all shadow-lg shadow-blue-900/40">
+                    Jetzt Gespräch buchen
+                </a>
+                <a href="#tools" class="px-10 py-4 bg-transparent border border-slate-700 text-white rounded-2xl font-bold text-lg hover:bg-slate-800 transition-all">
+                    Mehr erfahren
+                </a>
+            </div>
+        </div>
+    </section>
 
 </main>
 
