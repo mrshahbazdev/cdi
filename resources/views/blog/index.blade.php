@@ -1,7 +1,7 @@
 @section('title', 'Blog & Insights – SaaS, Automatisierung | Digitalpackt')
 @section('meta_description', 'Fachartikel, Tutorials und Expertenwissen zu SaaS-Plattformen, Automatisierung, digitalen Produkten und skalierbaren Architekturen bei Digitalpackt.')
 <x-app-layout
-    title="Blog & Insights – SaaS, Automatisierung & digitale Produkte | Digitalpackt"
+    title="Blog & Insights – SaaS, Automatisierung | Digitalpackt"
     metaDescription="Fachartikel, Tutorials und Expertenwissen zu SaaS-Plattformen, Automatisierung, digitalen Produkten und skalierbaren Architekturen bei Digitalpackt."
 >
     {{-- ================= HEADER ================= --}}
