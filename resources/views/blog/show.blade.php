@@ -1,9 +1,21 @@
-@section('title', $post->title . ' – ' . $post->category->name . ' | Digital Packt')
-@section('meta_description', $post->excerpt ?? Str::limit(strip_tags($post->content), 155))
+{{-- ================= SEO META ================= --}}
+@section(
+    'title',
+    $post->title . ' | Digital Packt'
+)
+
+@section(
+    'meta_description',
+    Str::limit(
+        $post->excerpt
+            ?? strip_tags($post->content),
+        155
+    )
+)
 
 <x-app-layout
-    title="{{ $post->title }} – {{ $post->category->name }} | Digital Packt"
-    metaDescription="{{ $post->excerpt ?? Str::limit(strip_tags($post->content), 155) }}"
+    title="{{ $post->title }} | Digital Packt"
+    metaDescription="{{ Str::limit($post->excerpt ?? strip_tags($post->content), 155) }}"
 >
     {{-- ================= HEADER ================= --}}
     <x-slot name="header">
@@ -45,6 +57,7 @@
                     </time>
                 </div>
 
+                {{-- ✅ H1 (ONLY ONE) --}}
                 <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight mb-6">
                     {{ $post->title }}
                 </h1>
@@ -93,6 +106,7 @@
                             prose-p:text-gray-700
                             prose-a:text-blue-600
                             prose-strong:font-semibold">
+
                     {!! $post->content !!}
                 </div>
 
