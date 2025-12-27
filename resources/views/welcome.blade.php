@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- SEO -->
-    <title>Digitalpackt.de – Digitalisierung für Compliance-Berater </title>
+    <title>Digital Packt – Digitalisierung für Compliance-Berater </title>
     <meta name="description" content="Mehr Sichtbarkeit, mehr Wachstum, mehr Zeit fürs Kerngeschäft – mit Tools und Strategien von Digitalpackt.de.">
     <meta name="robots" content="index, follow">
 
