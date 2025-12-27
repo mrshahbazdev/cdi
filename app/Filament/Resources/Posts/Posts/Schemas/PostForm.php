@@ -23,11 +23,10 @@ class PostForm
     {
         return $schema->components([
 
-            /* =========================
+            /* =====================
              | Post Content
-             ========================= */
+             ===================== */
             Section::make('Post Composition')
-                ->description('Write your article content and SEO data.')
                 ->schema([
 
                     TextInput::make('title')
@@ -45,101 +44,70 @@ class PostForm
                         ->disabled()
                         ->dehydrated()
                         ->required()
-                        ->maxLength(255)
                         ->unique(Post::class, 'slug', ignoreRecord: true),
 
                     RichEditor::make('content')
                         ->required()
                         ->columnSpanFull()
                         ->toolbarButtons([
-
-                            // Attachments
                             'attachFiles',
-
-                            // Text
                             'bold',
                             'italic',
                             'underline',
                             'strike',
                             'clearFormatting',
-
-                            // Headings
                             'h2',
                             'h3',
-
-                            // Lists
                             'bulletList',
                             'orderedList',
-
-                            // Media
                             'link',
-                            'image',
-
-                            // Blocks
                             'blockquote',
                             'horizontalRule',
-
-                            // Code
                             'codeBlock',
-
-                            // Tables
                             'table',
-
-                            // History
                             'undo',
                             'redo',
                         ])
                         ->fileAttachmentsDirectory('blog/attachments'),
 
                     Textarea::make('excerpt')
-                        ->label('Meta Description')
                         ->rows(3)
                         ->columnSpanFull(),
                 ]),
 
-            /* =========================
+            /* =====================
              | Media & Category
-             ========================= */
+             ===================== */
             Section::make('Media & Classification')
                 ->schema([
 
                     FileUpload::make('cover_image')
-                        ->label('Featured Image')
                         ->image()
                         ->directory('blog/covers')
-                        ->imageEditor()
-                        ->imageEditorAspectRatios([
-                            '16:9',
-                            '4:3',
-                            '1:1',
-                        ]),
+                        ->imageEditor(),
 
                     Grid::make(2)->schema([
 
                         Select::make('category_id')
                             ->relationship('category', 'name')
-                            ->searchable()
-                            ->preload()
                             ->required(),
 
                         Select::make('user_id')
                             ->relationship('user', 'name')
-                            ->label('Author')
                             ->default(Auth::id())
                             ->required(),
                     ]),
                 ]),
 
-            /* =========================
+            /* =====================
              | Publishing
-             ========================= */
-            Section::make('Publishing Protocols')
+             ===================== */
+            Section::make('Publishing')
                 ->schema([
 
                     Grid::make(2)->schema([
 
                         Toggle::make('is_published')
-                            ->label('Publish')
                             ->live()
                             ->afterStateUpdated(
                                 fn ($state, Set $set) =>
