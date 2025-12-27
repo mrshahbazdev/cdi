@@ -8,9 +8,9 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\Support\Assets\Css;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
-use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -45,19 +45,18 @@ class AdminPanelProvider extends PanelProvider
                 'warning' => Color::Orange,
             ])
 
-            /* 👉 CUSTOM ASSETS (IMPORTANT) */
+            /* ✅ CUSTOM CSS (Filament v4 correct way) */
             ->assets([
-                FilamentAsset::make(
-                    'filament-custom',
-                    asset('css/filament.css')
-                ),
+                Css::make('filament-custom', asset('css/filament.css')),
             ])
 
-            /* Resources & Pages */
+            /* Resources */
             ->discoverResources(
                 in: app_path('Filament/Resources'),
                 for: 'App\\Filament\\Resources'
             )
+
+            /* Pages */
             ->discoverPages(
                 in: app_path('Filament/Pages'),
                 for: 'App\\Filament\\Pages'
