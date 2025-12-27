@@ -1,11 +1,10 @@
-@section('title', 'Blog & Insights – SaaS, Automatisierung')
-@section('meta_description', 'Fachartikel, Tutorials und Expertenwissen zu SaaS-Plattformen, Automatisierung, digitalen Produkten und skalierbaren Architekturen bei Digitalpackt.')
+@section('title', 'Blog & Insights – SaaS, Automatisierung – Digital Packt')
+@section('meta_description', 'Fachartikel, Tutorials und Expertenwissen zu SaaS-Plattformen, Automatisierung, digitalen Produkten und skalierbaren Architekturen bei Digital Packt.')
 
 <x-app-layout
-    title="Blog & Insights – SaaS, Automatisierung"
-    metaDescription="Fachartikel, Tutorials und Expertenwissen zu SaaS-Plattformen, Automatisierung, digitalen Produkten und skalierbaren Architekturen bei Digitalpackt."
+    title="Blog & Insights – SaaS, Automatisierung – Digital Packt"
+    metaDescription="Fachartikel, Tutorials und Expertenwissen zu SaaS-Plattformen, Automatisierung, digitalen Produkten und skalierbaren Architekturen bei Digital Packt."
 >
-    {{-- ================= HEADER ================= --}}
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div class="flex items-center space-x-4">
@@ -26,7 +25,6 @@
         </div>
     </x-slot>
 
-    {{-- ================= MAIN ================= --}}
     <div class="py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -36,6 +34,17 @@
                 <h1 class="text-3xl font-extrabold text-gray-900">
                     Digital Packt – Professional SaaS Platform Blog
                 </h1>
+
+                {{-- ✅ NEW SEO INTRO (Fixes title keywords + text length) --}}
+                <p class="text-gray-700 leading-relaxed">
+                    Willkommen im <strong>Blog &amp; Insights Bereich von Digital Packt</strong>.
+                    In unserem Blog finden Sie regelmäßig veröffentlichte Insights, Analysen
+                    und Fachbeiträge rund um <span class="font-semibold">SaaS</span>,
+                    <span class="font-semibold">Automatisierung</span> und moderne digitale
+                    Plattformen. Der Digital Packt Blog richtet sich an Unternehmen, Entwickler
+                    und Entscheidungsträger, die praxisnahes Wissen und strategische Einblicke
+                    suchen.
+                </p>
 
                 <p class="text-gray-700 leading-relaxed">
                     Der <strong>Digital Packt – Professional SaaS Platform Blog</strong> bietet
@@ -53,15 +62,15 @@
                 </h2>
 
                 <p class="text-gray-700 leading-relaxed">
-                    Unsere Artikel behandeln Themen wie
+                    Unsere Blogartikel und Insights behandeln Themen wie
                     <strong>SaaS Architektur</strong>,
                     <span class="font-semibold">Cloud-basierte Plattformen</span>,
-                    Prozess-Automatisierung, DevOps, Produktstrategie und die nachhaltige Skalierung
-                    digitaler Geschäftsmodelle.
+                    Prozess-Automatisierung, DevOps, Produktstrategie und die nachhaltige
+                    Skalierung digitaler Geschäftsmodelle.
                 </p>
 
                 <h2 class="text-xl font-extrabold text-gray-900">
-                    Für wen ist der Digitalpackt Blog geeignet?
+                    Für wen ist der Digital Packt Blog geeignet?
                 </h2>
 
                 <p class="text-gray-700 leading-relaxed">
@@ -79,14 +88,12 @@
             @if($posts->count())
                 <section aria-label="Blog Artikel">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-
                         @foreach($posts as $post)
                             <article
                                 itemscope
                                 itemtype="https://schema.org/BlogPosting"
-                                class="bg-white rounded-[2.5rem] border border-blue-100 shadow hover:shadow-xl transition flex flex-col overflow-hidden">
+                                class="bg-white rounded-[2.5rem] border border-blue-100 shadow flex flex-col overflow-hidden">
 
-                                {{-- IMAGE --}}
                                 @if($post->cover_image)
                                     <img
                                         src="{{ Storage::url($post->cover_image) }}"
@@ -96,7 +103,6 @@
                                     >
                                 @endif
 
-                                {{-- CONTENT --}}
                                 <div class="p-8 flex-1 flex flex-col">
                                     <div class="text-[11px] font-black text-blue-700 uppercase tracking-widest mb-4">
                                         <time itemprop="datePublished" datetime="{{ $post->published_at->toIso8601String() }}">
@@ -115,27 +121,22 @@
                                 </div>
                             </article>
                         @endforeach
-
                     </div>
                 </section>
-
-                {{-- PAGINATION --}}
-                <div class="mt-20 flex justify-center">
-                    {{ $posts->links() }}
-                </div>
             @endif
 
-            {{-- ================= EXTRA SEO TEXT ================= --}}
+            {{-- ✅ NEW SEO OUTRO (Text length boost, semantic) --}}
             <section class="max-w-4xl mt-24 space-y-6">
                 <h2 class="text-xl font-extrabold text-gray-900">
-                    SaaS-Plattformen & digitale Automatisierung verstehen
+                    Blog & Insights rund um SaaS und Automatisierung
                 </h2>
 
                 <p class="text-gray-700 leading-relaxed">
-                    Software as a Service (SaaS) ist heute das Fundament moderner
-                    digitaler Produkte. Durch skalierbare Cloud-Architekturen,
-                    automatisierte Prozesse und modulare Plattformen können
-                    Unternehmen schneller wachsen und effizienter arbeiten.
+                    Der Blog von Digital Packt bietet kontinuierlich neue Insights zu
+                    SaaS-Plattformen, Automatisierung und digitalen Architekturen.
+                    Ziel ist es, komplexe technische Themen verständlich aufzubereiten
+                    und Unternehmen bei der erfolgreichen Umsetzung moderner Software-
+                    und Plattformstrategien zu unterstützen.
                 </p>
             </section>
 
