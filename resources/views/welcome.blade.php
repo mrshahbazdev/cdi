@@ -73,28 +73,29 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Service",
-    "serviceType": "Digitalisierung für Compliance Berater",
-    "provider": {
-      "@type": "Organization",
-      "name": "Digital Packt",
-      "url": "https://digitalpackt.de/",
-      "logo": "https://digitalpackt.de/logo.png"
-    },
-    "areaServed": "DE",
-    "description": "Digitale Tools und Strategien speziell für Compliance-Berater und kleine Beratungsunternehmen. Wir machen Digitalisierung einfach und bezahlbar.",
-    "offers": {
-      "@type": "Offer",
-      "availability": "https://schema.org/InStock",
-      "description": "Kostenloses Vorgespräch für Digitalisierungsstrategien"
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://digitalpackt.de/"
-    }
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Ist Digitalisierung für Compliance Berater teuer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Nein. Mit modernen Tools ist Digitalisierung auch für kleine Unternehmen bezahlbar."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Arbeitet Digital Packt speziell für Compliance Berater?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ja. Unsere Lösungen sind speziell auf Compliance Berater und regulatorische Bereiche zugeschnitten."
+        }
+      }
+    ]
   }
   </script>
   @endverbatim
+
 </head>
 
 <body class="bg-white text-slate-900 antialiased">
