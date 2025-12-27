@@ -50,24 +50,28 @@ class PostForm
                         ->required()
                         ->columnSpanFull()
                         ->toolbarButtons([
-                            'attachFiles',
                             'bold',
                             'italic',
                             'underline',
                             'strike',
-                            'clearFormatting',
+
                             'h2',
                             'h3',
+
                             'bulletList',
                             'orderedList',
+
                             'link',
+
                             'blockquote',
-                            'horizontalRule',
                             'codeBlock',
+
                             'table',
+
                             'undo',
                             'redo',
                         ])
+
                         ->fileAttachmentsDirectory('blog/attachments'),
 
                     Textarea::make('excerpt')

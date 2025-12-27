@@ -10,6 +10,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
+use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -27,10 +28,14 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+
+            /* Branding */
             ->brandName('CIP Tools Admin')
             ->brandLogo(asset('images/logo.png'))
             ->brandLogoHeight('2rem')
             ->favicon(asset('images/favicon.png'))
+
+            /* Colors */
             ->colors([
                 'primary' => Color::Blue,
                 'danger' => Color::Red,
@@ -39,19 +44,40 @@ class AdminPanelProvider extends PanelProvider
                 'success' => Color::Green,
                 'warning' => Color::Orange,
             ])
-            /* Automatically discover resources in the directory we structured */
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+
+            /* 👉 CUSTOM ASSETS (IMPORTANT) */
+            ->assets([
+                FilamentAsset::make(
+                    'filament-custom',
+                    asset('css/filament.css')
+                ),
+            ])
+
+            /* Resources & Pages */
+            ->discoverResources(
+                in: app_path('Filament/Resources'),
+                for: 'App\\Filament\\Resources'
+            )
+            ->discoverPages(
+                in: app_path('Filament/Pages'),
+                for: 'App\\Filament\\Pages'
+            )
             ->pages([
                 Pages\Dashboard::class,
             ])
-            /* Discovery and manual registration of Dashboard Widgets */
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+
+            /* Widgets */
+            ->discoverWidgets(
+                in: app_path('Filament/Widgets'),
+                for: 'App\\Filament\\Widgets'
+            )
             ->widgets([
                 \App\Filament\Widgets\StatsOverview::class,
                 \App\Filament\Widgets\RevenueChart::class,
                 \App\Filament\Widgets\LatestSubscriptions::class,
             ])
+
+            /* Middleware */
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -63,14 +89,13 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+
+            /* Auth */
             ->authMiddleware([
                 Authenticate::class,
-                /**
-                 * PRESERVED SECURITY: The 'admin' alias ensures only users 
-                 * with role === 'admin' can access this panel.
-                 */
                 'admin',
             ])
+
             ->databaseNotifications()
             ->databaseNotificationsPolling('30s')
             ->sidebarCollapsibleOnDesktop();
