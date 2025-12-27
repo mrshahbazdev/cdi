@@ -20,24 +20,33 @@ use Illuminate\Support\Facades\Auth;
 class PostForm
 {
     /**
-     * Configures the Post form schema using Filament v4 components.
-     * Updated: Removed the 2-column grid to allow sections to occupy the full width,
-     * resolving the cramped layout issue where the sidebar pushed the content.
+     * Full Post Form Schema (Filament v4)
+     * Includes extended RichEditor toolbar
      */
     public static function configure(Schema $schema): Schema
     {
         return $schema
             ->components([
-                // Main Content Section - Now occupies full width
+
+                /*
+                |--------------------------------------------------------------------------
+                | Post Content
+                |--------------------------------------------------------------------------
+                */
                 Section::make('Post Composition')
-                    ->description('Draft your story and primary metadata.')
+                    ->description('Write your article content and SEO data.')
                     ->schema([
+
                         TextInput::make('title')
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(fn (string $operation, $state, Set $set) => 
-                                $operation === 'create' ? $set('slug', Str::slug($state)) : null),
+                            ->afterStateUpdated(
+                                fn (string $operation, $state, Set $set) =>
+                                    $operation === 'create'
+                                        ? $set('slug', Str::slug($state))
+                                        : null
+                            ),
 
                         TextInput::make('slug')
                             ->disabled()
@@ -45,27 +54,78 @@ class PostForm
                             ->required()
                             ->maxLength(255)
                             ->unique(Post::class, 'slug', ignoreRecord: true)
-                            ->helperText('The SEO-friendly URL is generated from the title.'),
+                            ->helperText('Slug title se auto generate hota hai.'),
 
                         RichEditor::make('content')
                             ->required()
                             ->columnSpanFull()
                             ->toolbarButtons([
-                                'attachFiles', 'blockquote', 'bold', 'bulletList', 'codeBlock', 
-                                'h2', 'h3', 'italic', 'link', 'orderedList', 'redo', 'strike', 'undo',
+
+                                // Files
+                                'attachFiles',
+
+                                // Text formatting
+                                'bold',
+                                'italic',
+                                'underline',
+                                'strike',
+                                'subscript',
+                                'superscript',
+                                'clearFormatting',
+
+                                // Headings
+                                'h1',
+                                'h2',
+                                'h3',
+                                'h4',
+
+                                // Lists
+                                'bulletList',
+                                'orderedList',
+
+                                // Alignment
+                                'alignLeft',
+                                'alignCenter',
+                                'alignRight',
+                                'alignJustify',
+
+                                // Media
+                                'link',
+                                'image',
+                                'video',
+
+                                // Blocks
+                                'blockquote',
+                                'horizontalRule',
+
+                                // Code
+                                'code',
+                                'codeBlock',
+
+                                // Tables
+                                'table',
+
+                                // History
+                                'undo',
+                                'redo',
                             ])
                             ->fileAttachmentsDirectory('blog/attachments'),
 
                         Textarea::make('excerpt')
-                            ->label('Search Engine Description')
-                            ->placeholder('Write a brief teaser for search results...')
+                            ->label('Meta Description')
+                            ->placeholder('SEO ke liye short description...')
                             ->rows(3)
                             ->columnSpanFull(),
                     ]),
 
-                // Media & Classification Section
+                /*
+                |--------------------------------------------------------------------------
+                | Media & Classification
+                |--------------------------------------------------------------------------
+                */
                 Section::make('Media & Classification')
                     ->schema([
+
                         FileUpload::make('cover_image')
                             ->label('Featured Image')
                             ->image()
@@ -79,6 +139,7 @@ class PostForm
 
                         Grid::make(2)
                             ->schema([
+
                                 Select::make('category_id')
                                     ->relationship('category', 'name')
                                     ->searchable()
@@ -87,21 +148,27 @@ class PostForm
 
                                 Select::make('user_id')
                                     ->relationship('user', 'name')
+                                    ->label('Author')
                                     ->default(Auth::id())
                                     ->required()
-                                    ->label('Author')
-                                    ->helperText('Assigned to you by default.'),
+                                    ->helperText('Default: current user'),
                             ]),
                     ]),
 
-                // Publishing Protocols Section
+                /*
+                |--------------------------------------------------------------------------
+                | Publishing
+                |--------------------------------------------------------------------------
+                */
                 Section::make('Publishing Protocols')
                     ->schema([
+
                         Grid::make(2)
                             ->schema([
+
                                 Toggle::make('is_published')
-                                    ->label('Publicly Visible')
-                                    ->helperText('Toggle to publish or draft.')
+                                    ->label('Publish')
+                                    ->helperText('On = Live, Off = Draft')
                                     ->live()
                                     ->afterStateUpdated(function ($state, Set $set) {
                                         if ($state) {
@@ -110,8 +177,8 @@ class PostForm
                                     }),
 
                                 DateTimePicker::make('published_at')
-                                    ->label('Schedule Date')
-                                    ->placeholder('Select date/time...')
+                                    ->label('Publish Date')
+                                    ->placeholder('Schedule post')
                                     ->native(false),
                             ]),
                     ]),
