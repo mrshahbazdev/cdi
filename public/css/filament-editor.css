@@ -1,0 +1,28 @@
+/* ===============================
+   RichEditor – Mobile First Fix
+================================ */
+
+/* Toolbar wrap */
+.fi-fo-rich-editor-toolbar {
+    display: flex;
+    flex-wrap: wrap !important;
+    gap: 4px;
+}
+
+/* Buttons spacing */
+.fi-fo-rich-editor-toolbar > * {
+    margin-bottom: 4px;
+}
+
+/* Prevent horizontal scroll */
+.fi-fo-rich-editor {
+    overflow-x: hidden;
+}
+
+/* Mobile friendly buttons */
+@media (max-width: 640px) {
+    .fi-fo-rich-editor-toolbar button {
+        min-width: 40px;
+        min-height: 36px;
+    }
+}
