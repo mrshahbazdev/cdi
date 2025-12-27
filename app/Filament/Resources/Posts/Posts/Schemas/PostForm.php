@@ -80,21 +80,35 @@ class PostForm
                 ->schema([
 
                     FileUpload::make('cover_image')
+                        ->label('Cover Image')
                         ->image()
+                        ->disk('public')
                         ->directory('blog/covers')
                         ->imageEditor()
                         ->imageResizeMode('cover')
                         ->imageResizeTargetWidth(1200)
                         ->imageResizeTargetHeight(630)
-                        ->maxSize(5120) // 5MB
+                        ->maxSize(5120) // 5MB upload allow
                         ->saveUploadedFileUsing(function ($file) {
 
-                            $path = $file->store('blog/covers');
+                            // ✅ unique safe filename
+                            $filename = Str::random(40) . '.' . $file->getClientOriginalExtension();
 
-                            $optimizerChain = OptimizerChainFactory::create();
-                            $optimizerChain->optimize(
-                                storage_path('app/' . $path)
+                            // ✅ store file FIRST (important)
+                            $path = $file->storeAs(
+                                'blog/covers',
+                                $filename,
+                                'public'
                             );
+
+                            // ✅ absolute real path
+                            $absolutePath = storage_path('app/public/' . $path);
+
+                            // ✅ optimize ONLY if file exists
+                            if (file_exists($absolutePath)) {
+                                $optimizerChain = OptimizerChainFactory::create();
+                                $optimizerChain->optimize($absolutePath);
+                            }
 
                             return $path;
                         }),
