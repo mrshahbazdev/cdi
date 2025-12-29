@@ -131,7 +131,7 @@
             <a href="#vorgespräch" class="px-10 py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl">
                 Kostenloses Vorgespräch vereinbaren
             </a>
-            <a href="{{ route('tools') }}" class="px-10 py-4 border-2 border-slate-300 rounded-2xl font-bold text-lg hover:bg-slate-50 transition-all duration-300">
+            <a href="/tools" class="px-10 py-4 border-2 border-slate-300 rounded-2xl font-bold text-lg hover:bg-slate-50 transition-all duration-300">
                 Digitale Tools entdecken
             </a>
         </div>
@@ -347,7 +347,7 @@
             <a href="#vorgespräch" class="px-10 py-4 bg-white text-blue-600 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300">
                 Kostenloses Erstgespräch vereinbaren
             </a>
-            <a href="{{ route('tools') }}" class="px-10 py-4 border-2 border-white rounded-2xl font-bold text-lg hover:bg-blue-700 transition-all duration-300">
+            <a href="/tools" class="px-10 py-4 border-2 border-white rounded-2xl font-bold text-lg hover:bg-blue-700 transition-all duration-300">
                 Zu unseren Digital-Tools
             </a>
         </div>
