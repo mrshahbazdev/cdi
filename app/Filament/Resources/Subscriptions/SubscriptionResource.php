@@ -11,10 +11,8 @@ use App\Filament\Resources\Subscriptions\Schemas\SubscriptionInfolist;
 use App\Filament\Resources\Subscriptions\Tables\SubscriptionsTable;
 use App\Models\Subscription;
 use BackedEnum;
-use Filament\Forms\Form; // ADD THIS
-use Filament\Infolists\Infolist; // ADD THIS
 use Filament\Resources\Resource;
-// REMOVE THIS: use Filament\Schemas\Schema;
+use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
@@ -26,20 +24,21 @@ class SubscriptionResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'subdomain';
 
+    // Remove navigationGroup or make it null
+    // protected static ?string $navigationGroup = null;
+
     protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationLabel = 'Subscriptions';
 
-    // CHANGE FROM Schema TO Form
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return SubscriptionForm::configure($form);
+        return SubscriptionForm::configure($schema);
     }
 
-    // CHANGE FROM Schema TO Infolist
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return SubscriptionInfolist::configure($infolist);
+        return SubscriptionInfolist::configure($schema);
     }
 
     public static function table(Table $table): Table
