@@ -6,16 +6,15 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form; // Schema ki jagah Form use karna zaroori hai
+use Illuminate\Support\Facades\Log;
 
 class SubscriptionForm
 {
-    public static function configure(Schema $schema): Schema
+    public static function configure(Form $form): Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([
                 Section::make('Subscription Information')
                     ->description('Basic subscription details')
                     ->schema([
@@ -33,7 +32,7 @@ class SubscriptionForm
                             ->searchable()
                             ->preload()
                             ->required()
-                            ->reactive()
+                            ->live() // reactive() ki jagah live() use hota hai v3 mein
                             ->afterStateUpdated(function ($state, callable $set) {
                                 if ($state) {
                                     $package = \App\Models\Package::find($state);
@@ -51,8 +50,8 @@ class SubscriptionForm
                                             };
                                         }
                                         
-                                        $set('starts_at', $starts);
-                                        $set('expires_at', $expires);
+                                        $set('starts_at', $starts->format('Y-m-d H:i:s'));
+                                        $set('expires_at', $expires ? $expires->format('Y-m-d H:i:s') : null);
                                     }
                                 }
                             })
