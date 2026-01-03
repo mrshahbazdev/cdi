@@ -11,8 +11,9 @@ use App\Filament\Resources\Subscriptions\Schemas\SubscriptionInfolist;
 use App\Filament\Resources\Subscriptions\Tables\SubscriptionsTable;
 use App\Models\Subscription;
 use BackedEnum;
+use Filament\Forms\Form;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
@@ -31,14 +32,14 @@ class SubscriptionResource extends Resource
 
     protected static ?string $navigationLabel = 'Subscriptions';
 
-    public static function form(Schema $schema): Schema
+    public static function form(Form $form): Form
     {
-        return SubscriptionForm::configure($schema);
+        return SubscriptionForm::configure($form);
     }
 
-    public static function infolist(Schema $schema): Schema
+    public static function infolist(Infolist $infolist): Infolist
     {
-        return SubscriptionInfolist::configure($schema);
+        return SubscriptionInfolist::configure($infolist);
     }
 
     public static function table(Table $table): Table
