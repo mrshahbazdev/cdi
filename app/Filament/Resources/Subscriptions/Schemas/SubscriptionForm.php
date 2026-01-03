@@ -2,19 +2,19 @@
 
 namespace App\Filament\Resources\Subscriptions\Schemas;
 
-use Filament\Forms\Form;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Schema; // Change from Form to Schema
+use Filament\Schemas\Components\DateTimePicker; // Change from Forms\Components to Schemas\Components
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Select;
+use Filament\Schemas\Components\TextInput;
+use Filament\Schemas\Components\Textarea;
+use Filament\Schemas\Components\Toggle;
 
 class SubscriptionForm
 {
-    public static function configure(Form $form): Form
+    public static function configure(Schema $schema): Schema // Change from Form to Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Section::make('Subscription Information')
                     ->description('Basic subscription details')
