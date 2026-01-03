@@ -11,7 +11,6 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Toggle;
 
 class SubscriptionForm
 {
@@ -20,23 +19,20 @@ class SubscriptionForm
         return $schema->components([
 
             /* =====================
-             | Subscription Info
+             | Subscription Details
              ===================== */
             Section::make('Subscription Information')
-                ->description('Basic subscription details')
                 ->schema([
 
                     Grid::make(2)->schema([
 
                         Select::make('user_id')
-                            ->label('User')
                             ->relationship('user', 'name')
                             ->searchable()
                             ->preload()
                             ->required(),
 
                         Select::make('package_id')
-                            ->label('Package')
                             ->relationship('package', 'name')
                             ->searchable()
                             ->preload()
@@ -44,11 +40,12 @@ class SubscriptionForm
                             ->required()
                             ->afterStateUpdated(
                                 function ($state, Set $set) {
+
                                     if (! $state) {
                                         return;
                                     }
 
-                                    $package = Package::find($state);
+                                    $package = Package::with('tool')->find($state);
 
                                     if (! $package) {
                                         return;
@@ -75,13 +72,13 @@ class SubscriptionForm
                     Grid::make(2)->schema([
 
                         TextInput::make('subdomain')
-                            ->label('Subdomain')
+                            ->label('Domain')
                             ->required()
                             ->unique(Subscription::class, 'subdomain', ignoreRecord: true)
                             ->regex('/^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/')
                             ->minLength(3)
                             ->maxLength(63)
-                            ->helperText('Lowercase letters, numbers & hyphens only'),
+                            ->helperText('Used as subdomain (shown in table as full domain)'),
 
                         Select::make('status')
                             ->options([
@@ -91,17 +88,18 @@ class SubscriptionForm
                                 'cancelled' => 'Cancelled',
                             ])
                             ->default('pending')
-                            ->required(),
+                            ->required()
+                            ->helperText('Status actions are handled from table'),
                     ]),
                 ]),
 
             /* =====================
              | Transaction
              ===================== */
-            Section::make('Transaction Information')
+            Section::make('Transaction')
                 ->schema([
+
                     Select::make('transaction_id')
-                        ->label('Transaction')
                         ->relationship('transaction', 'transaction_id')
                         ->searchable()
                         ->preload()
@@ -112,23 +110,22 @@ class SubscriptionForm
             /* =====================
              | Duration
              ===================== */
-            Section::make('Duration')
-                ->description('Subscription start and expiry dates')
+            Section::make('Subscription Duration')
                 ->schema([
 
                     Grid::make(2)->schema([
 
                         DateTimePicker::make('starts_at')
                             ->label('Start Date')
-                            ->required()
                             ->native(false)
+                            ->required()
                             ->default(now()),
 
                         DateTimePicker::make('expires_at')
                             ->label('Expiry Date')
                             ->native(false)
                             ->nullable()
-                            ->helperText('Leave empty for lifetime subscriptions'),
+                            ->helperText('Empty = Lifetime'),
                     ]),
                 ]),
         ]);
