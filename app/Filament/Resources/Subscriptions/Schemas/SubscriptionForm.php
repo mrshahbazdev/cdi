@@ -3,19 +3,19 @@
 namespace App\Filament\Resources\Subscriptions\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Section;  // ← Cette ligne est correcte
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Schema;
+use Filament\Forms\Form;  // ← Changez Schema en Form
 
 class SubscriptionForm
 {
-    public static function configure(Schema $schema): Schema
+    public static function configure(Form $form): Form  // ← Changez Schema en Form
     {
-        return $schema
-            ->components([
+        return $form
+            ->schema([  // ← Utilisez ->schema() au lieu de ->components()
                 Section::make('Subscription Information')
                     ->description('Basic subscription details')
                     ->schema([
@@ -33,7 +33,7 @@ class SubscriptionForm
                             ->searchable()
                             ->preload()
                             ->required()
-                            ->reactive()
+                            ->live()  // ← Changez reactive() en live()
                             ->afterStateUpdated(function ($state, callable $set) {
                                 if ($state) {
                                     $package = \App\Models\Package::find($state);
