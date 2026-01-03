@@ -2,132 +2,116 @@
 
 namespace App\Filament\Resources\Subscriptions\Schemas;
 
-use App\Models\Package;
-use App\Models\Subscription;
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Utilities\Set;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Schema;
 
 class SubscriptionForm
 {
     public static function configure(Schema $schema): Schema
     {
-        return $schema->components([
-
-            /* =====================
-             | Subscription Details
-             ===================== */
-            Section::make('Subscription Information')
-                ->schema([
-
-                    Grid::make(2)->schema([
-
+        return $schema
+            ->components([
+                Section::make('Subscription Information')
+                    ->description('Basic subscription details')
+                    ->schema([
                         Select::make('user_id')
+                            ->label('User')
                             ->relationship('user', 'name')
                             ->searchable()
                             ->preload()
-                            ->required(),
+                            ->required()
+                            ->columnSpan(1),
 
                         Select::make('package_id')
+                            ->label('Package')
                             ->relationship('package', 'name')
                             ->searchable()
                             ->preload()
-                            ->live()
                             ->required()
-                            ->afterStateUpdated(
-                                function ($state, Set $set) {
-
-                                    if (! $state) {
-                                        return;
+                            ->reactive()
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                if ($state) {
+                                    $package = \App\Models\Package::find($state);
+                                    if ($package) {
+                                        // Auto-calculate expiry date
+                                        $starts = now();
+                                        $expires = null;
+                                        
+                                        if ($package->duration_type !== 'lifetime') {
+                                            $expires = match($package->duration_type) {
+                                                'trial', 'days' => $starts->copy()->addDays($package->duration_value),
+                                                'months' => $starts->copy()->addMonths($package->duration_value),
+                                                'years' => $starts->copy()->addYears($package->duration_value),
+                                                default => $starts->copy()->addDays(30),
+                                            };
+                                        }
+                                        
+                                        $set('starts_at', $starts);
+                                        $set('expires_at', $expires);
                                     }
-
-                                    $package = Package::with('tool')->find($state);
-
-                                    if (! $package) {
-                                        return;
-                                    }
-
-                                    $startsAt = now();
-                                    $expiresAt = null;
-
-                                    if ($package->duration_type !== 'lifetime') {
-                                        $expiresAt = match ($package->duration_type) {
-                                            'trial', 'days' => $startsAt->copy()->addDays($package->duration_value),
-                                            'months'        => $startsAt->copy()->addMonths($package->duration_value),
-                                            'years'         => $startsAt->copy()->addYears($package->duration_value),
-                                            default         => $startsAt->copy()->addDays(30),
-                                        };
-                                    }
-
-                                    $set('starts_at', $startsAt);
-                                    $set('expires_at', $expiresAt);
                                 }
-                            ),
-                    ]),
-
-                    Grid::make(2)->schema([
+                            })
+                            ->columnSpan(1),
 
                         TextInput::make('subdomain')
-                            ->label('Domain')
+                            ->label('Subdomain')
                             ->required()
-                            ->unique(Subscription::class, 'subdomain', ignoreRecord: true)
+                            ->unique(ignoreRecord: true)
                             ->regex('/^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/')
+                            ->helperText('Only lowercase letters, numbers, and hyphens (3-63 characters)')
                             ->minLength(3)
                             ->maxLength(63)
-                            ->helperText('Used as subdomain (shown in table as full domain)'),
+                            ->columnSpan(1),
 
                         Select::make('status')
+                            ->label('Status')
                             ->options([
-                                'pending'   => 'Pending',
-                                'active'    => 'Active',
-                                'expired'   => 'Expired',
+                                'pending' => 'Pending',
+                                'active' => 'Active',
+                                'expired' => 'Expired',
                                 'cancelled' => 'Cancelled',
                             ])
                             ->default('pending')
                             ->required()
-                            ->helperText('Status actions are handled from table'),
-                    ]),
-                ]),
+                            ->columnSpan(1),
+                    ])
+                    ->columns(2),
 
-            /* =====================
-             | Transaction
-             ===================== */
-            Section::make('Transaction')
-                ->schema([
+                Section::make('Transaction Information')
+                    ->description('Payment and transaction details')
+                    ->schema([
+                        Select::make('transaction_id')
+                            ->label('Transaction')
+                            ->relationship('transaction', 'transaction_id')
+                            ->searchable()
+                            ->preload()
+                            ->nullable()
+                            ->columnSpan(1),
+                    ])
+                    ->columns(1)
+                    ->collapsible(),
 
-                    Select::make('transaction_id')
-                        ->relationship('transaction', 'transaction_id')
-                        ->searchable()
-                        ->preload()
-                        ->nullable(),
-                ])
-                ->collapsible(),
-
-            /* =====================
-             | Duration
-             ===================== */
-            Section::make('Subscription Duration')
-                ->schema([
-
-                    Grid::make(2)->schema([
-
+                Section::make('Duration')
+                    ->description('Subscription start and end dates')
+                    ->schema([
                         DateTimePicker::make('starts_at')
                             ->label('Start Date')
-                            ->native(false)
                             ->required()
-                            ->default(now()),
+                            ->default(now())
+                            ->columnSpan(1),
 
                         DateTimePicker::make('expires_at')
                             ->label('Expiry Date')
-                            ->native(false)
                             ->nullable()
-                            ->helperText('Empty = Lifetime'),
-                    ]),
-                ]),
-        ]);
+                            ->helperText('Leave empty for lifetime subscriptions')
+                            ->columnSpan(1),
+                    ])
+                    ->columns(2),
+            ]);
     }
 }
