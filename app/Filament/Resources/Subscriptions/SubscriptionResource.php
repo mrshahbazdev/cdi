@@ -11,9 +11,8 @@ use App\Filament\Resources\Subscriptions\Schemas\SubscriptionInfolist;
 use App\Filament\Resources\Subscriptions\Tables\SubscriptionsTable;
 use App\Models\Subscription;
 use BackedEnum;
-use Filament\Forms\Form; // Corrected: Schema ki jagah Form
-use Filament\Infolists\Infolist; // Corrected: Schema ki jagah Infolist
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 
@@ -25,31 +24,23 @@ class SubscriptionResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'subdomain';
 
+    // Remove navigationGroup or make it null
+    // protected static ?string $navigationGroup = null;
+
     protected static ?int $navigationSort = 3;
 
     protected static ?string $navigationLabel = 'Subscriptions';
 
-    /**
-     * Form Configuration
-     */
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        // SubscriptionForm::configure mein ab Form pass ho raha hai
-        return SubscriptionForm::configure($form);
+        return SubscriptionForm::configure($schema);
     }
 
-    /**
-     * Infolist (Detail View) Configuration
-     */
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        // SubscriptionInfolist::configure mein ab Infolist pass ho rahi hai
-        return SubscriptionInfolist::configure($infolist);
+        return SubscriptionInfolist::configure($schema);
     }
 
-    /**
-     * Table Configuration
-     */
     public static function table(Table $table): Table
     {
         return SubscriptionsTable::configure($table);
@@ -58,7 +49,7 @@ class SubscriptionResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // Yahan aap relation managers add kar sakte hain
+            //
         ];
     }
 
@@ -73,43 +64,57 @@ class SubscriptionResource extends Resource
     }
 
     /**
-     * Navigation Badge (Pending Count)
+     * Get navigation badge (pending count)
      */
     public static function getNavigationBadge(): ?string
     {
         $pendingCount = static::getModel()::where('status', 'pending')->count();
+        
         return $pendingCount > 0 ? (string) $pendingCount : null;
     }
 
+    /**
+     * Get navigation badge color
+     */
     public static function getNavigationBadgeColor(): ?string
     {
         return 'warning';
     }
 
+    /**
+     * Get navigation badge tooltip
+     */
     public static function getNavigationBadgeTooltip(): ?string
     {
         $pendingCount = static::getModel()::where('status', 'pending')->count();
+        
         return $pendingCount > 0 
             ? "{$pendingCount} pending approval" 
             : null;
     }
 
     /**
-     * Global Search Configuration
+     * Get global search result title
      */
     public static function getGlobalSearchResultTitle($record): string
     {
-        return $record->subdomain;
+        return $record->full_domain;
     }
 
+    /**
+     * Get global search result details
+     */
     public static function getGlobalSearchResultDetails($record): array
     {
         return [
-            'User' => $record->user?->name ?? 'N/A',
+            'User' => $record->user->name,
             'Status' => ucfirst($record->status),
         ];
     }
 
+    /**
+     * Get global search result url
+     */
     public static function getGlobalSearchResultUrl($record): string
     {
         return static::getUrl('view', ['record' => $record]);
